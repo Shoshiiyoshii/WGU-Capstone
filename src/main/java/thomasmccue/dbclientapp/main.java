@@ -31,9 +31,12 @@ public class main extends Application {
         stage.show();
     }
 
+    public void stop() throws Exception{
+        JDBC.closeConnection();
+    }
+
     public static void main(String[] args) {
         JDBC.openConnection();
-        JDBC.closeConnection();
         launch();
     }
 }
