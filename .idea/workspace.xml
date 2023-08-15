@@ -4,11 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Got Connection working">
+    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="got log in working off of users table">
+      <change afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/addOrModifyAppointmentPage.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/deleteDialog.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/logInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/logInController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/helper/JDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/helper/JDBC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/clientManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/logInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/appointments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/contacts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Contact.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/countries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Country.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/customers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/firstLevelDivisions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/FirstLevelDivision.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/clientManagement.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/logIn.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/logIn.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,17 +48,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientAppReal/src",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientAppReal/src&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -60,7 +76,7 @@
   </component>
   <component name="RunManager">
     <configuration name="DbClientApp" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="thomasmccue.dbclientapp.main" />
+      <option name="MAIN_CLASS_NAME" value="thomasmccue.dbclientapp.Main" />
       <module name="DbClientApp" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -83,11 +99,19 @@
       <option name="project" value="LOCAL" />
       <updated>1691441275175</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="got log in working off of users table">
+      <created>1691443001911</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1691443001911</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Got Connection working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Got Connection working" />
+    <MESSAGE value="got log in working off of users table" />
+    <option name="LAST_COMMIT_MESSAGE" value="got log in working off of users table" />
   </component>
 </project>

@@ -10,9 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import thomasmccue.dbclientapp.helper.JDBC;
-import thomasmccue.dbclientapp.main;
+import thomasmccue.dbclientapp.Main;
 
-import java.net.ResponseCache;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class logInController implements Initializable {
+import static thomasmccue.dbclientapp.helper.JDBC.connection;
+
+public class LogInController implements Initializable {
     @FXML
     private Label usernameLabel, passwordLabel, errorMsg, welcome, locationLabel, zoneId;
     @FXML
@@ -29,22 +30,23 @@ public class logInController implements Initializable {
     @FXML
     private TextField passwordField, usernameField;
 
+    private static int loggedInUserId;
     private ResourceBundle resourceBundle;
 
     Stage stage;
 
     @FXML
     public void clickLogIn(ActionEvent event) throws IOException {
+        errorMsg.setVisible(false);
         String usernameInput = usernameField.getText();
         String passwordInput = passwordField.getText();
 
         boolean userExists = isValidUser(usernameInput, passwordInput);
-
         if(userExists){
-            FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("clientManagement.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("landingPage.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
-            stage.setTitle("Client Management");
+            stage.setTitle("Customer and Appointment Management Portal");
             stage.setScene(scene);
             stage.show();
         } else{
@@ -55,13 +57,14 @@ public class logInController implements Initializable {
    private boolean isValidUser(String user, String pass){
         try{
             String query = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
-            PreparedStatement preparedStatement = JDBC.connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user);
             preparedStatement.setString(2,pass);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){
+                loggedInUserId = resultSet.getInt("User_ID");
                 return true;
             }
 
@@ -71,7 +74,9 @@ public class logInController implements Initializable {
         return false;
     }
 
-
+    public static int getLoggedInUserId(){
+        return loggedInUserId;
+    }
 
     @FXML
     public void clickClose(ActionEvent event) throws IOException {

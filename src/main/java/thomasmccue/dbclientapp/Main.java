@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class main extends Application {
+public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Determine the user's preferred locale based on computer settings
@@ -19,7 +19,7 @@ public class main extends Application {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("thomasmccue.dbclientapp.logInText", userLocale);
 
         // Load the FXML file
-        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("logIn.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("logIn.fxml"));
 
         // Set the resource bundle for the loader
         fxmlLoader.setResources(resourceBundle);

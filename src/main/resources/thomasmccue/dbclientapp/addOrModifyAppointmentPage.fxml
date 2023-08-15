@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="584.0" prefWidth="518.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.AddOrUpdateAppointmentController">
+    <children>
+        <Label fx:id="appointmentIdLabel" layoutX="53.0" layoutY="84.0" text="Appointment ID:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="pageTitleLabel" layoutX="35.0" layoutY="24.0" text="Create An Appointment">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="selectContactLabel" layoutX="53.0" layoutY="330.0" text="Select a Primary Contact:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="titleLabel" layoutX="53.0" layoutY="120.0" text="Appointment Title:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="descLabel" layoutX="53.0" layoutY="155.0" text="Appointment Description:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="locationLabel" layoutX="53.0" layoutY="190.0" text="Appointment Location:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="typeLabel" layoutX="53.0" layoutY="225.0" text="Appointment Type:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="startDTLabel" layoutX="53.0" layoutY="260.0" text="Start Date and Time:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="endDTLabel" layoutX="53.0" layoutY="295.0" text="End Date and Time:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+
+        <TextField fx:id="apptIdField" editable="false" layoutX="213.0" layoutY="80.0" />
+        <TextField fx:id="titleField" layoutX="213.0" layoutY="115.0" />
+        <TextField fx:id="descField" layoutX="213.0" layoutY="150.0" />
+        <TextField fx:id="locationField" layoutX="213.0" layoutY="185.0" />
+        <TextField fx:id="typeField" layoutX="213.0" layoutY="220.0" />
+        <TextField fx:id="startDTField" layoutX="213.0" layoutY="255.0" />
+        <TextField fx:id="endDTField" layoutX="213.0" layoutY="290.0" />
+        <ButtonBar layoutX="226.0" layoutY="491.0" prefHeight="40.0" prefWidth="269.0">
+         <buttons>
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClicked" prefHeight="26.0" prefWidth="106.0" text="Save" />
+                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="26.0" prefWidth="99.0" text="Cancel" />
+         </buttons>
+        </ButtonBar>
+        <Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="437.0" prefHeight="54.0" prefWidth="446.0" textAlignment="CENTER" textFill="#ee0000">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="selectCustBox" editable="true" layoutX="213.0" layoutY="360.0" onAction="#selectOrEnterCust" prefHeight="26.0" prefWidth="160.0" promptText="Customer By ID " />
+        <ComboBox fx:id="selectContactBox" editable="true" layoutX="213.0" layoutY="325.0" onAction="#selectOrEnterContact" prefHeight="26.0" prefWidth="160.0" promptText="Contact by ID" />
+        <Label fx:id="selectCustIdLabel" layoutX="53.0" layoutY="364.0" text="Select Customer ID:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="userIdLabel" layoutX="53.0" layoutY="400.0" text="Your User ID:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="userIdField" layoutX="213.0" layoutY="396.0" />
+    </children>
+</AnchorPane>

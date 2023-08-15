@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="mainScreenPane" prefHeight="710.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.LandingPageController">
+    <children>
+      <Pane layoutX="59.0" layoutY="52.0" prefHeight="76.0" prefWidth="485.0">
+         <children>
+            <Label fx:id="ynUpcomingAppointment" layoutY="6.0" prefHeight="17.0" prefWidth="321.0" text="You have no appointments starting in the next 15 minutes." />
+            <Label fx:id="nextAppt" layoutY="30.0" text="Your next appointment is at:" />
+            <Label fx:id="nextApptWith" layoutY="45.0" text="Your next appointment is with:" />
+            <Label fx:id="whenNext" layoutX="155.0" layoutY="30.0" prefHeight="17.0" prefWidth="327.0" />
+            <Label fx:id="whoNext" layoutX="170.0" layoutY="45.0" prefHeight="17.0" prefWidth="315.0" />
+         </children></Pane>
+        <Label fx:id="title" layoutX="46.0" layoutY="23.0" text="Customer and Appointment Managment System">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <Pane layoutX="12.0" layoutY="398.0" prefHeight="250.0" prefWidth="962.0">
+            <children>
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f5f5f500" height="250.0" stroke="BLACK" strokeType="INSIDE" width="962.0" />
+                <TableView fx:id="custTable" layoutX="13.0" layoutY="44.0" prefHeight="162.0" prefWidth="944.0">
+                    <columns>
+                        <TableColumn fx:id="custIdBottomCol" prefWidth="75.0" text="Cust. ID" />
+                        <TableColumn fx:id="nameCol" prefWidth="69.0" text="Name" />
+                        <TableColumn fx:id="addressCol" prefWidth="97.0" text="Address" />
+                        <TableColumn fx:id="postalCodeCol" prefWidth="79.0" text="Postal Code" />
+                  <TableColumn fx:id="phoneCol" prefWidth="109.0" text="Phone Number" />
+                  <TableColumn fx:id="createDateCol" prefWidth="83.0" text="Date Created" />
+                  <TableColumn fx:id="createdByCol" prefWidth="114.0" text="Created By" />
+                  <TableColumn fx:id="lastUpdated" prefWidth="101.0" text="Last Updated" />
+                  <TableColumn fx:id="lastUpdatedByCol" prefWidth="100.0" text="Last Updated By" />
+                  <TableColumn fx:id="divisionIdCol" prefWidth="116.0" text="Division ID" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="custSearchBar" layoutX="708.0" layoutY="15.0" onAction="#customerSearch" prefHeight="26.0" prefWidth="240.0" promptText="Search by Customer ID or Name" />
+                <ButtonBar layoutX="703.0" layoutY="206.0" prefHeight="40.0" prefWidth="200.0">
+                    <buttons>
+                        <Button fx:id="custAddButton" mnemonicParsing="false" onAction="#clickCustAdd" text="Add" />
+                        <Button fx:id="custUpdateButton" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickCustUpdate" text="Update" />
+                        <Button fx:id="custDeleteButton" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickCustDelete" text="Delete" />
+                    </buttons>
+                </ButtonBar>
+                <Label fx:id="customersTitle" layoutX="14.0" layoutY="18.0" prefHeight="20.0" prefWidth="134.0" text="Customer Records" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font></Label>
+                <Label fx:id="customerErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="206.0" prefHeight="40.0" prefWidth="703.0" textAlignment="CENTER" textFill="#f20303" />
+            </children>
+        </Pane>
+        <Button fx:id="exitButton" layoutX="873.0" layoutY="667.0" mnemonicParsing="false" onAction="#exitClicked" prefHeight="26.0" prefWidth="83.0" text="Exit" />
+      <Pane layoutX="10.0" layoutY="135.0" prefHeight="250.0" prefWidth="962.0">
+         <children>
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f5f5f500" height="250.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="962.0" />
+            <TableView fx:id="apptTable" layoutX="10.0" layoutY="42.0" prefHeight="162.0" prefWidth="944.0">
+               <columns>
+                  <TableColumn fx:id="apptIdCol" prefWidth="52.0" text="Appt. ID" />
+                  <TableColumn fx:id="titleCol" prefWidth="68.0" text="Title" />
+                  <TableColumn fx:id="descCol" prefWidth="90.0" text="Description" />
+                  <TableColumn fx:id="locationCol" prefWidth="171.0" text="Location" />
+                  <TableColumn fx:id="contactIdCol" prefWidth="66.0" text="Contact ID" />
+                  <TableColumn fx:id="typeCol" prefWidth="90.0" text="Type" />
+                  <TableColumn fx:id="startDTCol" prefWidth="128.0" text="Start Date and Time" />
+                  <TableColumn fx:id="endDTCol" prefWidth="128.0" text="End Date and Time" />
+                  <TableColumn fx:id="custIdTopCol" prefWidth="77.0" text="Customer ID" />
+                  <TableColumn fx:id="userIdCol" prefWidth="73.0" text="User ID" />
+               </columns>
+            </TableView>
+            <TextField fx:id="apptSearchBar" layoutX="708.0" layoutY="15.0" onAction="#apptSearch" prefHeight="26.0" prefWidth="240.0" promptText="Search by Appointment ID" />
+            <ButtonBar layoutX="698.0" layoutY="206.0" prefHeight="40.0" prefWidth="200.0">
+               <buttons>
+                  <Button fx:id="apptAddButton1" mnemonicParsing="false" onAction="#clickApptAdd" text="Add" />
+                  <Button fx:id="apptUpdateButton" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickApptUpdate" text="Update" />
+                  <Button fx:id="apptDeleteButton" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickApptDelete" text="Delete" />
+               </buttons>
+            </ButtonBar>
+            <Label fx:id="appointmentTitle" layoutX="14.0" layoutY="18.0" prefHeight="20.0" prefWidth="134.0" text="Appointments" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="apptErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="211.0" prefHeight="29.0" prefWidth="703.0" textAlignment="CENTER" textFill="#f20303" />
+            <RadioButton fx:id="weekRadio" layoutX="482.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Week">
+               <toggleGroup>
+                  <ToggleGroup fx:id="apptFilter" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="monthRadio" layoutX="596.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Month" toggleGroup="$apptFilter" />
+            <RadioButton fx:id="allTimeRadio" layoutX="380.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="All Time" toggleGroup="$apptFilter" />
+         </children>
+      </Pane>
+      <Button fx:id="apptReportButton" layoutX="697.0" layoutY="667.0" mnemonicParsing="false" text="View Appointment Reports " />
+      <Button fx:id="contactSchedulesButton" layoutX="537.0" layoutY="667.0" mnemonicParsing="false" text="View Contact Schedules" />
+      <Button fx:id="custRecordCreationReportButton" layoutX="343.0" layoutY="667.0" mnemonicParsing="false" text="Veiw Customer Record Report" />
+    </children>
+</AnchorPane>
