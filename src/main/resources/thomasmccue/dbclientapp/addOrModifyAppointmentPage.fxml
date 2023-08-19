@@ -52,7 +52,7 @@
             </font>
         </Label>
 
-        <TextField fx:id="apptIdField" editable="false" layoutX="213.0" layoutY="80.0" />
+        <TextField fx:id="apptIdField" disable="true" editable="false" layoutX="213.0" layoutY="80.0" />
         <TextField fx:id="titleField" layoutX="213.0" layoutY="115.0" />
         <TextField fx:id="descField" layoutX="213.0" layoutY="150.0" />
         <TextField fx:id="locationField" layoutX="213.0" layoutY="185.0" />

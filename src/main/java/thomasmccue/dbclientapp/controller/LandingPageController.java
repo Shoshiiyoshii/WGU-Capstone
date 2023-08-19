@@ -14,7 +14,13 @@ import thomasmccue.dbclientapp.model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+
+import static thomasmccue.dbclientapp.helper.JDBC.connection;
 
 public class LandingPageController implements Initializable {
     @FXML
@@ -50,16 +56,13 @@ public class LandingPageController implements Initializable {
             apptTable.setItems(AppointmentDao.getAllAppointments());
         }
     }
-    public void apptSearch(ActionEvent event){
-
-    }
     public void clickApptAdd(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrModifyAppointmentPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
 
         AddOrUpdateAppointmentController controller = fxmlLoader.getController();
-        controller.setUpModify("Create a new Appointment", "Save");
+        controller.setUpAdd("Create a new Appointment", "Save");
         stage.setTitle("Create A New Appointment");
         stage.setScene(scene);
         stage.show();
@@ -78,7 +81,8 @@ public class LandingPageController implements Initializable {
             Stage stage = new Stage();
 
             AddOrUpdateAppointmentController controller = fxmlLoader.getController();
-            controller.setUpModify("Update An Existing Appointment", "Save Changes");
+            int apptID = selectedAppt.getApptId();
+            controller.setUpModify("Update An Existing Appointment", "Save Changes", apptID);
             controller.preFillFields(selectedAppt);
 
             stage.setTitle("Update Existing Appointment");
@@ -87,9 +91,28 @@ public class LandingPageController implements Initializable {
         }
     }
 
-    public void clickApptDelete(ActionEvent event){
+    public void clickApptDelete(ActionEvent event) throws SQLException, IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("deleteDialog.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Delete Appointment");
+        stage.setScene(scene);
 
+      DeleteDialogController dialogController = fxmlLoader.getController();
+
+        SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
+        Appointment selectedAppt = selectionModel.getSelectedItem();
+        if(selectedAppt != null) {
+            apptErrorMessage.setText("");
+            dialogController.setAppointment(selectedAppt);
+            dialogController.setToBeDeletedAppt();
+
+            stage.show();
+        } else{
+            apptErrorMessage.setText("First select an appointment to delete.");
+        }
     }
+
    public void customerSearch(ActionEvent event){
 
    }
@@ -111,7 +134,7 @@ public class LandingPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       //populate appointment table with all appointments, if table is not yet populated FIXME
+       //populate appointment table with all appointments, if table is not yet populated
 
         allTimeRadio.setSelected(true);
 

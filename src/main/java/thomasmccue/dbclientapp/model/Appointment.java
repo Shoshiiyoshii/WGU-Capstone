@@ -19,17 +19,17 @@ public class Appointment {
     private int contactId;
 
     //constructor
-    public Appointment(int apptId, String title, String desc, String location, String type,
-                       LocalDateTime start, LocalDateTime end, LocalDateTime createDate, String createdBy,
+    public Appointment(String title, String desc, String location, String type,
+                       LocalDateTime start, LocalDateTime end, String createdBy,
                        LocalDateTime lastUpdate, String lastUpdatedBy, int custId, int userId, int contactId) {
-        this.apptId = apptId;
+        //this.apptId = apptId;
         this.title = title;
         this.desc = desc;
         this.location = location;
         this.type = type;
         this.start = start;
         this.end = end;
-        this.createDate = createDate;
+        this.createDate = LocalDateTime.now();
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
@@ -40,9 +40,7 @@ public class Appointment {
     public Appointment(){}
 
     //setters
-    public void setApptId(int apptId){
-        this.apptId = apptId;
-    }
+   public void setApptId(int apptId){this.apptId = apptId;}
 
     public void setTitle(String title){
         this.title = title;

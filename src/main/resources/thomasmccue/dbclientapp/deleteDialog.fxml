@@ -5,8 +5,8 @@
 
 <AnchorPane prefHeight="100.0" prefWidth="409.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.DeleteDialogController">
     <children>
-        <Label fx:id="confirmationDialog" alignment="CENTER" contentDisplay="CENTER" layoutY="29.0" prefHeight="17.0" prefWidth="409.0" text="Are you sure you would like to delete this?" />
-        <Label fx:id="partToBeDeleted" alignment="CENTER" layoutX="2.0" layoutY="71.0" prefHeight="26.0" prefWidth="405.0" textAlignment="CENTER" />
+        <Label fx:id="confirmationDialog" alignment="CENTER" contentDisplay="CENTER" layoutY="29.0" prefHeight="17.0" prefWidth="409.0" text="Are you sure you'd like to delete the following?" />
+        <Label fx:id="toBeDeleted" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" layoutY="49.0" prefHeight="63.0" prefWidth="405.0" textAlignment="CENTER" />
         <ButtonBar layoutX="205.0" layoutY="112.0" prefHeight="41.0" prefWidth="193.0">
             <buttons>
                 <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteClicked" prefHeight="24.0" prefWidth="114.0" text="Delete" />

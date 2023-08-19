@@ -26,7 +26,7 @@ public class AppointmentDao {
                     " Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)")){
                 preparedStatement.setString(1,newAppt.getTitle());
                 preparedStatement.setString(2, newAppt.getDesc());
-                preparedStatement.setString(3, newAppt.getDesc());
+                preparedStatement.setString(3, newAppt.getLocation());
                 preparedStatement.setString(4, newAppt.getType());
                 preparedStatement.setTimestamp(5, Timestamp.valueOf(newAppt.getStart()));
                 preparedStatement.setTimestamp(6, Timestamp.valueOf(newAppt.getEnd()));
@@ -40,6 +40,16 @@ public class AppointmentDao {
 
                 preparedStatement.executeUpdate();
 
+                try(PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT MAX(Appointment_ID) AS " +
+                        "LatestAppointmentID FROM client_schedule.appointments")){
+                    ResultSet resultSet = preparedStatement1.executeQuery();
+                    if (resultSet.next()) {
+                        newAppt.setApptId(resultSet.getInt("LatestAppointmentID"));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
             }catch (SQLException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -48,9 +58,16 @@ public class AppointmentDao {
             return true;
     }
 
-    public static boolean deleteAppt(Appointment selectedAppt){
+    public static boolean deleteAppt(Appointment selectedAppt) throws SQLException {
         if(apptList.contains(selectedAppt)) {
             apptList.remove(selectedAppt);
+            try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM client_schedule.appointments" +
+                    " WHERE Appointment_ID = ?")){
+                preparedStatement.setInt(1,selectedAppt.getApptId());
+            }catch(SQLException e){
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
             return true;
         }else{
             return false;
@@ -58,7 +75,7 @@ public class AppointmentDao {
     }
 
     public static boolean editAppt(Appointment oldAppt, Appointment updatedAppt){
-        try(PreparedStatement preparedStatement = connection.prepareStatement("UPDATE appointments SET Title = ?," +
+        try(PreparedStatement preparedStatement = connection.prepareStatement("UPDATE client_schedule.appointments SET Title = ?," +
                 " Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?," +
                 " Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?")){
             preparedStatement.setString(1, updatedAppt.getTitle());
@@ -192,38 +209,5 @@ public class AppointmentDao {
         }
         return monthAppt;
     }
-
-    /*public static ObservableList<Appointment> getAppointmentsById(int searchId) {
-        ObservableList<Appointment> apptsContainingSearchID = FXCollections.observableArrayList();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Appointments WHERE Appointment_ID = ?")) {
-            preparedStatement.setInt(1, searchId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            //for every row in mysql table Appointments, create an appointment object and add to the ObservableList apptList
-            while (resultSet.next()) {
-                Appointment appointment = new Appointment();
-                appointment.setApptId(resultSet.getInt("Appointment_ID"));
-                appointment.setTitle(resultSet.getString("Title"));
-                appointment.setDesc(resultSet.getString("Description"));
-                appointment.setLocation(resultSet.getString("Location"));
-                appointment.setType(resultSet.getString("Type"));
-                appointment.setStart(resultSet.getObject("Start", LocalDateTime.class));
-                appointment.setEnd(resultSet.getObject("End", LocalDateTime.class));
-                appointment.setCreateDate(resultSet.getObject("Create_Date", LocalDateTime.class));
-                appointment.setCreatedBy(resultSet.getString("Created_By"));
-                appointment.setLastUpdate(resultSet.getObject("Last_Update", LocalDateTime.class));
-                appointment.setLastUpdatedBy(resultSet.getString("Last_Updated_By"));
-                appointment.setCustId(resultSet.getInt("Customer_ID"));
-                appointment.setUserId(resultSet.getInt("User_ID"));
-                appointment.setContactId(resultSet.getInt("Contact_ID"));
-
-                apptsContainingSearchID.add(appointment);
-            }
-            return apptsContainingSearchID;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }*/
 }
 

@@ -70,7 +70,6 @@
                   <TableColumn fx:id="userIdCol" prefWidth="73.0" text="User ID" />
                </columns>
             </TableView>
-            <TextField fx:id="apptSearchBar" layoutX="708.0" layoutY="15.0" onAction="#apptSearch" prefHeight="26.0" prefWidth="240.0" promptText="Search by Appointment ID" />
             <ButtonBar layoutX="698.0" layoutY="206.0" prefHeight="40.0" prefWidth="200.0">
                <buttons>
                   <Button fx:id="apptAddButton1" mnemonicParsing="false" onAction="#clickApptAdd" text="Add" />
@@ -84,12 +83,12 @@
                </font>
             </Label>
             <Label fx:id="apptErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="211.0" prefHeight="29.0" prefWidth="703.0" textAlignment="CENTER" textFill="#f20303" />
-            <RadioButton fx:id="weekRadio" layoutX="482.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Week">
+            <RadioButton fx:id="weekRadio" layoutX="770.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Week">
                <toggleGroup>
                   <ToggleGroup fx:id="apptFilter" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="monthRadio" layoutX="596.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Month" toggleGroup="$apptFilter" />
-            <RadioButton fx:id="allTimeRadio" layoutX="380.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="All Time" toggleGroup="$apptFilter" />
+            <RadioButton fx:id="monthRadio" layoutX="863.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Month" toggleGroup="$apptFilter" />
+            <RadioButton fx:id="allTimeRadio" layoutX="687.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="All Time" toggleGroup="$apptFilter" />
          </children>
       </Pane>
       <Button fx:id="apptReportButton" layoutX="697.0" layoutY="667.0" mnemonicParsing="false" text="View Appointment Reports " />

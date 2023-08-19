@@ -83,38 +83,49 @@ public class AddOrUpdateAppointmentController implements Initializable {
                                         newAppointment.setContactId(Integer.parseInt(selectContactBox.getValue()));
 
                                         AppointmentDao.editAppt(oldAppointment, newAppointment);
+                                        Stage stage = (Stage) saveButton.getScene().getWindow();
+                                        stage.close();
                                 }
                 } catch (SQLException e) {
                                 e.printStackTrace();
                                 throw new RuntimeException(e);
                         }
                 }else{
-                        Appointment newAppointment = new Appointment();
-                        newAppointment.setApptId(Integer.parseInt(apptIdField.getText()));
-                        newAppointment.setTitle(titleField.getText());
-                        newAppointment.setDesc(descField.getText());
-                        newAppointment.setLocation(locationField.getText());
-                        newAppointment.setType(typeField.getText());
-                        newAppointment.setStart(Timestamp.valueOf(startDTField.getText()).toLocalDateTime());
-                        newAppointment.setEnd(Timestamp.valueOf(endDTField.getText()).toLocalDateTime());
-                        newAppointment.setCreateDate(LocalDateTime.now());
-                        newAppointment.setCreatedBy(String.valueOf(LogInController.getLoggedInUserId()));
-                        newAppointment.setCustId(Integer.parseInt(selectCustBox.getValue()));
-                        newAppointment.setUserId(Integer.parseInt(userIdField.getText()));
-                        newAppointment.setContactId(Integer.parseInt(selectContactBox.getValue()));
+
+                        String title = titleField.getText();
+                        String desc = descField.getText();
+                        String location = locationField.getText();
+                        String type = typeField.getText();
+                        LocalDateTime start = (Timestamp.valueOf(startDTField.getText()).toLocalDateTime());
+                        LocalDateTime end = (Timestamp.valueOf(endDTField.getText()).toLocalDateTime());
+                        int createdBy = (LogInController.getLoggedInUserId());
+                        int customer = (Integer.parseInt(selectCustBox.getValue()));
+                        String user = (userIdField.getText());
+                        int userId =  Integer.parseInt(user);
+                        int contact = (Integer.parseInt(selectContactBox.getValue()));
+
+                        Appointment newAppointment = new Appointment(title,desc,location,type,start,end,user,LocalDateTime.now(),user,customer,userId,contact);
 
                         AppointmentDao.addAppt(newAppointment);
+                        Stage stage = (Stage) saveButton.getScene().getWindow();
+                        stage.close();
                 }
         }
         public void cancelClicked(ActionEvent event)throws IOException {
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         }
-
-        //setup, different depending on whether modify or add button are clicked
-        public void setUpModify(String titleText, String buttonText) throws IOException{
+        public void setUpAdd(String titleText, String buttonText) throws IOException{
                 pageTitleLabel.setText(titleText);
                 saveButton.setText(buttonText);
+                apptIdField.setVisible(false);
+                appointmentIdLabel.setVisible(false);
+        }
+        //setup, different depending on whether modify or add button are clicked
+        public void setUpModify(String titleText, String buttonText, int apptID) throws IOException{
+                pageTitleLabel.setText(titleText);
+                saveButton.setText(buttonText);
+                apptIdField.setText(String.valueOf(apptID));
         }
         public void preFillFields(Appointment selectedAppt) throws IOException{
                 this.appointment = selectedAppt;
