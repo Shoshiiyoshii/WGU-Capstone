@@ -17,26 +17,43 @@ public class AppointmentDao {
     private static ObservableList<Appointment> apptList = FXCollections.observableArrayList();
 
     public static boolean addAppt(Appointment newAppt){
-        if(apptList.contains(newAppt)){
+        String title = newAppt.getTitle();
+        String description = newAppt.getDesc();
+        String location = newAppt.getLocation();
+        String type = newAppt.getType();
+        Timestamp start =  Timestamp.valueOf(newAppt.getStart());
+        Timestamp end = Timestamp.valueOf(newAppt.getEnd());
+        Timestamp createDate = Timestamp.valueOf(newAppt.getEnd());
+        String createdBy = newAppt.getCreatedBy();
+        Timestamp lastUpdated = Timestamp.valueOf(newAppt.getLastUpdateTime());
+        String lastUpdatedBy = newAppt.getLastUpdatedBy();
+        int customerID = newAppt.getCustId();
+        int userID = newAppt.getUserId();
+        int contactID = newAppt.getContactId();
+        
+        if(apptList.contains(newAppt)) {
             return false;
-        }else {
+        } else if (start.after(end)) {
+            return false;
+        //more requirements FIXME
+    }else {
             apptList.add(newAppt);
             try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO client_schedule.appointments " +
                     "(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By," +
                     " Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)")){
-                preparedStatement.setString(1,newAppt.getTitle());
-                preparedStatement.setString(2, newAppt.getDesc());
-                preparedStatement.setString(3, newAppt.getLocation());
-                preparedStatement.setString(4, newAppt.getType());
-                preparedStatement.setTimestamp(5, Timestamp.valueOf(newAppt.getStart()));
-                preparedStatement.setTimestamp(6, Timestamp.valueOf(newAppt.getEnd()));
-                preparedStatement.setTimestamp(7, Timestamp.valueOf(newAppt.getCreateDate()));
-                preparedStatement.setString(8, newAppt.getCreatedBy());
-                preparedStatement.setTimestamp(9, Timestamp.valueOf(newAppt.getLastUpdateTime()));
-                preparedStatement.setString(10, newAppt.getLastUpdatedBy());
-                preparedStatement.setInt(11, newAppt.getCustId());
-                preparedStatement.setInt(12, newAppt.getUserId());
-                preparedStatement.setInt(13, newAppt.getContactId());
+                preparedStatement.setString(1,title);
+                preparedStatement.setString(2, description);
+                preparedStatement.setString(3, location);
+                preparedStatement.setString(4, type);
+                preparedStatement.setTimestamp(5,start);
+                preparedStatement.setTimestamp(6, end);
+                preparedStatement.setTimestamp(7, createDate);
+                preparedStatement.setString(8, createdBy);
+                preparedStatement.setTimestamp(9, lastUpdated);
+                preparedStatement.setString(10, lastUpdatedBy);
+                preparedStatement.setInt(11, customerID);
+                preparedStatement.setInt(12, userID);
+                preparedStatement.setInt(13, contactID);
 
                 preparedStatement.executeUpdate();
 
@@ -64,7 +81,9 @@ public class AppointmentDao {
             try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM client_schedule.appointments" +
                     " WHERE Appointment_ID = ?")){
                 preparedStatement.setInt(1,selectedAppt.getApptId());
+                System.out.println("Success");
             }catch(SQLException e){
+                System.out.println("fail");
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }

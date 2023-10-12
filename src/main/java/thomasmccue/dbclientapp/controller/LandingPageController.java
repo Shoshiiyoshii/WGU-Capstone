@@ -32,8 +32,6 @@ public class LandingPageController implements Initializable {
     @FXML
     private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol, lastUpdated, lastUpdatedByCol;
     @FXML
-    private TextField custSearchBar, apptSearchBar;;
-    @FXML
     private Button custAddButton, custUpdateButton, custDeleteButton, apptAddButton1, apptUpdateButton, apptDeleteButton,exitButton, apptReportButton, contactSchedulesButton, custRecordCreationReportButton;
     @FXML
     private TableView<Appointment> apptTable;
@@ -46,13 +44,13 @@ public class LandingPageController implements Initializable {
 
     public void radioFilter(ActionEvent event){
         if(monthRadio.isSelected()){
-            System.out.println(AppointmentDao.getThisMonthsAppointments());
+           // System.out.println(AppointmentDao.getThisMonthsAppointments());FIXME
             apptTable.setItems(AppointmentDao.getThisMonthsAppointments());
         } else if (weekRadio.isSelected()) {
-            System.out.println(AppointmentDao.getThisWeeksAppointments());
+           // System.out.println(AppointmentDao.getThisWeeksAppointments());FIXME
             apptTable.setItems(AppointmentDao.getThisWeeksAppointments());
         }else if(allTimeRadio.isSelected()){
-            System.out.println(AppointmentDao.getAllAppointments());
+           // System.out.println(AppointmentDao.getAllAppointments());FIXME
             apptTable.setItems(AppointmentDao.getAllAppointments());
         }
     }
@@ -113,11 +111,16 @@ public class LandingPageController implements Initializable {
         }
     }
 
-   public void customerSearch(ActionEvent event){
+   public void clickCustAdd(ActionEvent event) throws IOException {
+       FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
+       Scene scene = new Scene(fxmlLoader.load());
+       Stage stage = new Stage();
 
-   }
-   public void clickCustAdd(ActionEvent event){
-
+       AddOrUpdateCustomerController controller = fxmlLoader.getController();
+       controller.setUpAdd("Add A Customer To The System", "Save");
+       stage.setTitle("Add A Customer To The System");
+       stage.setScene(scene);
+       stage.show();
    }
     public void clickCustUpdate(ActionEvent event){
 

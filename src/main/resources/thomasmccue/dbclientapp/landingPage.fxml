@@ -37,7 +37,6 @@
                   <TableColumn fx:id="divisionIdCol" prefWidth="116.0" text="Division ID" />
                     </columns>
                 </TableView>
-                <TextField fx:id="custSearchBar" layoutX="708.0" layoutY="15.0" onAction="#customerSearch" prefHeight="26.0" prefWidth="240.0" promptText="Search by Customer ID or Name" />
                 <ButtonBar layoutX="703.0" layoutY="206.0" prefHeight="40.0" prefWidth="200.0">
                     <buttons>
                         <Button fx:id="custAddButton" mnemonicParsing="false" onAction="#clickCustAdd" text="Add" />

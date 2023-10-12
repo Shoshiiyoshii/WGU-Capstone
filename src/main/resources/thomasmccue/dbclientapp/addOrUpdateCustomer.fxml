@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="584.0" prefWidth="518.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.AddOrUpdateCustomerController">
+    <children>
+        <Label fx:id="custIdLabel" layoutX="53.0" layoutY="84.0" text="Customer ID:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="pageTitleLabel" layoutX="35.0" layoutY="24.0" text="Add A Customer To The System">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="custNameLabel" layoutX="53.0" layoutY="120.0" text="Customer Name:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="custPhoneLabel" layoutX="53.0" layoutY="156.0" text="Customer Phone Number:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="custAddressLabel" layoutX="53.0" layoutY="192.0" text="Street Address:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="custCountryLabel" layoutX="53.0" layoutY="261.0" text="Country:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+
+
+        <TextField fx:id="custIdField" disable="true" editable="false" layoutX="213.0" layoutY="80.0" />
+        <TextField fx:id="custNameField" layoutX="213.0" layoutY="115.0" />
+        <TextField fx:id="custPhoneField" layoutX="213.0" layoutY="150.0" />
+        <TextField fx:id="custAddressField" layoutX="213.0" layoutY="185.0" />
+        <ButtonBar layoutX="226.0" layoutY="491.0" prefHeight="40.0" prefWidth="269.0">
+            <buttons>
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClicked" prefHeight="26.0" prefWidth="106.0" text="Save" />
+                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="26.0" prefWidth="99.0" text="Cancel" />
+            </buttons>
+        </ButtonBar>
+        <Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="437.0" prefHeight="54.0" prefWidth="446.0" textAlignment="CENTER" textFill="#ee0000">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="custFirstLvlDivisionSelectionBox" editable="true" layoutX="213.0" layoutY="290.0" onAction="#selectOrEnterFirstLvlDiv" prefHeight="26.0" prefWidth="160.0" promptText="Select/Enter First Level Division" />
+        <ComboBox fx:id="custCountrySelectionBox" editable="true" layoutX="213.0" layoutY="255.0" onAction="#selectOrEnterCountry" prefHeight="26.0" prefWidth="160.0" promptText="Select/Enter Country" />
+        <Label fx:id="custFirstLvlDivisionLabel" layoutX="53.0" layoutY="292.0" text="First Level Division:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label fx:id="custPostalCodeLabel" layoutX="53.0" layoutY="228.0" text="Postal Code:">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="custPostalCodeField" layoutX="213.0" layoutY="220.0" />
+    </children>
+</AnchorPane>

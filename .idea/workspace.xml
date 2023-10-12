@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="saveClicked method">
+    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="appointment delete">
+      <change afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateCustomerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/addOrUpdateCustomer.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/addOrModifyAppointmentPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/addOrModifyAppointmentPage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/deleteDialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/deleteDialog.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,13 +101,21 @@
       <option name="project" value="LOCAL" />
       <updated>1692087919174</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="appointment delete">
+      <created>1692440425795</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1692440425795</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Got Connection working" />
     <MESSAGE value="got log in working off of users table" />
     <MESSAGE value="saveClicked method" />
-    <option name="LAST_COMMIT_MESSAGE" value="saveClicked method" />
+    <MESSAGE value="appointment delete" />
+    <option name="LAST_COMMIT_MESSAGE" value="appointment delete" />
   </component>
 </project>
