@@ -11,7 +11,7 @@ import java.time.ZoneId;
 import static thomasmccue.dbclientapp.helper.JDBC.connection;
 
 public class CustomerDao {
-    public void addCust(Customer customer) {
+    public static void addCust(Customer customer) {
         Connection connection = JDBC.getConnection();
         String sql = "INSERT INTO client_schedule.customers" +
                 " (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Division_ID)" +
@@ -32,7 +32,7 @@ public class CustomerDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, custName);
             preparedStatement.setString(2, address);
-            preparedStatement.setString(3,postalCode);
+            preparedStatement.setString(3, postalCode);
             preparedStatement.setString(4, phone);
             preparedStatement.setTimestamp(5, createDate);
             preparedStatement.setString(6, createdBy);
@@ -45,7 +45,7 @@ public class CustomerDao {
         }
     }
 
-    public void updateCust(Customer customer){
+    public static void updateCust(Customer customer) {
         Connection connection = JDBC.getConnection();
         int custId = customer.getCustomerId();
         String sql = "UPDATE client_schedule.customers " +
@@ -67,7 +67,7 @@ public class CustomerDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, custName);
             preparedStatement.setString(2, address);
-            preparedStatement.setString(3,postalCode);
+            preparedStatement.setString(3, postalCode);
             preparedStatement.setString(4, phone);
             preparedStatement.setTimestamp(5, updateDate);
             preparedStatement.setString(6, updatedBy);
@@ -80,7 +80,8 @@ public class CustomerDao {
             JDBC.closeConnection();
         }
     }
-    public void deleteCust(Customer customer) {
+
+    public static void deleteCust(Customer customer) {
         Connection connection = JDBC.getConnection();
         int custId = customer.getCustomerId();
         String sql = "DELETE FROM client_schedule.customers WHERE CUSTOMER_ID = ?";
@@ -96,17 +97,17 @@ public class CustomerDao {
         }
     }
 
-    public Customer findCust(Customer customer){
+    public static Customer findCust(Customer customer) {
         Connection connection = JDBC.getConnection();
         Customer foundCust = null;
         int custId = customer.getCustomerId();
         String sql = "SELECT * FROM client_schedule.customers WHERE CUSTOMER_ID =  ?";
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, custId);
 
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                if(resultSet.next()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     //convert UTC datetimes in sql table to users local times for display
                     //convert Create_Date
                     Timestamp utcCreateTime = resultSet.getTimestamp("Create_Date");
@@ -127,7 +128,7 @@ public class CustomerDao {
                             localUpdateTime,
                             resultSet.getString("Last_Updated_By"),
                             resultSet.getInt("Division_ID")
-                            );
+                    );
                 }
             }
 

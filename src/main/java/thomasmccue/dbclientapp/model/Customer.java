@@ -3,6 +3,7 @@ package thomasmccue.dbclientapp.model;
 import java.time.LocalDateTime;
 
 public class Customer {
+    //customerId is read only, so no mutator is available, only an accessor
     private int customerId;
     private String customerName;
     private String address;
@@ -14,7 +15,23 @@ public class Customer {
     private String lastUpdatedBy;
     private int divisionId;
 
-    // constructor
+    // constructors
+    //this one is for new customer objects that doesn't yet exist in the database
+    public Customer(String customerName, String address, String postalCode, String phone,
+                    LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy,
+                    int divisionId) {
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.createDate = createDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
+        this.divisionId = divisionId;
+    }
+
+    //this is for customer objects that already have a customerID assigned by the database
     public Customer(int customerId, String customerName, String address, String postalCode, String phone,
                     LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy,
                     int divisionId) {
@@ -31,10 +48,6 @@ public class Customer {
     }
 
     //setters
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
