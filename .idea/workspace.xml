@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="CustomerDao bones complete">
+    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Working on add customer in controller">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +27,23 @@
       </list>
     </option>
   </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="main" />
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="showPreview" value="true" />
   </component>
   <component name="ProjectId" id="2TXFLo79k3m9pmbh9yZvM4WFGZc" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -36,10 +57,11 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientAppReal/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientApp&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -57,7 +79,10 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="DbClientApp" type="Application" factoryName="Application">
+    <configuration name="DbClientApp" type="Application" factoryName="Application" activateToolWindowBeforeRun="false">
+      <classpathModifications>
+        <entry path="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/helper/JDBC.java" />
+      </classpathModifications>
       <option name="MAIN_CLASS_NAME" value="thomasmccue.dbclientapp.Main" />
       <module name="DbClientApp" />
       <method v="2">
@@ -109,8 +134,40 @@
       <option name="project" value="LOCAL" />
       <updated>1697069478264</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="workspace.xml">
+      <created>1697070620341</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1697070620341</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Stubbed README.md">
+      <created>1697071579964</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1697071579964</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Working on add customer in controller">
+      <created>1697591201817</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1697591201818</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Got Connection working" />
@@ -118,6 +175,23 @@
     <MESSAGE value="saveClicked method" />
     <MESSAGE value="appointment delete" />
     <MESSAGE value="CustomerDao bones complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="CustomerDao bones complete" />
+    <MESSAGE value="workspace.xml" />
+    <MESSAGE value="Stubbed README.md" />
+    <MESSAGE value="Working on add customer in controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on add customer in controller" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="com.mysql.cj.exceptions.ConnectionIsClosedException" package="com.mysql.cj.exceptions" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

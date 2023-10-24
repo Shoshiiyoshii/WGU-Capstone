@@ -137,9 +137,22 @@ public class LandingPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       //populate appointment table with all appointments, if table is not yet populated
+        custTable.setItems(CustomerDao.getAllCust());
 
-        allTimeRadio.setSelected(true);
+        custIdBottomCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        createDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+        createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+        lastUpdated.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+        lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+        divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+
+        //populate appointment table with all appointments, if table is not yet populated
+
+       /* allTimeRadio.setSelected(true);
 
         apptTable.setItems(AppointmentDao.getAllAppointments());
 
@@ -153,6 +166,7 @@ public class LandingPageController implements Initializable {
         endDTCol.setCellValueFactory(new PropertyValueFactory<>("end"));
         custIdTopCol.setCellValueFactory(new PropertyValueFactory<>("custId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+*/
 
 
     }
