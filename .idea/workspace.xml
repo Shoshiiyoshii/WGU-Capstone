@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Working on add customer in controller">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" afterDir="false" />
-    </list>
+    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Wip" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -155,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697591201818</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Wip">
+      <created>1698111733645</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1698111733645</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -178,7 +177,8 @@
     <MESSAGE value="workspace.xml" />
     <MESSAGE value="Stubbed README.md" />
     <MESSAGE value="Working on add customer in controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on add customer in controller" />
+    <MESSAGE value="Wip" />
+    <option name="LAST_COMMIT_MESSAGE" value="Wip" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
