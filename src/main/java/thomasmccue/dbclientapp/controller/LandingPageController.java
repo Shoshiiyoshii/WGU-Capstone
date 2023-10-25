@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import thomasmccue.dbclientapp.Main;
 import thomasmccue.dbclientapp.dao.AppointmentDao;
+import thomasmccue.dbclientapp.dao.CustomerDao;
 import thomasmccue.dbclientapp.model.*;
 
 import java.io.IOException;
