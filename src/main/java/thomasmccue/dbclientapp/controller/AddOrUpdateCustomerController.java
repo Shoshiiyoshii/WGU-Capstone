@@ -10,11 +10,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import thomasmccue.dbclientapp.dao.CountryDao;
 import thomasmccue.dbclientapp.dao.CustomerDao;
+import thomasmccue.dbclientapp.dao.FirstLevelDivisionDao;
+import thomasmccue.dbclientapp.helper.JDBC;
 import thomasmccue.dbclientapp.model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddOrUpdateCustomerController implements Initializable {
@@ -37,169 +44,33 @@ public class AddOrUpdateCustomerController implements Initializable {
         custIdField.setText("This Customer ID hasn't yet been assigned");
     }
     //setup, different depending on whether modify or add button are clicked
-    public void setUpModify(String titleText, String buttonText) throws IOException{
+    public void setUpModify(String titleText, String buttonText, Customer customer) throws IOException{
         pageTitleLabel.setText(titleText);
         saveButton.setText(buttonText);
+
+        //prefill fields
+        custIdField.setText(Integer.toString(customer.getCustomerId()));
+        custNameField.setText(customer.getCustomerName());
+        custPhoneField.setText(customer.getPhone());
+        custAddressField.setText(customer.getAddress());
+        custPostalCodeField.setText(customer.getPostalCode());
+        custFirstLvlDivisionSelectionBox.setValue(Integer.toString(customer.getDivisionId()));
+
+
     }
 
-    public void selectOrEnterCountry(ActionEvent event)throws IOException {
+  public void selectOrEnterCountry(ActionEvent event) throws IOException, SQLException {
         String selected = custCountrySelectionBox.getValue();
-        if(selected.equals("United States")){
-            ObservableList<String> states = FXCollections.observableArrayList(
-                    "Alabama",
-            "Arizona",
-            "Arkansas",
-            "California",
-            "Colorado",
-            "Connecticut",
-            "Delaware",
-            "District of Columbia",
-            "Florida",
-            "Georgia",
-            "Idaho",
-            "Illinois",
-            "Indiana",
-            "Iowa",
-            "Kansas",
-            "Kentucky",
-            "Louisiana",
-            "Maine",
-            "Maryland",
-            "Massachusetts",
-            "Michigan",
-            "Minnesota",
-            "Mississippi",
-            "Missouri",
-            "Montana",
-            "Nebraska",
-            "Nevada",
-            "New Hampshire",
-            "New Jersey",
-            "New Mexico",
-            "New York",
-            "North Carolina",
-            "North Dakota",
-            "Ohio",
-            "Oklahoma",
-            "Oregon",
-            "Pennsylvania",
-            "Rhode Island",
-            "South Carolina",
-            "South Dakota",
-            "Tennessee",
-            "Texas",
-            "Utah",
-            "Vermont",
-            "Virginia",
-            "Washington",
-            "West Virginia",
-            "Wisconsin",
-            "Wyoming",
-            "Hawaii",
-            "Alaska");
-
-
-            custFirstLvlDivisionSelectionBox.setItems(states);
-        } else if (selected.equals("United Kingdom")) {
-            ObservableList<String> ukStates = FXCollections.observableArrayList(
-                    "England",
-            "Wales",
-            "Scotland",
-            "Northern Ireland");
-
-            custFirstLvlDivisionSelectionBox.setItems(ukStates);
-        } else if (selected.equals("Canada")){
-            ObservableList<String> provinces = FXCollections.observableArrayList(
-                    "Northwest Territories",
-            "Alberta",
-            "British Columbia",
-            "Manitoba",
-            "New Brunswick",
-            "Nova Scotia",
-            "Prince Edward Island",
-            "Ontario",
-            "Québec",
-            "Saskatchewan",
-            "Nunavut",
-            "Yukon",
-            "Newfoundland and Labrador");
-
-            custFirstLvlDivisionSelectionBox.setItems(provinces);
-        } else{
-            ObservableList<String> all = FXCollections.observableArrayList(
-
-                    "Alabama",
-                    "Arizona",
-                    "Arkansas",
-                    "California",
-                    "Colorado",
-                    "Connecticut",
-                    "Delaware",
-                    "District of Columbia",
-                    "Florida",
-                    "Georgia",
-                    "Idaho",
-                    "Illinois",
-                    "Indiana",
-                    "Iowa",
-                    "Kansas",
-                    "Kentucky",
-                    "Louisiana",
-                    "Maine",
-                    "Maryland",
-                    "Massachusetts",
-                    "Michigan",
-                    "Minnesota",
-                    "Mississippi",
-                    "Missouri",
-                    "Montana",
-                    "Nebraska",
-                    "Nevada",
-                    "New Hampshire",
-                    "New Jersey",
-                    "New Mexico",
-                    "New York",
-                    "North Carolina",
-                    "North Dakota",
-                    "Ohio",
-                    "Oklahoma",
-                    "Oregon",
-                    "Pennsylvania",
-                    "Rhode Island",
-                    "South Carolina",
-                    "South Dakota",
-                    "Tennessee",
-                    "Texas",
-                    "Utah",
-                    "Vermont",
-                    "Virginia",
-                    "Washington",
-                    "West Virginia",
-                    "Wisconsin",
-                    "Wyoming",
-                    "Hawaii",
-                    "Alaska",
-                    "England",
-                    "Wales",
-                    "Scotland",
-                    "Northern Ireland",
-                    "Northwest Territories",
-                    "Alberta",
-                    "British Columbia",
-                    "Manitoba",
-                    "New Brunswick",
-                    "Nova Scotia",
-                    "Prince Edward Island",
-                    "Ontario",
-                    "Québec",
-                    "Saskatchewan",
-                    "Nunavut",
-                    "Yukon",
-                    "Newfoundland and Labrador");
-
-            custFirstLvlDivisionSelectionBox.setItems(all);
-        }
-
+            //depending on what country is selected, show the corresponding first level divisions in the combo box
+            if("United States".equals(selected)) {
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDiv1List());
+            } else if ("United Kingdom".equals(selected)) {
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDiv2List());
+            } else if ("Canada".equals(selected)) {
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDiv3List());
+            } else{
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getAllDivList());
+            }
     }
 
     public void selectOrEnterFirstLvlDiv(ActionEvent event)throws IOException {
@@ -236,12 +107,6 @@ public class AddOrUpdateCustomerController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> countries = FXCollections.observableArrayList(
-                "United States",
-                "United Kingdom",
-                "Canada");
-
-        custCountrySelectionBox.setItems(countries);
-
+        custCountrySelectionBox.setItems(CountryDao.getAllCountries());
     }
 }

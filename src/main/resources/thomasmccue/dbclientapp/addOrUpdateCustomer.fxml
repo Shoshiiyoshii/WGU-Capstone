@@ -38,10 +38,10 @@
         </Label>
 
 
-        <TextField fx:id="custIdField" disable="true" editable="false" layoutX="213.0" layoutY="80.0" />
-        <TextField fx:id="custNameField" layoutX="213.0" layoutY="115.0" />
-        <TextField fx:id="custPhoneField" layoutX="213.0" layoutY="150.0" />
-        <TextField fx:id="custAddressField" layoutX="213.0" layoutY="185.0" />
+        <TextField fx:id="custIdField" disable="true" editable="false" layoutX="213.0" layoutY="80.0" prefHeight="26.0" prefWidth="263.0" />
+        <TextField fx:id="custNameField" layoutX="213.0" layoutY="115.0" prefHeight="26.0" prefWidth="263.0" />
+        <TextField fx:id="custPhoneField" layoutX="213.0" layoutY="150.0" prefHeight="26.0" prefWidth="263.0" />
+        <TextField fx:id="custAddressField" layoutX="213.0" layoutY="185.0" prefHeight="26.0" prefWidth="263.0" />
         <ButtonBar layoutX="226.0" layoutY="491.0" prefHeight="40.0" prefWidth="269.0">
             <buttons>
                 <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClicked" prefHeight="26.0" prefWidth="106.0" text="Save" />
@@ -53,8 +53,8 @@
                 <Font name="System Bold" size="13.0" />
             </font>
         </Label>
-        <ComboBox fx:id="custFirstLvlDivisionSelectionBox" editable="true" layoutX="213.0" layoutY="290.0" onAction="#selectOrEnterFirstLvlDiv" prefHeight="26.0" prefWidth="160.0" promptText="Select/Enter First Level Division" />
-        <ComboBox fx:id="custCountrySelectionBox" editable="true" layoutX="213.0" layoutY="255.0" onAction="#selectOrEnterCountry" prefHeight="26.0" prefWidth="160.0" promptText="Select/Enter Country" />
+        <ComboBox fx:id="custFirstLvlDivisionSelectionBox" editable="true" layoutX="213.0" layoutY="290.0" onAction="#selectOrEnterFirstLvlDiv" prefHeight="26.0" prefWidth="263.0" promptText="Select/Enter First Level Division" />
+        <ComboBox fx:id="custCountrySelectionBox" editable="true" layoutX="213.0" layoutY="255.0" onAction="#selectOrEnterCountry" prefHeight="26.0" prefWidth="263.0" promptText="Select/Enter Country" />
         <Label fx:id="custFirstLvlDivisionLabel" layoutX="53.0" layoutY="292.0" text="First Level Division:">
             <font>
                 <Font name="System Bold" size="13.0" />
@@ -65,6 +65,6 @@
                 <Font name="System Bold" size="13.0" />
             </font>
         </Label>
-        <TextField fx:id="custPostalCodeField" layoutX="213.0" layoutY="220.0" />
+        <TextField fx:id="custPostalCodeField" layoutX="213.0" layoutY="220.0" prefHeight="26.0" prefWidth="263.0" />
     </children>
 </AnchorPane>

@@ -43,6 +43,41 @@ public class LandingPageController implements Initializable {
     @FXML
     private RadioButton weekRadio, monthRadio, allTimeRadio;
 
+    public void clickCustAdd(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+
+        AddOrUpdateCustomerController controller = fxmlLoader.getController();
+        controller.setUpAdd("Add A Customer To The System", "Save");
+        stage.setTitle("Add A Customer To The System");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void clickCustUpdate(ActionEvent event) throws IOException {
+        SelectionModel<Customer> selectionModel = custTable.getSelectionModel();
+        Customer selectedCust = selectionModel.getSelectedItem();
+
+        if(selectedCust == null){
+            customerErrorMessage.setText("Please first select a Customer to Modify.");
+        } else{
+            customerErrorMessage.setText("");
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            AddOrUpdateCustomerController controller = fxmlLoader.getController();
+            controller.setUpModify("Modify An Existing Customer", "Save Update", selectedCust);
+            stage.setTitle("Modify An Existing Customer");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+    }
+    public void clickCustDelete(ActionEvent event){
+
+    }
+
     public void radioFilter(ActionEvent event){
         if(monthRadio.isSelected()){
            // System.out.println(AppointmentDao.getThisMonthsAppointments());FIXME
@@ -110,24 +145,6 @@ public class LandingPageController implements Initializable {
         } else{
             apptErrorMessage.setText("First select an appointment to delete.");
         }
-    }
-
-   public void clickCustAdd(ActionEvent event) throws IOException {
-       FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
-       Scene scene = new Scene(fxmlLoader.load());
-       Stage stage = new Stage();
-
-       AddOrUpdateCustomerController controller = fxmlLoader.getController();
-       controller.setUpAdd("Add A Customer To The System", "Save");
-       stage.setTitle("Add A Customer To The System");
-       stage.setScene(scene);
-       stage.show();
-   }
-    public void clickCustUpdate(ActionEvent event){
-
-    }
-    public void clickCustDelete(ActionEvent event){
-
     }
 
     public void exitClicked(ActionEvent event)throws IOException {
