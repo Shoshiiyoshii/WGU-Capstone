@@ -170,7 +170,21 @@
       <option name="project" value="LOCAL" />
       <updated>1698111733645</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="WIP Monday Funday 🙃">
+      <created>1698716674862</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1698716674863</updated>
+    </task>
+    <task id="LOCAL-00011" summary="workspace.xml ? 🙃">
+      <created>1698716732111</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1698716732111</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -206,7 +220,9 @@
     <MESSAGE value="Stubbed README.md" />
     <MESSAGE value="Working on add customer in controller" />
     <MESSAGE value="Wip" />
-    <option name="LAST_COMMIT_MESSAGE" value="Wip" />
+    <MESSAGE value="WIP Monday Funday " />
+    <MESSAGE value="workspace.xml ? " />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace.xml ? " />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -215,11 +231,14 @@
           <properties class="com.mysql.cj.exceptions.ConnectionIsClosedException" package="com.mysql.cj.exceptions" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <breakpoint enabled="true" type="java-exception">
+        <breakpoint enabled="true" log-message="true" log-stack="true" type="java-exception">
           <properties class="java.sql.SQLNonTransientConnectionException" package="java.sql" />
           <option name="timeStamp" value="2" />
         </breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint log-message="true" log-stack="true" type="java-exception" />
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

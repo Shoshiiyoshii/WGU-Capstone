@@ -13,16 +13,15 @@ public class FirstLevelDivisionDao {
                   "FROM client_schedule.first_level_divisions WHERE Country_ID = ?;";
           ObservableList<String> usList = FXCollections.observableArrayList();
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try{
+             Connection connection = JDBC.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             preparedStatement.setInt(1, 1);
 
-                preparedStatement.setInt(1, 1);
-
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+             ResultSet resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
                         usList.add(resultSet.getString(1));
                     }
-                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -35,16 +34,15 @@ public class FirstLevelDivisionDao {
                 "FROM client_schedule.first_level_divisions WHERE Country_ID = ?;";
         ObservableList<String> ukList = FXCollections.observableArrayList();
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+        try{
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, 2);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     ukList.add(resultSet.getString(1));
                 }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -57,16 +55,15 @@ public class FirstLevelDivisionDao {
                 "FROM client_schedule.first_level_divisions WHERE Country_ID = ?;";
         ObservableList<String> canList = FXCollections.observableArrayList();
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+        try{
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, 3);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     canList.add(resultSet.getString(1));
                 }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -80,15 +77,14 @@ public class FirstLevelDivisionDao {
 
         ObservableList<String> allList = FXCollections.observableArrayList();
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try{
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     allList.add(resultSet.getString(1));
                 }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

@@ -16,9 +16,9 @@ public class CustomerDao {
                 " (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Division_ID)" +
                 " VALUES(?,?,?,?,?,?)";
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+        try{
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             String custName = customer.getCustomerName();
             String address = customer.getAddress();
             String postalCode = customer.getPostalCode();
@@ -50,9 +50,9 @@ public class CustomerDao {
                 "SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? " +
                 "WHERE Customer_ID = ?";
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             String custName = customer.getCustomerName();
             String address = customer.getAddress();
             String postalCode = customer.getPostalCode();
@@ -83,9 +83,9 @@ public class CustomerDao {
         int custId = customer.getCustomerId();
         String sql = "DELETE FROM client_schedule.customers WHERE CUSTOMER_ID = ?";
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, custId);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,12 +98,11 @@ public class CustomerDao {
         int custId = customer.getCustomerId();
         String sql = "SELECT * FROM client_schedule.customers WHERE CUSTOMER_ID =  ?";
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, custId);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     //convert UTC datetimes in SQL table to the user's local times for display
                     //convert Create_Date
@@ -127,7 +126,6 @@ public class CustomerDao {
                             resultSet.getInt("Division_ID")
                     );
                 }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -139,9 +137,10 @@ public class CustomerDao {
         ObservableList<Customer> custList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM client_schedule.customers";
 
-        try (Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 //convert UTC datetimes in SQL table to the user's local times for display

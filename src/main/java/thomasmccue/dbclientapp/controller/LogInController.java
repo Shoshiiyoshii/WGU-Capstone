@@ -12,15 +12,12 @@ import javafx.stage.Stage;
 import thomasmccue.dbclientapp.helper.JDBC;
 import thomasmccue.dbclientapp.Main;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.ZoneId;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static thomasmccue.dbclientapp.helper.JDBC.connection;
 
 public class LogInController implements Initializable {
     @FXML
@@ -56,8 +53,9 @@ public class LogInController implements Initializable {
 
    private boolean isValidUser(String user, String pass){
         try{
-            String query = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user);
             preparedStatement.setString(2,pass);
 
