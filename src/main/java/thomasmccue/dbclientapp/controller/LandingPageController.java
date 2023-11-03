@@ -1,5 +1,6 @@
 package thomasmccue.dbclientapp.controller;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,7 @@ public class LandingPageController implements Initializable {
     @FXML
     private TableColumn<Customer, Integer> custIdBottomCol, divisionIdCol;
     @FXML
-    private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol, lastUpdated, lastUpdatedByCol;
+    private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol, lastUpdated, lastUpdatedByCol, countryCol;
     @FXML
     private Button custAddButton, custUpdateButton, custDeleteButton, apptAddButton1, apptUpdateButton, apptDeleteButton,exitButton, apptReportButton, contactSchedulesButton, custRecordCreationReportButton;
     @FXML
@@ -152,6 +153,12 @@ public class LandingPageController implements Initializable {
         stage.close();
     }
 
+/*    public static void refreshCustomersTable() {
+        // Fetch the latest customer data from the database and update the tableView
+        custTable.setItems(CustomerDao.getAllCust());
+
+
+    }*/
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -167,6 +174,8 @@ public class LandingPageController implements Initializable {
         lastUpdated.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
         lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
         divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
+
 
         //populate appointment table with all appointments, if table is not yet populated
 

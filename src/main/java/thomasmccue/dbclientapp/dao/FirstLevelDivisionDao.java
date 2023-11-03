@@ -8,88 +8,69 @@ import thomasmccue.dbclientapp.model.FirstLevelDivision;
 import java.sql.*;
 
 public class FirstLevelDivisionDao {
-      public static ObservableList<String> getDiv1List() {
-          String sql = "SELECT CONCAT_WS(', ', Division_ID, Division) " +
-                  "FROM client_schedule.first_level_divisions WHERE Country_ID = ?;";
-          ObservableList<String> usList = FXCollections.observableArrayList();
+    public static ObservableList<String> getDivList(int whichDiv) {
+        ObservableList<String> results = FXCollections.observableArrayList();
 
-        try{
-             Connection connection = JDBC.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             preparedStatement.setInt(1, 1);
+        if (whichDiv > 0) {
+            String sql = "SELECT CONCAT_WS(', ', Division_ID, Division) " +
+                    "FROM client_schedule.first_level_divisions WHERE Country_ID = ?;";
+            try {
+                Connection connection = JDBC.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, whichDiv);
 
-             ResultSet resultSet = preparedStatement.executeQuery();
-                    while (resultSet.next()) {
-                        usList.add(resultSet.getString(1));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    results.add(resultSet.getString(1));
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
-        return usList;
+
+        } else {
+            String sql = "SELECT CONCAT_WS(', ', Division_ID, Division) " +
+                    "FROM client_schedule.first_level_divisions;";
+            try {
+                Connection connection = JDBC.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    results.add(resultSet.getString(1));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
         }
+        return results;
+    }
 
-    public static ObservableList<String> getDiv2List() {
-        String sql = "SELECT CONCAT_WS(', ', Division_ID, Division) " +
-                "FROM client_schedule.first_level_divisions WHERE Country_ID = ?;";
-        ObservableList<String> ukList = FXCollections.observableArrayList();
+    public static String getDivName(int divId){
+        String divName = "";
 
-        try{
+        String sql = "SELECT Division FROM client_schedule.first_level_divisions WHERE Division_ID = ?";
+        try {
             Connection connection = JDBC.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, 2);
+            preparedStatement.setInt(1, divId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    ukList.add(resultSet.getString(1));
-                }
+           if(resultSet.next()){
+               divName = resultSet.getString(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return ukList;
+        return divName;
     }
 
-    public static ObservableList<String> getDiv3List() {
-        String sql = "SELECT CONCAT_WS(', ', Division_ID, Division) " +
-                "FROM client_schedule.first_level_divisions WHERE Country_ID = ?;";
-        ObservableList<String> canList = FXCollections.observableArrayList();
+   /* public static int getDivId(String divDisplay){
+        int divId = 0;
 
-        try{
-            Connection connection = JDBC.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, 3);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    canList.add(resultSet.getString(1));
-                }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return canList;
-    }
-
-    public static ObservableList<String> getAllDivList() {
-        String sql = "SELECT CONCAT_WS(', ', Division_ID, Division) " +
-                "FROM client_schedule.first_level_divisions;";
-
-        ObservableList<String> allList = FXCollections.observableArrayList();
-
-        try{
-            Connection connection = JDBC.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    allList.add(resultSet.getString(1));
-                }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return allList;
-    }
+        return divId;
+    }*/
 }
 

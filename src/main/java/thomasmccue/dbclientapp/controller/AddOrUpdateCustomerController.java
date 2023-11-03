@@ -16,13 +16,13 @@ import thomasmccue.dbclientapp.dao.FirstLevelDivisionDao;
 import thomasmccue.dbclientapp.helper.JDBC;
 import thomasmccue.dbclientapp.model.Customer;
 
+
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import java.util.regex.*;
 
 public class AddOrUpdateCustomerController implements Initializable {
     @FXML
@@ -41,35 +41,50 @@ public class AddOrUpdateCustomerController implements Initializable {
     public void setUpAdd(String titleText, String buttonText) throws IOException{
         pageTitleLabel.setText(titleText);
         saveButton.setText(buttonText);
-        custIdField.setText("This Customer ID hasn't yet been assigned");
+        custIdField.setText("Customer ID will be auto-assigned on save");
+        custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(-1));
     }
-    //setup, different depending on whether modify or add button are clicked
+
     public void setUpModify(String titleText, String buttonText, Customer customer) throws IOException{
+        this.customer = customer;
         pageTitleLabel.setText(titleText);
         saveButton.setText(buttonText);
 
-        //prefill fields
+        custCountrySelectionBox.setValue(customer.getCountry());
+
+        int divId = customer.getDivisionId();
+        String divName = FirstLevelDivisionDao.getDivName(divId);
+        String concatenatedValue = divId + ", " + divName;
+
+        custFirstLvlDivisionSelectionBox.getSelectionModel().select(concatenatedValue);
+        if(custCountrySelectionBox.getValue().equals("U.S")){
+            custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(1));
+        }else if(custCountrySelectionBox.getValue().equals("UK")){
+            custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(2));
+        }else if(custCountrySelectionBox.getValue().equals("Canada")){
+            custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(3));
+        } else {
+            custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(-1));
+            }
+
         custIdField.setText(Integer.toString(customer.getCustomerId()));
         custNameField.setText(customer.getCustomerName());
         custPhoneField.setText(customer.getPhone());
         custAddressField.setText(customer.getAddress());
         custPostalCodeField.setText(customer.getPostalCode());
-        custFirstLvlDivisionSelectionBox.setValue(Integer.toString(customer.getDivisionId()));
-
-
     }
 
   public void selectOrEnterCountry(ActionEvent event) throws IOException, SQLException {
         String selected = custCountrySelectionBox.getValue();
             //depending on what country is selected, show the corresponding first level divisions in the combo box
-            if("United States".equals(selected)) {
-                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDiv1List());
-            } else if ("United Kingdom".equals(selected)) {
-                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDiv2List());
+            if("United States".equals(selected) || "U.S".equals(selected) || "U.S.A".equals(selected) || "U.S.".equals(selected)) {
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(1));
+            } else if ("UK".equals(selected) || "United Kingdom".equals(selected)) {
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(2));
             } else if ("Canada".equals(selected)) {
-                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDiv3List());
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(3));
             } else{
-                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getAllDivList());
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(-1));
             }
     }
 
@@ -89,12 +104,32 @@ public class AddOrUpdateCustomerController implements Initializable {
                     errorMessage.setText("Please ensure that you have filled out the Customers name," +
                             " phone number, address, and postal code");
                 } else{
-                    customer.setCustomerName(custNameField.getText());
-                    customer.setPhone(custPhoneField.getText());
-                    customer.setAddress(custAddressField.getText());
-                    customer.setPostalCode(custPostalCodeField.getText());
+                    String divS = custFirstLvlDivisionSelectionBox.getValue();
+                    int divId = parseDivId(divS);
 
-                    //customer.setDivisionId(); FIXME, create method somewhere to return the division ID
+                    String country = custCountrySelectionBox.getValue();
+
+                    customer = new Customer(
+                            name,
+                            address,
+                            postalCode,
+                            phone,
+                            null,
+                            "test",
+                            null,
+                            null,
+                            divId,
+                            country
+                    );
+
+                    boolean added = CustomerDao.addCust(customer);
+                    if(added) {
+                       // LandingPageController.refreshCustomersTable();
+                        Stage stage = (Stage) saveButton.getScene().getWindow();
+                        stage.close();
+                    } else{
+                        errorMessage.setText("There was a problem adding the customer to the database.");
+                    }
                 }
         }/* else if (pageTitleLabel.getText().equals("FIXME")) {
 
@@ -105,8 +140,25 @@ public class AddOrUpdateCustomerController implements Initializable {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
+    private int parseDivId(String divS){
+        int divId = 0;
+        Pattern p = Pattern.compile("\\d+");
+
+        // Create a matcher for the input string
+        Matcher m = p.matcher(divS);
+
+        // Find and extract numbers
+        while (m.find()) {
+            String numberStr = m.group(); // Get the matched number as a string
+            divId = Integer.parseInt(numberStr); // Convert the string to an integer
+        }
+
+        return divId;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custCountrySelectionBox.setItems(CountryDao.getAllCountries());
+
     }
 }

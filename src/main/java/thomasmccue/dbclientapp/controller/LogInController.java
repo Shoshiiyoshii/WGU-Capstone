@@ -52,8 +52,8 @@ public class LogInController implements Initializable {
     }
 
    private boolean isValidUser(String user, String pass){
-        try{
-            String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+       String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+       try{
             Connection connection = JDBC.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user);

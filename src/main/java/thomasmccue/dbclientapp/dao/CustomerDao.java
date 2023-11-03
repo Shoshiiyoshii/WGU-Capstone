@@ -11,25 +11,26 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class CustomerDao {
-    public static void addCust(Customer customer) {
+    public static boolean addCust(Customer customer) {
         String sql = "INSERT INTO client_schedule.customers" +
                 " (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Division_ID)" +
-                " VALUES(?,?,?,?,?,?)";
+                " VALUES(?,?,?,?,?,?,?)";
+
+        String custName = customer.getCustomerName();
+        String address = customer.getAddress();
+        String postalCode = customer.getPostalCode();
+        String phone = customer.getPhone();
+
+        //records the current instant of time in UTC, which is the correct time zone for my SQL data
+        Instant now = Instant.now();
+        Timestamp createDate = Timestamp.from(now);
+
+        String createdBy = customer.getCreatedBy();
+        int divisionId = customer.getDivisionId();
 
         try{
             Connection connection = JDBC.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            String custName = customer.getCustomerName();
-            String address = customer.getAddress();
-            String postalCode = customer.getPostalCode();
-            String phone = customer.getPhone();
-
-            //records the current instant of time in UTC, which is the correct time zone for my SQL data
-            Instant now = Instant.now();
-            Timestamp createDate = Timestamp.from(now);
-
-            String createdBy = customer.getCreatedBy();
-            int divisionId = customer.getDivisionId();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, custName);
             preparedStatement.setString(2, address);
@@ -38,10 +39,23 @@ public class CustomerDao {
             preparedStatement.setTimestamp(5, createDate);
             preparedStatement.setString(6, createdBy);
             preparedStatement.setInt(7, divisionId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0) {
+                // The insertion was successful, there are generated keys
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int customerId = generatedKeys.getInt(1);
+                    //is this necessary? FIXME
+                    customer.setCustomerId(customerId);
+                    return true;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+        return false;
     }
 
     public static void updateCust(Customer customer) {
@@ -123,7 +137,8 @@ public class CustomerDao {
                             resultSet.getString("Created_By"),
                             localUpdateTime,
                             resultSet.getString("Last_Updated_By"),
-                            resultSet.getInt("Division_ID")
+                            resultSet.getInt("Division_ID"),
+                            getCountryID(resultSet.getInt("Division_ID"))
                     );
                 }
         } catch (SQLException e) {
@@ -133,7 +148,7 @@ public class CustomerDao {
         return foundCust;
     }
 
-    public static ObservableList<Customer> getAllCust() {
+        public static ObservableList<Customer> getAllCust() {
         ObservableList<Customer> custList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM client_schedule.customers";
 
@@ -150,27 +165,80 @@ public class CustomerDao {
 
                 //convert Last_Update
                 Timestamp utcUpdateTime = resultSet.getTimestamp("Last_Update");
-                LocalDateTime localUpdateTime = utcUpdateTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                if(utcUpdateTime != null) {
+                    LocalDateTime localUpdateTime = utcUpdateTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                    Customer customer = new Customer(
+                            resultSet.getInt("Customer_ID"),
+                            resultSet.getString("Customer_Name"),
+                            resultSet.getString("Address"),
+                            resultSet.getString("Postal_Code"),
+                            resultSet.getString("Phone"),
+                            localCreateTime,
+                            resultSet.getString("Created_By"),
+                            localUpdateTime,
+                            resultSet.getString("Last_Updated_By"),
+                            resultSet.getInt("Division_ID"),
+                            getCountryID(resultSet.getInt("Division_ID"))
+                    );
 
-                Customer customer = new Customer(
-                        resultSet.getInt("Customer_ID"),
-                        resultSet.getString("Customer_Name"),
-                        resultSet.getString("Address"),
-                        resultSet.getString("Postal_Code"),
-                        resultSet.getString("Phone"),
-                        localCreateTime,
-                        resultSet.getString("Created_By"),
-                        localUpdateTime,
-                        resultSet.getString("Last_Updated_By"),
-                        resultSet.getInt("Division_ID")
-                );
+                    custList.add(customer);
+                    //not all Customers have been updated, so allow for null update time
+                } else {
+                    Customer customer = new Customer(
+                    resultSet.getInt("Customer_ID"),
+                            resultSet.getString("Customer_Name"),
+                            resultSet.getString("Address"),
+                            resultSet.getString("Postal_Code"),
+                            resultSet.getString("Phone"),
+                            localCreateTime,
+                            resultSet.getString("Created_By"),
+                            null,
+                            resultSet.getString("Last_Updated_By"),
+                            resultSet.getInt("Division_ID"),
+                            getCountryID(resultSet.getInt("Division_ID"))
+                    );
 
-                custList.add(customer);
+                    custList.add(customer);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
         return custList;
+    }
+
+    private static String getCountryID(int divId) {
+        int countryId = 0;
+        String country = "";
+
+        String sql = "SELECT Country_ID FROM client_schedule.first_level_divisions WHERE Division_ID = ?";
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, divId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                countryId = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        String sql2 = "SELECT Country FROM client_schedule.countries WHERE Country_ID = ?";
+        try{
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql2);
+            preparedStatement.setInt(1, countryId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                country = resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return country;
     }
 }
