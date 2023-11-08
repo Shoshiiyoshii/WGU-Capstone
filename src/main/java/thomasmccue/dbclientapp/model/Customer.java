@@ -3,7 +3,6 @@ package thomasmccue.dbclientapp.model;
 import java.time.LocalDateTime;
 
 public class Customer {
-    //customerId is read only, so no mutator is available, only an accessor
     private int customerId;
     private String customerName;
     private String address;
@@ -14,12 +13,13 @@ public class Customer {
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
     private int divisionId;
+    private String country;
 
     // constructors
-    //this one is for new customer objects that doesn't yet exist in the database
+    //this one is for new customer objects that doesn't yet exist in the database, i.e don't yet have an assigned ID
     public Customer(String customerName, String address, String postalCode, String phone,
                     LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy,
-                    int divisionId) {
+                    int divisionId, String country) {
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
@@ -29,12 +29,13 @@ public class Customer {
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
         this.divisionId = divisionId;
+        this.country = country;
     }
 
     //this is for customer objects that already have a customerID assigned by the database
     public Customer(int customerId, String customerName, String address, String postalCode, String phone,
                     LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy,
-                    int divisionId) {
+                    int divisionId, String country) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
@@ -45,9 +46,13 @@ public class Customer {
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
         this.divisionId = divisionId;
+        this.country = country;
     }
 
     //setters
+
+    public void setCustomerId(int customerId) {this.customerId = customerId;}
+
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
@@ -83,6 +88,8 @@ public class Customer {
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
     }
+
+    public void setCountry(String country){ this.country = country; }
 
     //getters
     public int getCustomerId() {
@@ -124,5 +131,8 @@ public class Customer {
     public int getDivisionId() {
         return divisionId;
     }
+
+    public String getCountry(){ return country; }
+
 }
 

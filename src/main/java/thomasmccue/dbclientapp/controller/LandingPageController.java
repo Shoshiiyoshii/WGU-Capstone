@@ -1,5 +1,7 @@
 package thomasmccue.dbclientapp.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,17 +23,15 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import static thomasmccue.dbclientapp.helper.JDBC.connection;
-
 public class LandingPageController implements Initializable {
     @FXML
     private Label ynUpcomingAppointment, nextAppt, nextApptWith, whenNext, whoNext, title, customersTitle, customerErrorMessage, apptErrorMessage;
     @FXML
-    private TableView<Customer> custTable;
+    public TableView<Customer> custTable;
     @FXML
     private TableColumn<Customer, Integer> custIdBottomCol, divisionIdCol;
     @FXML
-    private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol, lastUpdated, lastUpdatedByCol;
+    private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol, lastUpdated, lastUpdatedByCol, countryCol;
     @FXML
     private Button custAddButton, custUpdateButton, custDeleteButton, apptAddButton1, apptUpdateButton, apptDeleteButton,exitButton, apptReportButton, contactSchedulesButton, custRecordCreationReportButton;
     @FXML
@@ -42,6 +42,59 @@ public class LandingPageController implements Initializable {
     private TableColumn<Appointment, String> titleCol, descCol, locationCol, typeCol, startDTCol, endDTCol;
     @FXML
     private RadioButton weekRadio, monthRadio, allTimeRadio;
+
+    public void clickCustAdd(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+
+        AddOrUpdateCustomerController controller = fxmlLoader.getController();
+        controller.setUpAdd("Add A Customer To The System", "Save");
+        stage.setTitle("Add A Customer To The System");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void clickCustUpdate(ActionEvent event) throws IOException {
+        SelectionModel<Customer> selectionModel = custTable.getSelectionModel();
+        Customer selectedCust = selectionModel.getSelectedItem();
+
+        if(selectedCust == null){
+            customerErrorMessage.setText("Please first select a Customer to Modify.");
+        } else{
+            customerErrorMessage.setText("");
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            AddOrUpdateCustomerController controller = fxmlLoader.getController();
+            controller.setUpModify("Modify An Existing Customer", "Save Update", selectedCust);
+            stage.setTitle("Modify An Existing Customer");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+    }
+    public void clickCustDelete(ActionEvent event) throws IOException{
+        SelectionModel<Customer> selectionModel = custTable.getSelectionModel();
+        Customer selectedCust = selectionModel.getSelectedItem();
+
+        if(selectedCust == null) {
+            customerErrorMessage.setText("Please first select a Customer to Delete.");
+        } else {
+            customerErrorMessage.setText("");
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("deleteDialog.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            DeleteDialogController controller = fxmlLoader.getController();
+            controller.setUpCustomerDelete(selectedCust);
+            stage.setTitle("Delete Customer");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+
+    }
 
     public void radioFilter(ActionEvent event){
         if(monthRadio.isSelected()){
@@ -112,29 +165,14 @@ public class LandingPageController implements Initializable {
         }
     }
 
-   public void clickCustAdd(ActionEvent event) throws IOException {
-       FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
-       Scene scene = new Scene(fxmlLoader.load());
-       Stage stage = new Stage();
-
-       AddOrUpdateCustomerController controller = fxmlLoader.getController();
-       controller.setUpAdd("Add A Customer To The System", "Save");
-       stage.setTitle("Add A Customer To The System");
-       stage.setScene(scene);
-       stage.show();
-   }
-    public void clickCustUpdate(ActionEvent event){
-
-    }
-    public void clickCustDelete(ActionEvent event){
-
-    }
-
     public void exitClicked(ActionEvent event)throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
 
+    public void refresh(){
+        custTable.refresh();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -150,6 +188,8 @@ public class LandingPageController implements Initializable {
         lastUpdated.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
         lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
         divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
+
 
         //populate appointment table with all appointments, if table is not yet populated
 

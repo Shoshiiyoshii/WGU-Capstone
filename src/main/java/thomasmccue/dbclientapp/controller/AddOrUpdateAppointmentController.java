@@ -77,7 +77,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
                                         newAppointment.setCreateDate(resultSet.getObject("Create_Date", LocalDateTime.class));
                                         newAppointment.setCreatedBy(resultSet.getString("Created_By"));
                                         newAppointment.setLastUpdate(LocalDateTime.now());
-                                        newAppointment.setLastUpdatedBy(String.valueOf(LogInController.getLoggedInUserId()));
+                                   //FIXME     newAppointment.setLastUpdatedBy(String.valueOf(LogInController.getLoggedInUserId()));
                                         newAppointment.setCustId(Integer.parseInt(selectCustBox.getValue()));
                                         newAppointment.setUserId(Integer.parseInt(userIdField.getText()));
                                         newAppointment.setContactId(Integer.parseInt(selectContactBox.getValue()));
@@ -98,7 +98,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
                         String type = typeField.getText();
                         LocalDateTime start = (Timestamp.valueOf(startDTField.getText()).toLocalDateTime());
                         LocalDateTime end = (Timestamp.valueOf(endDTField.getText()).toLocalDateTime());
-                        int createdBy = (LogInController.getLoggedInUserId());
+                     //FIXME   int createdBy = (LogInController.getLoggedInUserId());
                         int customer = (Integer.parseInt(selectCustBox.getValue()));
                         String user = (userIdField.getText());
                         int userId =  Integer.parseInt(user);

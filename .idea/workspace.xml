@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Wip" />
+    <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Wip">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateCustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Customer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +43,8 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="proportion" value="0.9" />
+    <option name="selectedTabId" value="CurrentFile" />
     <option name="showPreview" value="true" />
   </component>
   <component name="ProjectId" id="2TXFLo79k3m9pmbh9yZvM4WFGZc" />
@@ -48,7 +58,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;CustomersTableCRUD&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientApp&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
@@ -161,7 +171,42 @@
       <option name="project" value="LOCAL" />
       <updated>1698111733645</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="WIP Monday Funday 🙃">
+      <created>1698716674862</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1698716674863</updated>
+    </task>
+    <task id="LOCAL-00011" summary="workspace.xml ? 🙃">
+      <created>1698716732111</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1698716732111</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fixed issue with closing static connection">
+      <created>1698888731656</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1698888731656</updated>
+    </task>
+    <task id="LOCAL-00013" summary="WIP Customer add &amp; modify, next need to implement table refresh">
+      <created>1698970064031</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1698970064031</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Customer add &amp; modify done, delete is WIP">
+      <created>1699421496051</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1699421496051</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -169,7 +214,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="CustomersTableCRUD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -185,7 +242,12 @@
     <MESSAGE value="Stubbed README.md" />
     <MESSAGE value="Working on add customer in controller" />
     <MESSAGE value="Wip" />
-    <option name="LAST_COMMIT_MESSAGE" value="Wip" />
+    <MESSAGE value="WIP Monday Funday " />
+    <MESSAGE value="workspace.xml ? " />
+    <MESSAGE value="Fixed issue with closing static connection" />
+    <MESSAGE value="WIP Customer add &amp; modify, next need to implement table refresh" />
+    <MESSAGE value="Customer add &amp; modify done, delete is WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="Customer add &amp; modify done, delete is WIP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -194,7 +256,33 @@
           <properties class="com.mysql.cj.exceptions.ConnectionIsClosedException" package="com.mysql.cj.exceptions" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <breakpoint enabled="true" log-message="true" log-stack="true" type="java-exception">
+          <properties class="java.sql.SQLNonTransientConnectionException" package="java.sql" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.sql.SQLException" package="java.sql" />
+          <option name="timeStamp" value="21" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java</url>
+          <line>107</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java</url>
+          <line>132</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint log-message="true" log-stack="true" type="java-exception" />
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

@@ -4,18 +4,29 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import thomasmccue.dbclientapp.Main;
+import thomasmccue.dbclientapp.dao.CountryDao;
 import thomasmccue.dbclientapp.dao.CustomerDao;
+import thomasmccue.dbclientapp.dao.FirstLevelDivisionDao;
+import thomasmccue.dbclientapp.helper.JDBC;
 import thomasmccue.dbclientapp.model.Customer;
+
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import java.util.regex.*;
+
 
 public class AddOrUpdateCustomerController implements Initializable {
     @FXML
@@ -31,175 +42,55 @@ public class AddOrUpdateCustomerController implements Initializable {
 
     private Customer customer;
 
+
     public void setUpAdd(String titleText, String buttonText) throws IOException{
         pageTitleLabel.setText(titleText);
         saveButton.setText(buttonText);
-        custIdField.setText("This Customer ID hasn't yet been assigned");
+        custIdField.setText("Customer ID will be auto-assigned on save");
+        custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(-1));
     }
-    //setup, different depending on whether modify or add button are clicked
-    public void setUpModify(String titleText, String buttonText) throws IOException{
+
+    public void setUpModify(String titleText, String buttonText, Customer customer) throws IOException{
+        this.customer = customer;
         pageTitleLabel.setText(titleText);
         saveButton.setText(buttonText);
+
+        custCountrySelectionBox.setValue(customer.getCountry());
+
+        int divId = customer.getDivisionId();
+        String divName = FirstLevelDivisionDao.getDivName(divId);
+        String concatenatedValue = divId + ", " + divName;
+
+        custFirstLvlDivisionSelectionBox.getSelectionModel().select(concatenatedValue);
+        if(custCountrySelectionBox.getValue().equals("U.S")){
+            custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(1));
+        }else if(custCountrySelectionBox.getValue().equals("UK")){
+            custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(2));
+        }else if(custCountrySelectionBox.getValue().equals("Canada")){
+            custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(3));
+        } else {
+            custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(-1));
+            }
+
+        custIdField.setText(Integer.toString(customer.getCustomerId()));
+        custNameField.setText(customer.getCustomerName());
+        custPhoneField.setText(customer.getPhone());
+        custAddressField.setText(customer.getAddress());
+        custPostalCodeField.setText(customer.getPostalCode());
     }
 
-    public void selectOrEnterCountry(ActionEvent event)throws IOException {
+  public void selectOrEnterCountry(ActionEvent event) throws IOException, SQLException {
         String selected = custCountrySelectionBox.getValue();
-        if(selected.equals("United States")){
-            ObservableList<String> states = FXCollections.observableArrayList(
-                    "Alabama",
-            "Arizona",
-            "Arkansas",
-            "California",
-            "Colorado",
-            "Connecticut",
-            "Delaware",
-            "District of Columbia",
-            "Florida",
-            "Georgia",
-            "Idaho",
-            "Illinois",
-            "Indiana",
-            "Iowa",
-            "Kansas",
-            "Kentucky",
-            "Louisiana",
-            "Maine",
-            "Maryland",
-            "Massachusetts",
-            "Michigan",
-            "Minnesota",
-            "Mississippi",
-            "Missouri",
-            "Montana",
-            "Nebraska",
-            "Nevada",
-            "New Hampshire",
-            "New Jersey",
-            "New Mexico",
-            "New York",
-            "North Carolina",
-            "North Dakota",
-            "Ohio",
-            "Oklahoma",
-            "Oregon",
-            "Pennsylvania",
-            "Rhode Island",
-            "South Carolina",
-            "South Dakota",
-            "Tennessee",
-            "Texas",
-            "Utah",
-            "Vermont",
-            "Virginia",
-            "Washington",
-            "West Virginia",
-            "Wisconsin",
-            "Wyoming",
-            "Hawaii",
-            "Alaska");
-
-
-            custFirstLvlDivisionSelectionBox.setItems(states);
-        } else if (selected.equals("United Kingdom")) {
-            ObservableList<String> ukStates = FXCollections.observableArrayList(
-                    "England",
-            "Wales",
-            "Scotland",
-            "Northern Ireland");
-
-            custFirstLvlDivisionSelectionBox.setItems(ukStates);
-        } else if (selected.equals("Canada")){
-            ObservableList<String> provinces = FXCollections.observableArrayList(
-                    "Northwest Territories",
-            "Alberta",
-            "British Columbia",
-            "Manitoba",
-            "New Brunswick",
-            "Nova Scotia",
-            "Prince Edward Island",
-            "Ontario",
-            "Québec",
-            "Saskatchewan",
-            "Nunavut",
-            "Yukon",
-            "Newfoundland and Labrador");
-
-            custFirstLvlDivisionSelectionBox.setItems(provinces);
-        } else{
-            ObservableList<String> all = FXCollections.observableArrayList(
-
-                    "Alabama",
-                    "Arizona",
-                    "Arkansas",
-                    "California",
-                    "Colorado",
-                    "Connecticut",
-                    "Delaware",
-                    "District of Columbia",
-                    "Florida",
-                    "Georgia",
-                    "Idaho",
-                    "Illinois",
-                    "Indiana",
-                    "Iowa",
-                    "Kansas",
-                    "Kentucky",
-                    "Louisiana",
-                    "Maine",
-                    "Maryland",
-                    "Massachusetts",
-                    "Michigan",
-                    "Minnesota",
-                    "Mississippi",
-                    "Missouri",
-                    "Montana",
-                    "Nebraska",
-                    "Nevada",
-                    "New Hampshire",
-                    "New Jersey",
-                    "New Mexico",
-                    "New York",
-                    "North Carolina",
-                    "North Dakota",
-                    "Ohio",
-                    "Oklahoma",
-                    "Oregon",
-                    "Pennsylvania",
-                    "Rhode Island",
-                    "South Carolina",
-                    "South Dakota",
-                    "Tennessee",
-                    "Texas",
-                    "Utah",
-                    "Vermont",
-                    "Virginia",
-                    "Washington",
-                    "West Virginia",
-                    "Wisconsin",
-                    "Wyoming",
-                    "Hawaii",
-                    "Alaska",
-                    "England",
-                    "Wales",
-                    "Scotland",
-                    "Northern Ireland",
-                    "Northwest Territories",
-                    "Alberta",
-                    "British Columbia",
-                    "Manitoba",
-                    "New Brunswick",
-                    "Nova Scotia",
-                    "Prince Edward Island",
-                    "Ontario",
-                    "Québec",
-                    "Saskatchewan",
-                    "Nunavut",
-                    "Yukon",
-                    "Newfoundland and Labrador");
-
-            custFirstLvlDivisionSelectionBox.setItems(all);
-        }
-
+            //depending on what country is selected, show the corresponding first level divisions in the combo box
+            if("United States".equals(selected) || "U.S".equals(selected) || "U.S.A".equals(selected) || "U.S.".equals(selected)) {
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(1));
+            } else if ("UK".equals(selected) || "United Kingdom".equals(selected)) {
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(2));
+            } else if ("Canada".equals(selected)) {
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(3));
+            } else{
+                custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(-1));
+            }
     }
 
     public void selectOrEnterFirstLvlDiv(ActionEvent event)throws IOException {
@@ -207,41 +98,108 @@ public class AddOrUpdateCustomerController implements Initializable {
     }
 
     public void saveClicked(ActionEvent event)throws IOException {
-        if(pageTitleLabel.getText().equals("Add A Customer To The System")) {
-                String name = custNameField.getText();
-                String phone = custPhoneField.getText();
-                String address = custAddressField.getText();
-                String postalCode = custPostalCodeField.getText();
+        //in add mode, save a new customer
+        if (pageTitleLabel.getText().equals("Add A Customer To The System")) {
+            String name = custNameField.getText();
+            String phone = custPhoneField.getText();
+            String address = custAddressField.getText();
+            String postalCode = custPostalCodeField.getText();
 
-                //ensure that all text fields have been filled out
-                if(name.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty()){
-                    errorMessage.setText("Please ensure that you have filled out the Customers name," +
-                            " phone number, address, and postal code");
-                } else{
-                    customer.setCustomerName(custNameField.getText());
-                    customer.setPhone(custPhoneField.getText());
-                    customer.setAddress(custAddressField.getText());
-                    customer.setPostalCode(custPostalCodeField.getText());
+            //ensure that all text fields have been filled out
+            if (name.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty()) {
+                errorMessage.setText("Please ensure that you have filled out the Customers name," +
+                        " phone number, address, and postal code");
+            } else {
+                String divS = custFirstLvlDivisionSelectionBox.getValue();
+                int divId = parseDivId(divS);
 
-                    //customer.setDivisionId(); FIXME, create method somewhere to return the division ID
+                String country = custCountrySelectionBox.getValue();
+
+                String createdBy = LogInController.loggedInUser;
+
+                customer = new Customer(
+                        name,
+                        address,
+                        postalCode,
+                        phone,
+                        null,
+                        createdBy,
+                        null,
+                        null,
+                        divId,
+                        country
+                );
+                boolean added = CustomerDao.addCust(customer);
+                if (added) {
+                    Stage stage = (Stage) saveButton.getScene().getWindow();
+                    stage.close();
+                } else {
+                    errorMessage.setText("There was a problem adding the customer to the database.");
                 }
-        }/* else if (pageTitleLabel.getText().equals("FIXME")) {
+            }
+            //in update mode, update an existing customer
+        } else if (pageTitleLabel.getText().equals("Modify An Existing Customer")) {
+            int index = CustomerDao.displayCust.indexOf(customer);
 
-        }*/
+            String name = custNameField.getText();
+            String phone = custPhoneField.getText();
+            String address = custAddressField.getText();
+            String postalCode = custPostalCodeField.getText();
+
+            //ensure that all text fields have been filled out
+            if (name.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty()) {
+                errorMessage.setText("Please ensure that you have filled out the Customers name," +
+                        " phone number, address, and postal code");
+            } else {
+                String divS = custFirstLvlDivisionSelectionBox.getValue();
+                int divId = parseDivId(divS);
+
+                String country = custCountrySelectionBox.getValue();
+
+                String updatedBy = LogInController.loggedInUser;
+
+                customer.setCustomerName(name);
+                customer.setPhone(phone);
+                customer.setAddress(address);
+                customer.setPostalCode(postalCode);
+                customer.setDivisionId(divId);
+                customer.setCountry(country);
+                customer.setLastUpdatedBy(updatedBy);
+
+                boolean updated = CustomerDao.updateCust(customer,index);
+                if (updated) {
+                    Stage stage = (Stage) saveButton.getScene().getWindow();
+                    stage.close();
+                } else {
+                    errorMessage.setText("There was a problem updating the customer in the database.");
+                }
+            }
+        }
     }
 
     public void cancelClicked(ActionEvent event)throws IOException {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
+    private int parseDivId(String divS){
+        int divId = 0;
+        Pattern p = Pattern.compile("\\d+");
+
+        // Create a matcher for the input string
+        Matcher m = p.matcher(divS);
+
+        // Find and extract numbers
+        while (m.find()) {
+            String numberStr = m.group(); // Get the matched number as a string
+            divId = Integer.parseInt(numberStr); // Convert the string to an integer
+        }
+
+        return divId;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> countries = FXCollections.observableArrayList(
-                "United States",
-                "United Kingdom",
-                "Canada");
-
-        custCountrySelectionBox.setItems(countries);
+        custCountrySelectionBox.setItems(CountryDao.getAllCountries());
 
     }
 }
