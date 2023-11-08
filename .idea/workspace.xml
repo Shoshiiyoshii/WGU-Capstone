@@ -199,7 +199,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698970064031</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Customer add &amp; modify done, delete is WIP">
+      <created>1699421496051</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1699421496051</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -239,7 +246,8 @@
     <MESSAGE value="workspace.xml ? " />
     <MESSAGE value="Fixed issue with closing static connection" />
     <MESSAGE value="WIP Customer add &amp; modify, next need to implement table refresh" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP Customer add &amp; modify, next need to implement table refresh" />
+    <MESSAGE value="Customer add &amp; modify done, delete is WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="Customer add &amp; modify done, delete is WIP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -265,6 +273,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java</url>
           <line>45</line>
           <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java</url>
+          <line>132</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

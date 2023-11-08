@@ -106,7 +106,7 @@ public class CustomerDao {
 
     public static boolean deleteCust(Customer customer) {
         int custId = customer.getCustomerId();
-        int appts = findAppts(custId);
+        int appts = findCustAppts(custId);
 
         if(appts == 0) {
             String sql = "DELETE FROM client_schedule.customers WHERE CUSTOMER_ID = ?";
@@ -129,7 +129,7 @@ public class CustomerDao {
             return false;
     }
 
-    public static int findAppts(int custId){
+    public static int findCustAppts(int custId){
         String sql = "SELECT * FROM client_schedule.appointments WHERE CUSTOMER_ID = ?";
         int appts = 0;
         try {
@@ -137,10 +137,9 @@ public class CustomerDao {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, custId);
 
-           //FIXMe resultSet is null
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                appts ++;
+                appts++;
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -149,7 +148,7 @@ public class CustomerDao {
         return appts;
     }
 
-    public static Customer findCust(Customer customer) {
+    public static Customer findCust(Customer customer) { //FIXME not used
         Customer foundCust = null;
         int custId = customer.getCustomerId();
         String sql = "SELECT * FROM client_schedule.customers WHERE CUSTOMER_ID =  ?";

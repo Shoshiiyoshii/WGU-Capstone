@@ -49,8 +49,7 @@ public class DeleteDialogController implements Initializable {
                 cancelButton.setText("Okay");
                 deleteButton.setVisible(false);
             } else {
-                confirmationDialog.setText("The selected Customer could not be deleted. " +
-                        "\nPlease Ensure that all associated appointments are deleted first.");
+                confirmationDialog.setText("Delete Failed. Please delete all associated appointments before trying again.");
                 cancelButton.setText("Okay");
                 deleteButton.setVisible(false);
             }
