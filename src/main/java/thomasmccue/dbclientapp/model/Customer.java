@@ -13,7 +13,6 @@ public class Customer {
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
     private int divisionId;
-
     private String country;
 
     // constructors

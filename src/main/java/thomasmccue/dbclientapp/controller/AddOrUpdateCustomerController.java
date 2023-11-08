@@ -4,12 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import thomasmccue.dbclientapp.Main;
 import thomasmccue.dbclientapp.dao.CountryDao;
 import thomasmccue.dbclientapp.dao.CustomerDao;
 import thomasmccue.dbclientapp.dao.FirstLevelDivisionDao;
@@ -24,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.regex.*;
 
+
 public class AddOrUpdateCustomerController implements Initializable {
     @FXML
     private Label custIdLabel, pageTitleLabel, custNameLabel, custPhoneLabel, custAddressLabel, custCountryLabel;
@@ -37,6 +41,7 @@ public class AddOrUpdateCustomerController implements Initializable {
     private Button saveButton, cancelButton;
 
     private Customer customer;
+
 
     public void setUpAdd(String titleText, String buttonText) throws IOException{
         pageTitleLabel.setText(titleText);
@@ -93,47 +98,83 @@ public class AddOrUpdateCustomerController implements Initializable {
     }
 
     public void saveClicked(ActionEvent event)throws IOException {
-        if(pageTitleLabel.getText().equals("Add A Customer To The System")) {
-                String name = custNameField.getText();
-                String phone = custPhoneField.getText();
-                String address = custAddressField.getText();
-                String postalCode = custPostalCodeField.getText();
+        //in add mode, save a new customer
+        if (pageTitleLabel.getText().equals("Add A Customer To The System")) {
+            String name = custNameField.getText();
+            String phone = custPhoneField.getText();
+            String address = custAddressField.getText();
+            String postalCode = custPostalCodeField.getText();
 
-                //ensure that all text fields have been filled out
-                if(name.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty()){
-                    errorMessage.setText("Please ensure that you have filled out the Customers name," +
-                            " phone number, address, and postal code");
-                } else{
-                    String divS = custFirstLvlDivisionSelectionBox.getValue();
-                    int divId = parseDivId(divS);
+            //ensure that all text fields have been filled out
+            if (name.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty()) {
+                errorMessage.setText("Please ensure that you have filled out the Customers name," +
+                        " phone number, address, and postal code");
+            } else {
+                String divS = custFirstLvlDivisionSelectionBox.getValue();
+                int divId = parseDivId(divS);
 
-                    String country = custCountrySelectionBox.getValue();
+                String country = custCountrySelectionBox.getValue();
 
-                    customer = new Customer(
-                            name,
-                            address,
-                            postalCode,
-                            phone,
-                            null,
-                            "test",
-                            null,
-                            null,
-                            divId,
-                            country
-                    );
+                String createdBy = LogInController.loggedInUser;
 
-                    boolean added = CustomerDao.addCust(customer);
-                    if(added) {
-                       // LandingPageController.refreshCustomersTable();
-                        Stage stage = (Stage) saveButton.getScene().getWindow();
-                        stage.close();
-                    } else{
-                        errorMessage.setText("There was a problem adding the customer to the database.");
-                    }
+                customer = new Customer(
+                        name,
+                        address,
+                        postalCode,
+                        phone,
+                        null,
+                        createdBy,
+                        null,
+                        null,
+                        divId,
+                        country
+                );
+                boolean added = CustomerDao.addCust(customer);
+                if (added) {
+                    Stage stage = (Stage) saveButton.getScene().getWindow();
+                    stage.close();
+                } else {
+                    errorMessage.setText("There was a problem adding the customer to the database.");
                 }
-        }/* else if (pageTitleLabel.getText().equals("FIXME")) {
+            }
+            //in update mode, update an existing customer
+        } else if (pageTitleLabel.getText().equals("Modify An Existing Customer")) {
+            int index = CustomerDao.displayCust.indexOf(customer);
 
-        }*/
+            String name = custNameField.getText();
+            String phone = custPhoneField.getText();
+            String address = custAddressField.getText();
+            String postalCode = custPostalCodeField.getText();
+
+            //ensure that all text fields have been filled out
+            if (name.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty()) {
+                errorMessage.setText("Please ensure that you have filled out the Customers name," +
+                        " phone number, address, and postal code");
+            } else {
+                String divS = custFirstLvlDivisionSelectionBox.getValue();
+                int divId = parseDivId(divS);
+
+                String country = custCountrySelectionBox.getValue();
+
+                String updatedBy = LogInController.loggedInUser;
+
+                customer.setCustomerName(name);
+                customer.setPhone(phone);
+                customer.setAddress(address);
+                customer.setPostalCode(postalCode);
+                customer.setDivisionId(divId);
+                customer.setCountry(country);
+                customer.setLastUpdatedBy(updatedBy);
+
+                boolean updated = CustomerDao.updateCust(customer,index);
+                if (updated) {
+                    Stage stage = (Stage) saveButton.getScene().getWindow();
+                    stage.close();
+                } else {
+                    errorMessage.setText("There was a problem updating the customer in the database.");
+                }
+            }
+        }
     }
 
     public void cancelClicked(ActionEvent event)throws IOException {

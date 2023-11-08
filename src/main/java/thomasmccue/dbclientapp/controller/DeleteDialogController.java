@@ -8,7 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionModel;
 import javafx.stage.Stage;
 import thomasmccue.dbclientapp.dao.AppointmentDao;
+import thomasmccue.dbclientapp.dao.CustomerDao;
 import thomasmccue.dbclientapp.model.Appointment;
+import thomasmccue.dbclientapp.model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,26 +24,47 @@ public class DeleteDialogController implements Initializable {
     private Label confirmationDialog, toBeDeleted;
 
     private Appointment appointment;
+    private Customer customer;
+
+    public void setUpCustomerDelete(Customer customer){
+        this.customer = customer;
+
+        toBeDeleted.setText("Customer with ID: " + customer.getCustomerId() + "\nCustomer Name: " + customer.getCustomerName());
+    }
 
     public void setAppointment(Appointment appointment){
         this.appointment = appointment;
-    }
+    }//FIXME
 
-    public void setToBeDeletedAppt(){
+    public void setToBeDeletedAppt(){//FIxME
         toBeDeleted.setText("Appointment with ID: " + appointment.getApptId() +"\nAppointment Type: " + appointment.getType());
     }
 
     @FXML
    public void onDeleteClicked(ActionEvent event) throws IOException, SQLException {
-        boolean deleted = AppointmentDao.deleteAppt(appointment);
-        if (deleted) {
-            confirmationDialog.setText("Appointment Deleted");
-            cancelButton.setText("Okay");
-            deleteButton.setVisible(false);
+        if (this.customer != null) {
+            boolean deleted = CustomerDao.deleteCust(customer);
+            if(deleted){
+                confirmationDialog.setText("Customer Successfully Deleted");
+                cancelButton.setText("Okay");
+                deleteButton.setVisible(false);
+            } else {
+                confirmationDialog.setText("The selected Customer could not be deleted. " +
+                        "\nPlease Ensure that all associated appointments are deleted first.");
+                cancelButton.setText("Okay");
+                deleteButton.setVisible(false);
+            }
         } else {
-            confirmationDialog.setText("The selected appointment could not be deleted");
-            cancelButton.setText("Okay");
-            deleteButton.setVisible(false);
+            boolean deleted = AppointmentDao.deleteAppt(appointment);
+            if (deleted) {
+                confirmationDialog.setText("Appointment Deleted");
+                cancelButton.setText("Okay");
+                deleteButton.setVisible(false);
+            } else {
+                confirmationDialog.setText("The selected appointment could not be deleted");
+                cancelButton.setText("Okay");
+                deleteButton.setVisible(false);
+            }
         }
     }
 

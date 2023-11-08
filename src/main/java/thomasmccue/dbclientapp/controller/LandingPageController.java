@@ -1,6 +1,7 @@
 package thomasmccue.dbclientapp.controller;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,13 +23,11 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import static thomasmccue.dbclientapp.helper.JDBC.connection;
-
 public class LandingPageController implements Initializable {
     @FXML
     private Label ynUpcomingAppointment, nextAppt, nextApptWith, whenNext, whoNext, title, customersTitle, customerErrorMessage, apptErrorMessage;
     @FXML
-    private TableView<Customer> custTable;
+    public TableView<Customer> custTable;
     @FXML
     private TableColumn<Customer, Integer> custIdBottomCol, divisionIdCol;
     @FXML
@@ -75,7 +74,25 @@ public class LandingPageController implements Initializable {
         }
 
     }
-    public void clickCustDelete(ActionEvent event){
+    public void clickCustDelete(ActionEvent event) throws IOException{
+        SelectionModel<Customer> selectionModel = custTable.getSelectionModel();
+        Customer selectedCust = selectionModel.getSelectedItem();
+
+        if(selectedCust == null) {
+            customerErrorMessage.setText("Please first select a Customer to Delete.");
+        } else {
+            customerErrorMessage.setText("");
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("deleteDialog.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            DeleteDialogController controller = fxmlLoader.getController();
+            controller.setUpCustomerDelete(selectedCust);
+            stage.setTitle("Delete Customer");
+            stage.setScene(scene);
+            stage.show();
+        }
+
 
     }
 
@@ -153,12 +170,9 @@ public class LandingPageController implements Initializable {
         stage.close();
     }
 
-/*    public static void refreshCustomersTable() {
-        // Fetch the latest customer data from the database and update the tableView
-        custTable.setItems(CustomerDao.getAllCust());
-
-
-    }*/
+    public void refresh(){
+        custTable.refresh();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

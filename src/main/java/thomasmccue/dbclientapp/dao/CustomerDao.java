@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class CustomerDao {
+
+    public static ObservableList<Customer> displayCust = FXCollections.observableArrayList();
     public static boolean addCust(Customer customer) {
         String sql = "INSERT INTO client_schedule.customers" +
                 " (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Division_ID)" +
@@ -46,8 +48,8 @@ public class CustomerDao {
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     int customerId = generatedKeys.getInt(1);
-                    //is this necessary? FIXME
                     customer.setCustomerId(customerId);
+                    displayCust.add(customer);
                     return true;
                 }
             }
@@ -58,26 +60,27 @@ public class CustomerDao {
         return false;
     }
 
-    public static void updateCust(Customer customer) {
+    public static boolean updateCust(Customer customer, int index) {
         int custId = customer.getCustomerId();
         String sql = "UPDATE client_schedule.customers " +
                 "SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? " +
                 "WHERE Customer_ID = ?";
 
+        String custName = customer.getCustomerName();
+        String address = customer.getAddress();
+        String postalCode = customer.getPostalCode();
+        String phone = customer.getPhone();
+
+        //records the current instant of time in UTC, which is the correct time zone for my SQL data
+        Instant now = Instant.now();
+        Timestamp updateDate = Timestamp.from(now);
+
+        String updatedBy = customer.getLastUpdatedBy();
+        int divisionId = customer.getDivisionId();
+
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            String custName = customer.getCustomerName();
-            String address = customer.getAddress();
-            String postalCode = customer.getPostalCode();
-            String phone = customer.getPhone();
-
-            //records the current instant of time in UTC, which is the correct time zone for my SQL data
-            Instant now = Instant.now();
-            Timestamp updateDate = Timestamp.from(now);
-
-            String updatedBy = customer.getLastUpdatedBy();
-            int divisionId = customer.getDivisionId();
 
             preparedStatement.setString(1, custName);
             preparedStatement.setString(2, address);
@@ -87,24 +90,63 @@ public class CustomerDao {
             preparedStatement.setString(6, updatedBy);
             preparedStatement.setInt(7, divisionId);
             preparedStatement.setInt(8, custId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0) {
+                // The insertion was successful
+                    displayCust.set(index, customer);
+                    return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+        return false;
     }
 
-    public static void deleteCust(Customer customer) {
+    public static boolean deleteCust(Customer customer) {
         int custId = customer.getCustomerId();
-        String sql = "DELETE FROM client_schedule.customers WHERE CUSTOMER_ID = ?";
+        int appts = findAppts(custId);
 
+        if(appts == 0) {
+            String sql = "DELETE FROM client_schedule.customers WHERE CUSTOMER_ID = ?";
+
+            try {
+                Connection connection = JDBC.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, custId);
+
+                int affectedRows = preparedStatement.executeUpdate();
+                if (affectedRows > 0) {
+                    displayCust.remove(customer);
+                    return true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        }
+            return false;
+    }
+
+    public static int findAppts(int custId){
+        String sql = "SELECT * FROM client_schedule.appointments WHERE CUSTOMER_ID = ?";
+        int appts = 0;
         try {
             Connection connection = JDBC.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, custId);
-        } catch (SQLException e) {
+
+           //FIXMe resultSet is null
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                appts ++;
+            }
+        }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+        return appts;
     }
 
     public static Customer findCust(Customer customer) {
@@ -149,7 +191,6 @@ public class CustomerDao {
     }
 
         public static ObservableList<Customer> getAllCust() {
-        ObservableList<Customer> custList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM client_schedule.customers";
 
         try {
@@ -181,7 +222,7 @@ public class CustomerDao {
                             getCountryID(resultSet.getInt("Division_ID"))
                     );
 
-                    custList.add(customer);
+                    displayCust.add(customer);
                     //not all Customers have been updated, so allow for null update time
                 } else {
                     Customer customer = new Customer(
@@ -198,14 +239,14 @@ public class CustomerDao {
                             getCountryID(resultSet.getInt("Division_ID"))
                     );
 
-                    custList.add(customer);
+                    displayCust.add(customer);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return custList;
+        return displayCust;
     }
 
     private static String getCountryID(int divId) {
