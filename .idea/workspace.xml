@@ -206,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699421496051</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="AddAppt cleaned up, WIP">
+      <created>1699492482491</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1699492482491</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -247,7 +254,8 @@
     <MESSAGE value="Fixed issue with closing static connection" />
     <MESSAGE value="WIP Customer add &amp; modify, next need to implement table refresh" />
     <MESSAGE value="Customer add &amp; modify done, delete is WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="Customer add &amp; modify done, delete is WIP" />
+    <MESSAGE value="AddAppt cleaned up, WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="AddAppt cleaned up, WIP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -265,19 +273,9 @@
           <option name="timeStamp" value="21" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java</url>
-          <line>107</line>
-          <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java</url>
           <line>45</line>
           <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java</url>
-          <line>132</line>
-          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -53,7 +53,7 @@ public class DeleteDialogController implements Initializable {
                 cancelButton.setText("Okay");
                 deleteButton.setVisible(false);
             }
-        } else {
+        } /*else {
             boolean deleted = AppointmentDao.deleteAppt(appointment);
             if (deleted) {
                 confirmationDialog.setText("Appointment Deleted");
@@ -64,7 +64,7 @@ public class DeleteDialogController implements Initializable {
                 cancelButton.setText("Okay");
                 deleteButton.setVisible(false);
             }
-        }
+        }*/
     }
 
     @FXML

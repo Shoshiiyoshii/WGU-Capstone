@@ -2,6 +2,7 @@ package thomasmccue.dbclientapp.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,11 +18,11 @@ import thomasmccue.dbclientapp.model.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.*;
 import java.time.LocalDateTime;
-import java.util.ResourceBundle;
+import java.time.temporal.*;
+import java.util.*;
 
 public class LandingPageController implements Initializable {
     @FXML
@@ -97,19 +98,42 @@ public class LandingPageController implements Initializable {
     }
 
     public void radioFilter(ActionEvent event){
+        //get the current date to compare
+        LocalDate now = LocalDate.now();
         if(monthRadio.isSelected()){
-           // System.out.println(AppointmentDao.getThisMonthsAppointments());FIXME
-            apptTable.setItems(AppointmentDao.getThisMonthsAppointments());
+            //get the current month and year
+            int currentMonth = now.getMonthValue();
+            int currentYear = now.getYear();
+
+            //FIXME LAMBDA HERE
+            //create a filtered list of appointments that occur during the current month and year
+            FilteredList<Appointment> thisMonthsAppts = new FilteredList<>(AppointmentDao.displayAppt, appointment -> {
+                LocalDateTime start = appointment.getStart();
+                return start.getMonthValue() == currentMonth && start.getYear() == currentYear;
+            });
+
+            // set the filtered list to the TableView
+            apptTable.setItems(thisMonthsAppts);
+
         } else if (weekRadio.isSelected()) {
-           // System.out.println(AppointmentDao.getThisWeeksAppointments());FIXME
-            apptTable.setItems(AppointmentDao.getThisWeeksAppointments());
+            //get current week range
+            TemporalField fieldISO = WeekFields.of(Locale.getDefault()).dayOfWeek();
+            LocalDate startOfWeek = now.with(fieldISO, 1); // Start of week (e.g., Monday)
+            LocalDate endOfWeek = now.with(fieldISO, 7); // End of week (e.g., Sunday)
+
+            //FIXME LAMBDA HERE
+            FilteredList<Appointment> thisWeeksAppts = new FilteredList<>(AppointmentDao.displayAppt, appointment -> {
+                LocalDateTime start = appointment.getStart();
+                return !start.toLocalDate().isBefore(startOfWeek) && !start.toLocalDate().isAfter(endOfWeek);
+            });
+
+            apptTable.setItems(thisWeeksAppts);
         }else if(allTimeRadio.isSelected()){
-           // System.out.println(AppointmentDao.getAllAppointments());FIXME
-            apptTable.setItems(AppointmentDao.getAllAppointments());
+           apptTable.setItems(AppointmentDao.displayAppt);
         }
     }
     public void clickApptAdd(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrModifyAppointmentPage.fxml"));
+       /* FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrModifyAppointmentPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
 
@@ -117,10 +141,10 @@ public class LandingPageController implements Initializable {
         controller.setUpAdd("Create a new Appointment", "Save");
         stage.setTitle("Create A New Appointment");
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
     }
     public void clickApptUpdate(ActionEvent event) throws IOException{
-        SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
+       /* SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
         Appointment selectedAppt = selectionModel.getSelectedItem();
 
         if(selectedAppt == null) {
@@ -140,11 +164,11 @@ public class LandingPageController implements Initializable {
             stage.setTitle("Update Existing Appointment");
             stage.setScene(scene);
             stage.show();
-        }
+        }*/
     }
 
     public void clickApptDelete(ActionEvent event) throws SQLException, IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("deleteDialog.fxml"));
+      /*  FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("deleteDialog.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setTitle("Delete Appointment");
@@ -162,18 +186,13 @@ public class LandingPageController implements Initializable {
             stage.show();
         } else{
             apptErrorMessage.setText("First select an appointment to delete.");
-        }
+        }*/
     }
 
     public void exitClicked(ActionEvent event)throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
-
-    public void refresh(){
-        custTable.refresh();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custTable.setItems(CustomerDao.getAllCust());
@@ -192,9 +211,6 @@ public class LandingPageController implements Initializable {
 
 
         //populate appointment table with all appointments, if table is not yet populated
-
-       /* allTimeRadio.setSelected(true);
-
         apptTable.setItems(AppointmentDao.getAllAppointments());
 
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("apptId"));
@@ -207,8 +223,8 @@ public class LandingPageController implements Initializable {
         endDTCol.setCellValueFactory(new PropertyValueFactory<>("end"));
         custIdTopCol.setCellValueFactory(new PropertyValueFactory<>("custId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-*/
 
+        allTimeRadio.setSelected(true);
 
     }
 }

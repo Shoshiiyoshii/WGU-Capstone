@@ -45,7 +45,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
 
         }
         public void saveClicked(ActionEvent event)throws IOException{
-                if(saveButton.getText().equals("Save Changes")){
+               /* if(saveButton.getText().equals("Save Changes")){
                         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Appointments WHERE Appointment_ID = ?")) {
                                 preparedStatement.setString(1, apptIdField.getText());
 
@@ -109,26 +109,26 @@ public class AddOrUpdateAppointmentController implements Initializable {
                         AppointmentDao.addAppt(newAppointment);
                         Stage stage = (Stage) saveButton.getScene().getWindow();
                         stage.close();
-                }
+                }*/
         }
         public void cancelClicked(ActionEvent event)throws IOException {
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         }
         public void setUpAdd(String titleText, String buttonText) throws IOException{
-                pageTitleLabel.setText(titleText);
+               /* pageTitleLabel.setText(titleText);
                 saveButton.setText(buttonText);
                 apptIdField.setVisible(false);
-                appointmentIdLabel.setVisible(false);
+                appointmentIdLabel.setVisible(false);*/
         }
         //setup, different depending on whether modify or add button are clicked
         public void setUpModify(String titleText, String buttonText, int apptID) throws IOException{
-                pageTitleLabel.setText(titleText);
+               /* pageTitleLabel.setText(titleText);
                 saveButton.setText(buttonText);
-                apptIdField.setText(String.valueOf(apptID));
+                apptIdField.setText(String.valueOf(apptID));*/
         }
         public void preFillFields(Appointment selectedAppt) throws IOException{
-                this.appointment = selectedAppt;
+               /* this.appointment = selectedAppt;
 
                 apptIdField.setText(String.valueOf(appointment.getApptId()));
                 titleField.setText(appointment.getTitle());
@@ -139,7 +139,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
                 endDTField.setText(String.valueOf(appointment.getEnd()));
                 selectContactBox.getSelectionModel().select(String.valueOf(appointment.getContactId()));
                 selectCustBox.getSelectionModel().select(String.valueOf(appointment.getCustId()));
-                userIdField.setText(String.valueOf(appointment.getUserId()));
+                userIdField.setText(String.valueOf(appointment.getUserId()));*/
         }
 
         @Override
