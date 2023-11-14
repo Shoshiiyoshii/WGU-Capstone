@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="584.0" prefWidth="518.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.AddOrUpdateAppointmentController">
+<AnchorPane prefHeight="583.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.AddOrUpdateAppointmentController">
     <children>
         <Label fx:id="appointmentIdLabel" layoutX="53.0" layoutY="84.0" text="Appointment ID:">
             <font>
@@ -52,13 +52,13 @@
             </font>
         </Label>
 
-        <TextField fx:id="apptIdField" disable="true" editable="false" layoutX="213.0" layoutY="80.0" />
-        <TextField fx:id="titleField" layoutX="213.0" layoutY="115.0" />
-        <TextField fx:id="descField" layoutX="213.0" layoutY="150.0" />
-        <TextField fx:id="locationField" layoutX="213.0" layoutY="185.0" />
-        <TextField fx:id="typeField" layoutX="213.0" layoutY="220.0" />
-        <TextField fx:id="startDTField" layoutX="213.0" layoutY="255.0" />
-        <TextField fx:id="endDTField" layoutX="213.0" layoutY="290.0" />
+        <TextField fx:id="apptIdField" disable="true" editable="false" layoutX="213.0" layoutY="80.0" prefHeight="26.0" prefWidth="299.0" />
+        <TextField fx:id="titleField" layoutX="213.0" layoutY="115.0" prefHeight="26.0" prefWidth="299.0" />
+        <TextField fx:id="descField" layoutX="213.0" layoutY="150.0" prefHeight="26.0" prefWidth="299.0" />
+        <TextField fx:id="locationField" layoutX="213.0" layoutY="185.0" prefHeight="26.0" prefWidth="299.0" />
+        <TextField fx:id="typeField" layoutX="213.0" layoutY="220.0" prefHeight="26.0" prefWidth="299.0" />
+        <TextField fx:id="startDTField" layoutX="213.0" layoutY="255.0" prefHeight="26.0" prefWidth="299.0" promptText="Input Time and Date as yyyy-mm-dd hh:mm:ss" />
+        <TextField fx:id="endDTField" layoutX="213.0" layoutY="290.0" prefHeight="26.0" prefWidth="299.0" promptText="Input Time and Date as yyyy-mm-dd hh:mm:ss" />
         <ButtonBar layoutX="226.0" layoutY="491.0" prefHeight="40.0" prefWidth="269.0">
          <buttons>
                 <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClicked" prefHeight="26.0" prefWidth="106.0" text="Save" />
@@ -70,18 +70,18 @@
                 <Font name="System Bold" size="13.0" />
             </font>
         </Label>
-        <ComboBox fx:id="selectCustBox" editable="true" layoutX="213.0" layoutY="360.0" onAction="#selectOrEnterCust" prefHeight="26.0" prefWidth="160.0" promptText="Customer By ID " />
-        <ComboBox fx:id="selectContactBox" editable="true" layoutX="213.0" layoutY="325.0" onAction="#selectOrEnterContact" prefHeight="26.0" prefWidth="160.0" promptText="Contact by ID" />
+        <ComboBox fx:id="selectCustBox" editable="true" layoutX="213.0" layoutY="360.0" onAction="#selectOrEnterCust" prefHeight="26.0" prefWidth="299.0" promptText="Customers By ID " />
+        <ComboBox fx:id="selectContactBox" editable="true" layoutX="213.0" layoutY="325.0" onAction="#selectOrEnterContact" prefHeight="26.0" prefWidth="299.0" promptText="Contacts by ID" />
         <Label fx:id="selectCustIdLabel" layoutX="53.0" layoutY="364.0" text="Select Customer ID:">
             <font>
                 <Font name="System Bold" size="13.0" />
             </font>
         </Label>
-        <Label fx:id="userIdLabel" layoutX="53.0" layoutY="400.0" text="Your User ID:">
+        <Label fx:id="userIdLabel" layoutX="53.0" layoutY="400.0" text="User ID:">
             <font>
                 <Font name="System Bold" size="13.0" />
             </font>
         </Label>
-        <TextField fx:id="userIdField" layoutX="213.0" layoutY="396.0" />
+      <ComboBox fx:id="selectUserIdBox" editable="true" layoutX="213.0" layoutY="396.0" onAction="#selectOrEnterCust" prefHeight="26.0" prefWidth="299.0" promptText="Users By ID " />
     </children>
 </AnchorPane>

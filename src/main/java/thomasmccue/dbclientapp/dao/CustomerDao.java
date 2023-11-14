@@ -13,6 +13,7 @@ import java.time.ZoneId;
 public class CustomerDao {
 
     public static ObservableList<Customer> displayCust = FXCollections.observableArrayList();
+    public static  ObservableList<String> allCustIds = FXCollections.observableArrayList();
     public static boolean addCust(Customer customer) {
         String sql = "INSERT INTO client_schedule.customers" +
                 " (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Division_ID)" +
@@ -246,6 +247,24 @@ public class CustomerDao {
             throw new RuntimeException(e);
         }
         return displayCust;
+    }
+
+    public static ObservableList<String> getAllCustId() {
+        String sql = "SELECT Customer_ID FROM client_schedule.customers";
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                allCustIds.add( String.valueOf(id));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return allCustIds;
     }
 
     private static String getCountryID(int divId) {

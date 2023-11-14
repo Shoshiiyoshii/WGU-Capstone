@@ -29,13 +29,21 @@ public class AppointmentDao {
         Instant now = Instant.now();
         Timestamp createDate = Timestamp.from(now);
 
+        //explicitly convert start and end times for appointments from users local time to UTC for storage
+        ZoneId userTimeZone = ZoneId.systemDefault();
 
-        Timestamp apptStart = Timestamp.valueOf(appointment.getStart());
-        Timestamp apptEnd = Timestamp.valueOf(appointment.getEnd());
+        LocalDateTime localStartTime = appointment.getStart();
+        ZonedDateTime userZoneStartTime = localStartTime.atZone(userTimeZone);
+        ZonedDateTime utcStartTime = userZoneStartTime.withZoneSameInstant(ZoneOffset.UTC);
 
-        //check that appointment start and end times meet requirements
-        boolean validTime = apptTimesValid(apptStart, apptEnd);
-        if (validTime) {
+        LocalDateTime localEndTime = appointment.getEnd();
+        ZonedDateTime userZoneEndTime = localEndTime.atZone(userTimeZone);
+        ZonedDateTime utcEndTime = userZoneEndTime.withZoneSameInstant(ZoneOffset.UTC);
+
+
+        Timestamp apptStart = Timestamp.valueOf(utcStartTime.toLocalDateTime());
+        Timestamp apptEnd = Timestamp.valueOf(utcEndTime.toLocalDateTime());
+
             try {
                 Connection connection = JDBC.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -48,9 +56,9 @@ public class AppointmentDao {
                 preparedStatement.setTimestamp(6, apptEnd);
                 preparedStatement.setTimestamp(7, createDate);
                 preparedStatement.setString(8, createdBy);
-                preparedStatement.setInt(11, customerID);
-                preparedStatement.setInt(12, userID);
-                preparedStatement.setInt(13, contactID);
+                preparedStatement.setInt(9, customerID);
+                preparedStatement.setInt(10, userID);
+                preparedStatement.setInt(11, contactID);
 
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows > 0) {
@@ -67,9 +75,10 @@ public class AppointmentDao {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
-        }
         return false;
-    }
+        }
+
+
 
       /*  public static boolean deleteAppt (Appointment selectedAppt) throws SQLException {
             if (apptList.contains(selectedAppt)) {
@@ -200,91 +209,5 @@ public class AppointmentDao {
             return displayAppt;
         }
 
-       /* public static ObservableList<Appointment> getThisWeeksAppointments () {
-            ObservableList<Appointment> weekAppt = FXCollections.observableArrayList();
-            try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM client_schedule.appointments WHERE WEEK(Start)" +
-                    " = WEEK(NOW()) AND YEAR(Start) = YEAR(NOW());");
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
-
-                //for every row in mysql table Appointments, create an appointment object and add to the ObservableList apptList
-                while (resultSet.next()) {
-                    Appointment appointment = new Appointment();
-                    appointment.setApptId(resultSet.getInt("Appointment_ID"));
-                    appointment.setTitle(resultSet.getString("Title"));
-                    appointment.setDesc(resultSet.getString("Description"));
-                    appointment.setLocation(resultSet.getString("Location"));
-                    appointment.setType(resultSet.getString("Type"));
-                    appointment.setStart(resultSet.getObject("Start", LocalDateTime.class));
-                    appointment.setEnd(resultSet.getObject("End", LocalDateTime.class));
-                    appointment.setCreateDate(resultSet.getObject("Create_Date", LocalDateTime.class));
-                    appointment.setCreatedBy(resultSet.getString("Created_By"));
-                    appointment.setLastUpdate(resultSet.getObject("Last_Update", LocalDateTime.class));
-                    appointment.setLastUpdatedBy(resultSet.getString("Last_Updated_By"));
-                    appointment.setCustId(resultSet.getInt("Customer_ID"));
-                    appointment.setUserId(resultSet.getInt("User_ID"));
-                    appointment.setContactId(resultSet.getInt("Contact_ID"));
-
-                    weekAppt.add(appointment);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-            return weekAppt;
-        }*/
-
-       /* public static ObservableList<Appointment> getThisMonthsAppointments () {
-            ObservableList<Appointment> monthAppt = FXCollections.observableArrayList();
-            try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM client_schedule.appointments WHERE MONTH(Start) " +
-                    "= MONTH(NOW()) AND YEAR(Start) = YEAR(NOW())");
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
-
-                //for every row in mysql table Appointments, create an appointment object and add to the ObservableList apptList
-                while (resultSet.next()) {
-                    Appointment appointment = new Appointment();
-                    appointment.setApptId(resultSet.getInt("Appointment_ID"));
-                    appointment.setTitle(resultSet.getString("Title"));
-                    appointment.setDesc(resultSet.getString("Description"));
-                    appointment.setLocation(resultSet.getString("Location"));
-                    appointment.setType(resultSet.getString("Type"));
-                    appointment.setStart(resultSet.getObject("Start", LocalDateTime.class));
-                    appointment.setEnd(resultSet.getObject("End", LocalDateTime.class));
-                    appointment.setCreateDate(resultSet.getObject("Create_Date", LocalDateTime.class));
-                    appointment.setCreatedBy(resultSet.getString("Created_By"));
-                    appointment.setLastUpdate(resultSet.getObject("Last_Update", LocalDateTime.class));
-                    appointment.setLastUpdatedBy(resultSet.getString("Last_Updated_By"));
-                    appointment.setCustId(resultSet.getInt("Customer_ID"));
-                    appointment.setUserId(resultSet.getInt("User_ID"));
-                    appointment.setContactId(resultSet.getInt("Contact_ID"));
-
-                    monthAppt.add(appointment);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-            return monthAppt;
-        }*/
-
-        public static boolean apptTimesValid (Timestamp start, Timestamp end){
-            ZoneId et = ZoneId.of("America/New_York");
-
-            Instant startInstant = start.toInstant();
-            Instant endInstant = end.toInstant();
-
-            ZonedDateTime etStart = ZonedDateTime.ofInstant(startInstant, et);
-            ZonedDateTime etEnd = ZonedDateTime.ofInstant(endInstant, et);
-
-            ZonedDateTime businessOpen = etStart.with(LocalTime.of(8, 0));
-            ZonedDateTime businessClosed = etStart.with(LocalTime.of(22, 0));
-
-            boolean isWithinBusinessHours = !etStart.isBefore(businessOpen) && !etStart.isAfter(businessClosed)
-                    && !etEnd.isBefore(businessOpen) && !etEnd.isAfter(businessClosed);
-
-            boolean isStartTimeBeforeEndTime = etStart.isBefore(etEnd);
-
-
-            return isWithinBusinessHours && isStartTimeBeforeEndTime;
-        }
     }
 

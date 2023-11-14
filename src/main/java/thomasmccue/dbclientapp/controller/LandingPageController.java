@@ -133,7 +133,7 @@ public class LandingPageController implements Initializable {
         }
     }
     public void clickApptAdd(ActionEvent event) throws IOException {
-       /* FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrModifyAppointmentPage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrModifyAppointmentPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
 
@@ -141,7 +141,7 @@ public class LandingPageController implements Initializable {
         controller.setUpAdd("Create a new Appointment", "Save");
         stage.setTitle("Create A New Appointment");
         stage.setScene(scene);
-        stage.show();*/
+        stage.show();
     }
     public void clickApptUpdate(ActionEvent event) throws IOException{
        /* SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
