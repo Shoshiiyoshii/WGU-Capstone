@@ -57,8 +57,8 @@
         <TextField fx:id="descField" layoutX="213.0" layoutY="150.0" prefHeight="26.0" prefWidth="299.0" />
         <TextField fx:id="locationField" layoutX="213.0" layoutY="185.0" prefHeight="26.0" prefWidth="299.0" />
         <TextField fx:id="typeField" layoutX="213.0" layoutY="220.0" prefHeight="26.0" prefWidth="299.0" />
-        <TextField fx:id="startDTField" layoutX="213.0" layoutY="255.0" prefHeight="26.0" prefWidth="299.0" promptText="Input Time and Date as yyyy-mm-dd hh:mm:ss" />
-        <TextField fx:id="endDTField" layoutX="213.0" layoutY="290.0" prefHeight="26.0" prefWidth="299.0" promptText="Input Time and Date as yyyy-mm-dd hh:mm:ss" />
+        <TextField fx:id="startDTField" layoutX="213.0" layoutY="255.0" prefHeight="26.0" prefWidth="299.0" promptText="Input Time and Date as mm-dd-yyyy hh:mm" />
+        <TextField fx:id="endDTField" layoutX="213.0" layoutY="290.0" prefHeight="26.0" prefWidth="299.0" promptText="Input Time and Date as mm-dd-yyyy hh:mm" />
         <ButtonBar layoutX="226.0" layoutY="491.0" prefHeight="40.0" prefWidth="269.0">
          <buttons>
                 <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveClicked" prefHeight="26.0" prefWidth="106.0" text="Save" />

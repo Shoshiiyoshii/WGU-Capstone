@@ -19,10 +19,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.*;
-import java.util.Locale;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-import static thomasmccue.dbclientapp.helper.JDBC.connection;
 
 public class AddOrUpdateAppointmentController implements Initializable {
         @FXML
@@ -36,6 +35,9 @@ public class AddOrUpdateAppointmentController implements Initializable {
         @FXML
         private Button saveButton, cancelButton;
 
+        //assumes times are input in users local time
+        final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm")
+                .withZone(ZoneId.systemDefault());
         private Appointment appointment;
 
         public void selectOrEnterContact(ActionEvent event)throws IOException {
@@ -74,10 +76,10 @@ public class AddOrUpdateAppointmentController implements Initializable {
 
                                 if (start.isEmpty() || end.isEmpty()) {
                                         errorMessage.setText("Please input valid appointment start and end times\n" +
-                                                "in the format yyyy-mm-dd hh:mm:ss");
+                                                "in the format mm-dd-yyyy hh:mm");
                                 } else {
-                                        Timestamp apptStart = Timestamp.valueOf(start);
-                                        Timestamp apptEnd = Timestamp.valueOf(end);
+                                        ZonedDateTime apptStart = ZonedDateTime.parse(start, formatter);
+                                        ZonedDateTime apptEnd = ZonedDateTime.parse(end, formatter);
 
                                         if (!apptTimesInBusinessHours(apptStart, apptEnd)) {
                                                 errorMessage.setText("Please ensure the appointment is scheduled\n" +
@@ -85,7 +87,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
                                         } else if (!apptTimesStartBeforeEnd(apptStart, apptEnd)) {
                                                 errorMessage.setText("Please ensure the appointment start time is\n" +
                                                         "before the appointment end time");
-                                        } else if (apptOverlaps(apptStart, apptEnd, custId)) {
+                                        } else if (apptOverlaps(apptStart, apptEnd, custId, -1)) {
                                                 errorMessage.setText("Please ensure that the chosen start and end times do\n" +
                                                         "not overlap with an already existing appointment.");
                                         } else {
@@ -115,10 +117,82 @@ public class AddOrUpdateAppointmentController implements Initializable {
                                         }
                                 }
                         }
+                        //update appointment
+                } else {
+                        int index = AppointmentDao.displayAppt.indexOf(appointment);
+
+                        String title = titleField.getText();
+                        String desc = descField.getText();
+                        String location = locationField.getText();
+                        String type = typeField.getText();
+
+                        String start = startDTField.getText();
+                        String end = endDTField.getText();
+
+                        String updatedBy = (LogInController.loggedInUser);
+
+                        //check to make sure form is complete
+                        if (title.isEmpty() || desc.isEmpty() || location.isEmpty() ||
+                                type.isEmpty() || selectUserIdBox.getValue().isEmpty() ||
+                                selectContactBox.getValue().isEmpty() || selectCustBox.getValue().isEmpty()) {
+
+                                errorMessage.setText("Please first ensure all fields are filled out.");
+                        } else {
+                                int custId = Integer.parseInt(selectCustBox.getValue());
+                                int userId = Integer.parseInt(selectUserIdBox.getValue());
+
+                                String contactValue = selectContactBox.getValue();
+                                //split the string at the comma
+                                String[] parts = contactValue.split(",");
+                                //parse the first part (after trimming spaces) to an integer
+                                int contactId = Integer.parseInt(parts[0].trim());
+
+                                if (start.isEmpty() || end.isEmpty()) {
+                                        errorMessage.setText("Please input valid appointment start and end times\n" +
+                                                "in the format yyyy-mm-dd hh:mm:ss");
+                                } else {
+                                        ZonedDateTime apptStart = ZonedDateTime.parse(start, formatter);
+                                        ZonedDateTime apptEnd = ZonedDateTime.parse(end, formatter);
+
+                                        if (!apptTimesInBusinessHours(apptStart, apptEnd)) {
+                                                errorMessage.setText("Please ensure the appointment is scheduled\n" +
+                                                        "within the business hours of 8:00am ET to 10:00pm ET");
+                                        } else if (!apptTimesStartBeforeEnd(apptStart, apptEnd)) {
+                                                errorMessage.setText("Please ensure the appointment start time is\n" +
+                                                        "before the appointment end time");
+                                        } else if (apptOverlaps(apptStart, apptEnd, custId, appointment.getApptId())) {
+                                                errorMessage.setText("Please ensure that the chosen start and end times do\n" +
+                                                        "not overlap with an already existing appointment.");
+                                        } else {
+                                                LocalDateTime localStart = (apptStart.toLocalDateTime());
+                                                LocalDateTime localEnd = (apptEnd.toLocalDateTime());
+
+                                                appointment.setTitle(title);
+                                                appointment.setDesc(desc);
+                                                appointment.setLocation(location);
+                                                appointment.setType(type);
+                                                appointment.setStart(localStart);
+                                                appointment.setEnd(localEnd);
+                                                appointment.setLastUpdatedBy(updatedBy);
+                                                appointment.setCustId(custId);
+                                                appointment.setContactId(contactId);
+                                                appointment.setUserId(userId);
+
+                                                boolean updated = AppointmentDao.updateAppt(appointment, index);
+                                                if (updated) {
+                                                        Stage stage = (Stage) saveButton.getScene().getWindow();
+                                                        stage.close();
+                                                } else {
+                                                        errorMessage.setText("There was a problem updating the appointment" +
+                                                                " in the database.");
+                                                }
+                                        }
+                                }
+                        }
                 }
         }
 
-        public static boolean apptTimesInBusinessHours (Timestamp start, Timestamp end){
+        public static boolean apptTimesInBusinessHours (ZonedDateTime start, ZonedDateTime end){
                 ZoneId et = ZoneId.of("America/New_York");
 
                 Instant startInstant = start.toInstant();
@@ -135,7 +209,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
 
                 return isWithinBusinessHours;
         }
-        public static boolean apptTimesStartBeforeEnd (Timestamp start, Timestamp end){
+        public static boolean apptTimesStartBeforeEnd (ZonedDateTime start, ZonedDateTime end){
                 ZoneId et = ZoneId.of("America/New_York");
 
                 Instant startInstant = start.toInstant();
@@ -151,7 +225,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
 
         //user input is in local time, and start and end times in the displayAppt
         // list are also in local time, so can be compared directly.
-        public static boolean apptOverlaps (Timestamp start, Timestamp end, int custId) {
+        public static boolean apptOverlaps (ZonedDateTime start, ZonedDateTime end, int custId, int apptId) {
                 LocalDateTime newStart = start.toLocalDateTime();
                 LocalDateTime newEnd = end.toLocalDateTime();
 
@@ -160,6 +234,12 @@ public class AddOrUpdateAppointmentController implements Initializable {
                         LocalDateTime existingStart = existingAppt.getStart();
                         LocalDateTime existingEnd = existingAppt.getEnd();
                         int existingCustId = existingAppt.getCustId();
+                        int existingApptId = existingAppt.getApptId();
+
+                        //make sure the appointment times that are being edited are exempt from the checks.
+                        if(apptId == existingApptId){
+                                continue;
+                        }
 
                         if(custId == existingCustId){
                                 if((existingStart.isAfter(newStart) || existingStart.isEqual(newStart))
@@ -191,24 +271,28 @@ public class AddOrUpdateAppointmentController implements Initializable {
                 apptIdField.setText("Appointment ID will be auto-assigned on save");
         }
         //setup, different depending on whether modify or add button are clicked
-        public void setUpModify(String titleText, String buttonText, int apptID) throws IOException{
-               /* pageTitleLabel.setText(titleText);
+        public void setUpModify(String titleText, String buttonText, Appointment appointment) throws IOException{
+                pageTitleLabel.setText(titleText);
                 saveButton.setText(buttonText);
-                apptIdField.setText(String.valueOf(apptID));*/
-        }
-        public void preFillFields(Appointment selectedAppt) throws IOException{
-               /* this.appointment = selectedAppt;
+
+                this.appointment = appointment;
+
+                LocalDateTime start = appointment.getStart();
+                LocalDateTime end = appointment.getEnd();
+
+                String formattedStartTime = start.format(formatter);
+                String formattedEndTime = end.format(formatter);
 
                 apptIdField.setText(String.valueOf(appointment.getApptId()));
                 titleField.setText(appointment.getTitle());
                 descField.setText(appointment.getDesc());
                 locationField.setText(appointment.getLocation());
                 typeField.setText(appointment.getType());
-                startDTField.setText(String.valueOf(appointment.getStart()));
-                endDTField.setText(String.valueOf(appointment.getEnd()));
+                startDTField.setText(formattedStartTime);
+                endDTField.setText(formattedEndTime);
                 selectContactBox.getSelectionModel().select(String.valueOf(appointment.getContactId()));
                 selectCustBox.getSelectionModel().select(String.valueOf(appointment.getCustId()));
-                userIdField.setText(String.valueOf(appointment.getUserId()));*/
+                selectUserIdBox.getSelectionModel().select(String.valueOf(appointment.getUserId()));
         }
 
         @Override

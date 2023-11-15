@@ -220,7 +220,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699579415230</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Checks for appointments written, apptOverlaps needs to be tested">
+      <created>1699935535361</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1699935535361</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -263,7 +270,8 @@
     <MESSAGE value="Customer add &amp; modify done, delete is WIP" />
     <MESSAGE value="AddAppt cleaned up, WIP" />
     <MESSAGE value="getAllAppts method fixed, Lambdas added, appointment sorting working" />
-    <option name="LAST_COMMIT_MESSAGE" value="getAllAppts method fixed, Lambdas added, appointment sorting working" />
+    <MESSAGE value="Checks for appointments written, apptOverlaps needs to be tested" />
+    <option name="LAST_COMMIT_MESSAGE" value="Checks for appointments written, apptOverlaps needs to be tested" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -281,9 +289,24 @@
           <option name="timeStamp" value="21" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="43" />
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java</url>
+          <line>167</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

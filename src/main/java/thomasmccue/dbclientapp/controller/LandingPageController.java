@@ -93,8 +93,6 @@ public class LandingPageController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
-
-
     }
 
     public void radioFilter(ActionEvent event){
@@ -144,7 +142,7 @@ public class LandingPageController implements Initializable {
         stage.show();
     }
     public void clickApptUpdate(ActionEvent event) throws IOException{
-       /* SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
+        SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
         Appointment selectedAppt = selectionModel.getSelectedItem();
 
         if(selectedAppt == null) {
@@ -157,36 +155,32 @@ public class LandingPageController implements Initializable {
             Stage stage = new Stage();
 
             AddOrUpdateAppointmentController controller = fxmlLoader.getController();
-            int apptID = selectedAppt.getApptId();
-            controller.setUpModify("Update An Existing Appointment", "Save Changes", apptID);
-            controller.preFillFields(selectedAppt);
+            controller.setUpModify("Update An Existing Appointment", "Save Changes", selectedAppt);
 
             stage.setTitle("Update Existing Appointment");
             stage.setScene(scene);
             stage.show();
-        }*/
+        }
     }
 
     public void clickApptDelete(ActionEvent event) throws SQLException, IOException {
-      /*  FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("deleteDialog.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Delete Appointment");
-        stage.setScene(scene);
-
-      DeleteDialogController dialogController = fxmlLoader.getController();
-
         SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
         Appointment selectedAppt = selectionModel.getSelectedItem();
-        if(selectedAppt != null) {
-            apptErrorMessage.setText("");
-            dialogController.setAppointment(selectedAppt);
-            dialogController.setToBeDeletedAppt();
 
+        if(selectedAppt == null) {
+            customerErrorMessage.setText("Please first select an Appointment to Delete.");
+        } else {
+            customerErrorMessage.setText("");
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("deleteDialog.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            DeleteDialogController controller = fxmlLoader.getController();
+            controller.setUpAppointmentDelete(selectedAppt);
+            stage.setTitle("Delete Appointment");
+            stage.setScene(scene);
             stage.show();
-        } else{
-            apptErrorMessage.setText("First select an appointment to delete.");
-        }*/
+        }
     }
 
     public void exitClicked(ActionEvent event)throws IOException {
