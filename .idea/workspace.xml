@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Wip">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/appointmentReport.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +38,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="proportion" value="0.9" />
+    <option name="proportion" value="0.54363376" />
     <option name="selectedTabId" value="CurrentFile" />
     <option name="showPreview" value="true" />
   </component>
@@ -67,6 +69,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="thomasmccue.dbclientapp.model" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
@@ -241,7 +246,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="CustomersTableCRUD" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -311,7 +316,16 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java</url>
-          <line>192</line>
+          <line>243</line>
+          <option name="timeStamp" value="73" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/ContactScheduleController.java</url>
+          <line>31</line>
+          <properties class="thomasmccue.dbclientapp.controller.ContactScheduleController" method="selectContact">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
       </breakpoints>

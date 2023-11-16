@@ -13,9 +13,13 @@ import thomasmccue.dbclientapp.helper.JDBC;
 import thomasmccue.dbclientapp.Main;
 
 import java.sql.*;
+import java.time.Instant;
+import java.io.*;
 import java.time.ZoneId;
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 
@@ -40,6 +44,7 @@ public class LogInController implements Initializable {
 
         boolean userExists = isValidUser(usernameInput, passwordInput);
         if(userExists){
+            recordLogins(usernameInput, true);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("landingPage.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
@@ -47,6 +52,7 @@ public class LogInController implements Initializable {
             stage.setScene(scene);
             stage.show();
         } else{
+            recordLogins(usernameInput, false);
             errorMsg.setVisible(true);
         }
     }
@@ -74,9 +80,25 @@ public class LogInController implements Initializable {
         return false;
     }
 
-    //public static int getLoggedInUserId(){
-    //    return loggedInUserId;
-    //}
+    public static void recordLogins(String username, boolean loggedIn) {
+        ZonedDateTime utcNow = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
+        ZonedDateTime localNow = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss z");
+        String utcTimestamp = utcNow.format(formatter);
+        String localTimestamp = localNow.format(formatter);
+
+        String loginAttempt = String.format("Login Attempt Time: %s - %s, Username Input: %s, Login Successful: %s%n",
+                utcTimestamp, localTimestamp, username, loggedIn);
+
+        String filePath = "login_activity.txt";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.append(loginAttempt);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void clickClose(ActionEvent event) throws IOException {

@@ -6,6 +6,7 @@ import thomasmccue.dbclientapp.helper.JDBC;
 import thomasmccue.dbclientapp.model.FirstLevelDivision;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 public class FirstLevelDivisionDao {
     public static ObservableList<String> getDivList(int whichDiv) {
@@ -47,7 +48,7 @@ public class FirstLevelDivisionDao {
         return results;
     }
 
-    public static String getDivName(int divId){
+    public static String getDivName(int divId) {
         String divName = "";
 
         String sql = "SELECT Division FROM client_schedule.first_level_divisions WHERE Division_ID = ?";
@@ -57,8 +58,8 @@ public class FirstLevelDivisionDao {
             preparedStatement.setInt(1, divId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-           if(resultSet.next()){
-               divName = resultSet.getString(1);
+            if (resultSet.next()) {
+                divName = resultSet.getString(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,10 +68,33 @@ public class FirstLevelDivisionDao {
         return divName;
     }
 
-   /* public static int getDivId(String divDisplay){
-        int divId = 0;
+    public static ObservableList<FirstLevelDivision> getAllDivs() {
+        String sql = "SELECT * FROM client_schedule.first_level_divisions";
+        ObservableList<FirstLevelDivision> allDivs = FXCollections.observableArrayList();
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-        return divId;
-    }*/
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                FirstLevelDivision division = new FirstLevelDivision(
+                        resultSet.getInt("Division_Id"),
+                        resultSet.getString("Division"),
+                        null,
+                        null,
+                        null,
+                        null,
+                        resultSet.getInt("Country_ID")
+                );
+
+                allDivs.add(division);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return allDivs;
+
+    }
 }
 
