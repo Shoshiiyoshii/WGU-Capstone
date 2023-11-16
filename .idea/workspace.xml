@@ -53,26 +53,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;CustomersTableCRUD&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientApp&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "AppointmentsCRUD",
+    "last_opened_file_path": "/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientApp",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "terminal"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;GitStage.ChangesTree.GroupingKeys&quot;: [
-      &quot;directory&quot;,
-      &quot;module&quot;,
-      &quot;repository&quot;
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -206,7 +206,35 @@
       <option name="project" value="LOCAL" />
       <updated>1699421496051</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="AddAppt cleaned up, WIP">
+      <created>1699492482491</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1699492482491</updated>
+    </task>
+    <task id="LOCAL-00016" summary="getAllAppts method fixed, Lambdas added, appointment sorting working">
+      <created>1699579415230</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1699579415230</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Checks for appointments written, apptOverlaps needs to be tested">
+      <created>1699935535361</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1699935535361</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Appointment CRUD done">
+      <created>1700092540455</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1700092540456</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -247,7 +275,11 @@
     <MESSAGE value="Fixed issue with closing static connection" />
     <MESSAGE value="WIP Customer add &amp; modify, next need to implement table refresh" />
     <MESSAGE value="Customer add &amp; modify done, delete is WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="Customer add &amp; modify done, delete is WIP" />
+    <MESSAGE value="AddAppt cleaned up, WIP" />
+    <MESSAGE value="getAllAppts method fixed, Lambdas added, appointment sorting working" />
+    <MESSAGE value="Checks for appointments written, apptOverlaps needs to be tested" />
+    <MESSAGE value="Appointment CRUD done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Appointment CRUD done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -265,19 +297,24 @@
           <option name="timeStamp" value="21" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java</url>
-          <line>107</line>
-          <option name="timeStamp" value="42" />
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java</url>
+          <line>167</line>
+          <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="43" />
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java</url>
-          <line>132</line>
-          <option name="timeStamp" value="44" />
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

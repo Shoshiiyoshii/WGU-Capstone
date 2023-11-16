@@ -23,7 +23,6 @@ import thomasmccue.dbclientapp.model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.regex.*;
 

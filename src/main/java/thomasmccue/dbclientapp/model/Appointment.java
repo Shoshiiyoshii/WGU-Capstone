@@ -18,18 +18,18 @@ public class Appointment {
     private int userId;
     private int contactId;
 
-    //constructor
-    public Appointment(String title, String desc, String location, String type,
-                       LocalDateTime start, LocalDateTime end, String createdBy,
-                       LocalDateTime lastUpdate, String lastUpdatedBy, int custId, int userId, int contactId) {
-        //this.apptId = apptId;
+    //constructor for appt not yet auto-assigned an ID by database
+    public Appointment( String title, String desc, String location, String type,
+                        LocalDateTime start, LocalDateTime end,
+                        LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
+                        String lastUpdatedBy, int custId, int userId, int contactId) {
         this.title = title;
         this.desc = desc;
         this.location = location;
         this.type = type;
         this.start = start;
         this.end = end;
-        this.createDate = LocalDateTime.now();
+        this.createDate = createDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
@@ -37,7 +37,26 @@ public class Appointment {
         this.userId = userId;
         this.contactId = contactId;
     }
-    public Appointment(){}
+    //constructor for appt with ID
+    public Appointment(int apptId, String title, String desc, String location, String type,
+                       LocalDateTime start, LocalDateTime end,
+                       LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
+                       String lastUpdatedBy, int custId, int userId, int contactId) {
+        this.apptId = apptId;
+        this.title = title;
+        this.desc = desc;
+        this.location = location;
+        this.type = type;
+        this.start = start;
+        this.end = end;
+        this.createDate = createDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
+        this.custId = custId;
+        this.userId = userId;
+        this.contactId = contactId;
+    }
 
     //setters
    public void setApptId(int apptId){this.apptId = apptId;}

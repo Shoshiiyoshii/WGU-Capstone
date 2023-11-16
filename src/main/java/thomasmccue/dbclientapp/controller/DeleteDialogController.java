@@ -32,11 +32,9 @@ public class DeleteDialogController implements Initializable {
         toBeDeleted.setText("Customer with ID: " + customer.getCustomerId() + "\nCustomer Name: " + customer.getCustomerName());
     }
 
-    public void setAppointment(Appointment appointment){
+    public void setUpAppointmentDelete(Appointment appointment){
         this.appointment = appointment;
-    }//FIXME
 
-    public void setToBeDeletedAppt(){//FIxME
         toBeDeleted.setText("Appointment with ID: " + appointment.getApptId() +"\nAppointment Type: " + appointment.getType());
     }
 
@@ -46,24 +44,20 @@ public class DeleteDialogController implements Initializable {
             boolean deleted = CustomerDao.deleteCust(customer);
             if(deleted){
                 confirmationDialog.setText("Customer Successfully Deleted");
-                cancelButton.setText("Okay");
-                deleteButton.setVisible(false);
             } else {
                 confirmationDialog.setText("Delete Failed. Please delete all associated appointments before trying again.");
-                cancelButton.setText("Okay");
-                deleteButton.setVisible(false);
             }
+            cancelButton.setText("Okay");
+            deleteButton.setVisible(false);
         } else {
             boolean deleted = AppointmentDao.deleteAppt(appointment);
             if (deleted) {
                 confirmationDialog.setText("Appointment Deleted");
-                cancelButton.setText("Okay");
-                deleteButton.setVisible(false);
             } else {
                 confirmationDialog.setText("The selected appointment could not be deleted");
-                cancelButton.setText("Okay");
-                deleteButton.setVisible(false);
             }
+            cancelButton.setText("Okay");
+            deleteButton.setVisible(false);
         }
     }
 
