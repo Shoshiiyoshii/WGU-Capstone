@@ -174,8 +174,6 @@ public class AppointmentDao {
                     ZonedDateTime localStartTime = utcStartTime.withZoneSameInstant(localZone);
                     LocalDateTime displayStartTime = localStartTime.toLocalDateTime();
 
-                    // FIXME: this doesn't actually convert UTC to localized time, just a different type for the utc time
-
                     ZonedDateTime utcEndTime = resultSet.getObject("End", ZonedDateTime.class);
                     ZonedDateTime localEndTime = utcEndTime.withZoneSameInstant(localZone);
                     LocalDateTime displayEndTime = localEndTime.toLocalDateTime();

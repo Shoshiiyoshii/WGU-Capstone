@@ -227,7 +227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699935535361</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Appointment CRUD done">
+      <created>1700092540455</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1700092540456</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -271,7 +278,8 @@
     <MESSAGE value="AddAppt cleaned up, WIP" />
     <MESSAGE value="getAllAppts method fixed, Lambdas added, appointment sorting working" />
     <MESSAGE value="Checks for appointments written, apptOverlaps needs to be tested" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checks for appointments written, apptOverlaps needs to be tested" />
+    <MESSAGE value="Appointment CRUD done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Appointment CRUD done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
