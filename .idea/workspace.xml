@@ -6,13 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Wip">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateCustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/DeleteDialogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/CustomerDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/model/Customer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,26 +46,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "AppointmentsCRUD",
-    "last_opened_file_path": "/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientApp",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "terminal"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;AppointmentsCRUD&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientApp&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
   },
-  "keyToStringList": {
-    "GitStage.ChangesTree.GroupingKeys": [
-      "directory",
-      "module",
-      "repository"
+  &quot;keyToStringList&quot;: {
+    &quot;GitStage.ChangesTree.GroupingKeys&quot;: [
+      &quot;directory&quot;,
+      &quot;module&quot;,
+      &quot;repository&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -296,25 +289,30 @@
           <properties class="java.sql.SQLException" package="java.sql" />
           <option name="timeStamp" value="21" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java</url>
           <line>167</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
           <line>34</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
           <line>172</line>
           <option name="timeStamp" value="68" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
           <line>49</line>
           <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java</url>
+          <line>192</line>
+          <option name="timeStamp" value="72" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

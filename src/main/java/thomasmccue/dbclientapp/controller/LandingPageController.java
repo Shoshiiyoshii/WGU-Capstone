@@ -21,12 +21,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
 import java.util.*;
 
 public class LandingPageController implements Initializable {
     @FXML
-    private Label ynUpcomingAppointment, nextAppt, nextApptWith, whenNext, whoNext, title, customersTitle, customerErrorMessage, apptErrorMessage;
+    private Label ynUpcomingAppointment, nextAppts, title, customersTitle, customerErrorMessage, apptErrorMessage;
     @FXML
     public TableView<Customer> custTable;
     @FXML
@@ -43,6 +44,8 @@ public class LandingPageController implements Initializable {
     private TableColumn<Appointment, String> titleCol, descCol, locationCol, typeCol, startDTCol, endDTCol;
     @FXML
     private RadioButton weekRadio, monthRadio, allTimeRadio;
+    final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm")
+            .withZone(ZoneId.systemDefault());
 
     public void clickCustAdd(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
@@ -183,6 +186,34 @@ public class LandingPageController implements Initializable {
         }
     }
 
+    public void upcomingAppts(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime in15Mins = now.plusMinutes(15);
+
+        FilteredList<Appointment> soonAppts = new FilteredList<>(AppointmentDao.displayAppt, appointment -> {
+            LocalDateTime start = appointment.getStart();
+            return ((start.isEqual(now) || start.isAfter(now))
+                    && (start.isBefore(in15Mins) || start.isEqual(in15Mins)));
+        });
+            if(!soonAppts.isEmpty()){
+                ynUpcomingAppointment.setText("You have " + soonAppts.size() +" appointments" +
+                        " starting in the next 15 minutes.");
+                StringBuilder stringBuilder = new StringBuilder();
+
+                for (Appointment appointment: soonAppts) {
+                    String id = String.valueOf(appointment.getApptId());
+                    stringBuilder.append("Appointment ID: " + id);
+                    String time = appointment.getStart().format(formatter);
+                    stringBuilder.append(" Starts at: "+ time + ", ");
+                }
+                String upcoming = stringBuilder.toString();
+                nextAppts.setText(upcoming.substring(0, upcoming.length() - 2));
+            } else {
+                ynUpcomingAppointment.setText("You have no appointments starting in the next 15 minutes.");
+                nextAppts.setText("");
+            }
+    }
+
     public void exitClicked(ActionEvent event)throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
@@ -220,5 +251,6 @@ public class LandingPageController implements Initializable {
 
         allTimeRadio.setSelected(true);
 
+        upcomingAppts();
     }
 }

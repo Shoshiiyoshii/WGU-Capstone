@@ -193,7 +193,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
         }
 
         public static boolean apptTimesInBusinessHours (ZonedDateTime start, ZonedDateTime end){
-                ZoneId et = ZoneId.of("America/New_York");
+                /*ZoneId et = ZoneId.of("America/New_York");
 
                 Instant startInstant = start.toInstant();
                 Instant endInstant = end.toInstant();
@@ -208,6 +208,8 @@ public class AddOrUpdateAppointmentController implements Initializable {
                         && !etEnd.isBefore(businessOpen) && !etEnd.isAfter(businessClosed);
 
                 return isWithinBusinessHours;
+
+                 */ return true;
         }
         public static boolean apptTimesStartBeforeEnd (ZonedDateTime start, ZonedDateTime end){
                 ZoneId et = ZoneId.of("America/New_York");
