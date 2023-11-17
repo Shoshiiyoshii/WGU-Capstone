@@ -21,7 +21,10 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-
+/**
+ * The LogInController class managed the log in window and
+ * the record of log in attempts
+ */
 public class LogInController implements Initializable {
     @FXML
     private Label usernameLabel, passwordLabel, errorMsg, welcome, locationLabel, zoneId;
@@ -29,14 +32,22 @@ public class LogInController implements Initializable {
     private Button logInButton, closeButton;
     @FXML
     private TextField passwordField, usernameField;
-
     public static String loggedInUser;
     private ResourceBundle resourceBundle;
-
     Stage stage;
 
+    /**
+     * When the login button is clicked, the username and password inputs are checked
+     * to see if they are valid. If they are, the landing page window is launched.
+     * If now, an error message is displayed. Each log in attempt calls the
+     * recordLogins() method.
+     *
+     * @param event
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
-    public void clickLogIn(ActionEvent event) throws IOException {
+    public void clickLogIn(ActionEvent event) throws IOException, SQLException {
         errorMsg.setVisible(false);
         String usernameInput = usernameField.getText();
         String passwordInput = passwordField.getText();
@@ -56,8 +67,17 @@ public class LogInController implements Initializable {
         }
     }
 
-   private boolean isValidUser(String user, String pass){
-       String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+    /**
+     * This method does a query against the client_schedule.users table, checking
+     * if the user input it has been passed is valid.
+     *
+     * @param user username from textField
+     * @param pass password from textField
+     * @return boolean true/false depending on if the username/password combo exist
+     * @throws SQLException
+     */
+   private boolean isValidUser(String user, String pass) throws SQLException{
+       String sql = "SELECT * FROM client_schedule.users WHERE User_Name = ? AND Password = ?";
        int loggedInUserId;
        try{
             Connection connection = JDBC.getConnection();
@@ -79,6 +99,15 @@ public class LogInController implements Initializable {
         return false;
     }
 
+    /**
+     * recordLogins() writes to the login_activity.txt file and is called every
+     * time the login button is clicked. It records the username that was attempted,
+     * the time of the attempt in UTC and the system default local time, and
+     * whether or not the log in was successful.
+     *
+     * @param username username from user input
+     * @param loggedIn boolean true/false depending on if the login attempt was successful
+     */
     public static void recordLogins(String username, boolean loggedIn) {
         ZonedDateTime utcNow = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
         ZonedDateTime localNow = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault());
@@ -99,15 +128,38 @@ public class LogInController implements Initializable {
         }
     }
 
+    /**
+     * This method closes the window when the close button is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void clickClose(ActionEvent event) throws IOException {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * This method sets the resource bundle so that the log in window displays the form
+     * in English or French based on the user’s computer language setting.
+     * Allows all the text, labels, buttons, and errors on the form to be translated
+     * appropriately
+     *
+     * @param resourceBundle prepared files for what to display depending on the computers language setting
+     */
     public void setResourceBundle(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
+
+    /**
+     * The initialize method is called first when the window opens, and
+     * sets/uses the resource bundle to display the form
+     * in English or French based on the user’s computer language setting.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //set ResourceBundle to one passed from Main

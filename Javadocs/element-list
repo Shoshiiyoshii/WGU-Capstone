@@ -1,0 +1,6 @@
+module:thomasmccue.dbclientappreal
+thomasmccue.dbclientapp
+thomasmccue.dbclientapp.controller
+thomasmccue.dbclientapp.dao
+thomasmccue.dbclientapp.helper
+thomasmccue.dbclientapp.model

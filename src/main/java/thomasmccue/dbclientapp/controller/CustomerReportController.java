@@ -24,6 +24,9 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the customerReport.fxml display
+ */
 public class CustomerReportController implements Initializable {
     @FXML
     private Button exitButton;
@@ -43,6 +46,13 @@ public class CustomerReportController implements Initializable {
     private ObservableList<CustomerDivs> customersPerDiv = FXCollections.observableArrayList();
     private ObservableList<CustomerCountries> customersPerCountry = FXCollections.observableArrayList();
 
+    /**
+     * This method is used to populate the table showing how many customers live in
+     * each first level division. For each customer that lives in each division, a
+     * customer count is incremented. Then a customerDivs object is created for
+     * each first level division, and an observable list of how many customers per
+     * division is used to populate a tableView to display the report.
+     */
     public void populateCustPerDiv(){
        ObservableList<String> allDivs = FirstLevelDivisionDao.getDivList(-1);
 
@@ -68,6 +78,11 @@ public class CustomerReportController implements Initializable {
        custColumn1.setCellValueFactory(new PropertyValueFactory<>("custs"));
     }
 
+    /**
+     * This method shows how many customers live in each country that the business operates in.
+     * CustomerCountry objects are created and added to an observable list of customers per country
+     * which is then displayed in the tableView.
+     */
     public void populateCustPerCountry(){
         int usCustomers = 0;
         int ukCustomers = 0;
@@ -94,10 +109,25 @@ public class CustomerReportController implements Initializable {
             countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
             custColumn2.setCellValueFactory(new PropertyValueFactory<>("custs"));
     }
+    /**
+     * This method closes the window when the cancel button is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void exitClicked(ActionEvent event) throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * The initialize method is called when the window launches, and calls
+     * the populateCustPerDiv() and populateCustPerCountry() methods so that
+     * the reports are displayed in the tableViews.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateCustPerDiv();

@@ -27,8 +27,8 @@ On successful log in you will be met with the landing page. At the top left
 you will be notified whether there are any appointments scheduled to start
 in the next 15 minutes. Below that there is a pane that contains the
 appointments table. Use the radio buttons above the appointments table on
-the right to toggle between all appointments, this weeks appointments, or
-this months appointments. Directly under the appointments table you can 
+the right to toggle between all appointments, this week's appointments, or
+this month's appointments. Directly under the appointments table you can 
 see three buttons, "Add", "Update", or "Delete" which will allow you to
 manipulate the appointment data accordingly. 
 

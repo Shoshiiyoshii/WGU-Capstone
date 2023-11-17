@@ -1,6 +1,5 @@
 package thomasmccue.dbclientapp.controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,12 +16,15 @@ import thomasmccue.dbclientapp.model.Appointment;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
-
+/**
+ * This class serves as a controller and manages
+ * the addOrModifyAppointmentPage.fxml. Depending on
+ * whether the Add or Update buttons were used to access
+ * it from the landing page, it behaves differently.
+ */
 public class AddOrUpdateAppointmentController implements Initializable {
         @FXML
         private Label appointmentIdLabel, selectContactLabel, titleLabel, descLabel, locationLabel, typeLabel, startDTLabel;
@@ -47,6 +49,29 @@ public class AddOrUpdateAppointmentController implements Initializable {
         public void selectOrEnterCust(ActionEvent event)throws IOException{
 
         }
+        /**
+         * This method is called when the save button is clicked on the add appointment or the
+         * update appointment forms.
+         *
+         * If the controller is accessed from the Add button, the save button will say "Save".
+         * In this case user input is collected from the form. Checks are executed to ensure
+         * the form is filled out, and to ensure user input for appointment times are valid.
+         * If the checks are all passed, an Appointment object is created from the users input
+         * and sent to the AppointmentDao.addAppt() method to be added to the sql table and in
+         * the GUI for the landing page. If the checks are not passed, an appropriate error
+         * message is printed to the GUI.
+         *
+         * If the controller is accessed from the Update button, the save button will say "Save Changes".
+         * In this case user input is checked to ensure the form is filled out, and to ensure user input
+         * for appointment times are valid. If the user input passes the checks the mutators/setters for
+         * the selected appointment object are called, and update the appointment object so that the users
+         * input is set. Then the appointment is sent to AppointmentDao.updateAppt() method to be updated
+         * in the sql table and in the GUI for the landing page. If the checks are not passed, an
+         * appropriate error message is printed to the GUI.
+         *
+         * @param event
+         * @throws IOException
+         */
         public void saveClicked(ActionEvent event)throws IOException {
                 if (saveButton.getText().equals("Save")) {
                         String title = titleField.getText();
@@ -192,6 +217,14 @@ public class AddOrUpdateAppointmentController implements Initializable {
                 }
         }
 
+        /**
+         * This method is called by the saveClicked method. It checks that the user input for
+         * an appointment start and end time are within the business hours of 8:00am to 10:00pm et.
+         *
+         * @param start the users chosen start date/time
+         * @param end the users chosen end date/time
+         * @return boolean to show whether start and end are within business hours.
+         */
         public static boolean apptTimesInBusinessHours (ZonedDateTime start, ZonedDateTime end){
                 ZoneId et = ZoneId.of("America/New_York");
 
@@ -209,6 +242,14 @@ public class AddOrUpdateAppointmentController implements Initializable {
 
                 return isWithinBusinessHours;
         }
+        /**
+         * This method is called by the saveClicked method. It checks that the user input for
+         * an appointment start time is before the user input for an appointment end time.
+         *
+         * @param start the users chosen start date/time
+         * @param end the users chosen end date/time
+         * @return boolean to show whether start is before end
+         */
         public static boolean apptTimesStartBeforeEnd (ZonedDateTime start, ZonedDateTime end){
                 ZoneId et = ZoneId.of("America/New_York");
 
@@ -222,10 +263,22 @@ public class AddOrUpdateAppointmentController implements Initializable {
 
                 return isStartTimeBeforeEndTime;
         }
+        /**
+         * This method is called by the saveClicked method. It checks that the user input for
+         * appointment start and end times do not overlap with an already scheduled appointment
+         * for the selected customer, as a customer cannot be in two places at once.
+         *
+         * @param start the users chosen start date/time
+         * @param end the users chosen end date/time
+         * @param apptId used to ensure that in update mode, the appointment being updated doesn't
+         *               cause a false scheduling conflict
+         * @param custId only appointments for the same customer must be checked for overlap
+         * @return boolean to show whether there is a scheduling conflict
+         */
 
-        //user input is in local time, and start and end times in the displayAppt
-        // list are also in local time, so can be compared directly.
         public static boolean apptOverlaps (ZonedDateTime start, ZonedDateTime end, int custId, int apptId) {
+                //user input is in local time, and start and end times in the displayAppt
+                // list are also in local time, so can be compared directly.
                 LocalDateTime newStart = start.toLocalDateTime();
                 LocalDateTime newEnd = end.toLocalDateTime();
 
@@ -260,17 +313,39 @@ public class AddOrUpdateAppointmentController implements Initializable {
                 return overlaps;
         }
 
-
+        /**
+         * This method closes the Update or Add window when the cancel button is clicked.
+         *
+         * @param event
+         * @throws IOException
+         */
         public void cancelClicked(ActionEvent event)throws IOException {
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         }
+
+        /**
+         * This method is called from the LandingPageController if the addOrModifyAppointment.fxml
+         * GUI is to be accessed from the Add button.
+         *
+         * @param titleText sets the title of the form
+         * @param buttonText sets the text on the save button to "Save"
+         * @throws IOException
+         */
         public void setUpAdd(String titleText, String buttonText) throws IOException{
                 pageTitleLabel.setText(titleText);
                 saveButton.setText(buttonText);
                 apptIdField.setText("Appointment ID will be auto-assigned on save");
         }
-        //setup, different depending on whether modify or add button are clicked
+        /**
+         * This method is called from the LandingPageController if the addOrModifyAppointment.fxml
+         * GUI is to be accessed from the Update button.
+         *
+         * @param titleText sets the title of the form
+         * @param buttonText sets the text on the save button to "Save Updates"
+         * @param appointment passes the selected appointment so that it can be updated
+         * @throws IOException
+         */
         public void setUpModify(String titleText, String buttonText, Appointment appointment) throws IOException{
                 pageTitleLabel.setText(titleText);
                 saveButton.setText(buttonText);
@@ -295,6 +370,12 @@ public class AddOrUpdateAppointmentController implements Initializable {
                 selectUserIdBox.getSelectionModel().select(String.valueOf(appointment.getUserId()));
         }
 
+        /**
+         * initialize method is called first, ensures that the comboBoxes are populated
+         * correctly when the form opens.
+         * @param url
+         * @param resourceBundle
+         */
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
         selectCustBox.setItems(CustomerDao.getAllCustId());

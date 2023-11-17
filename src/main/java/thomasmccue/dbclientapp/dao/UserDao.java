@@ -6,7 +6,17 @@ import thomasmccue.dbclientapp.helper.JDBC;
 
 import java.sql.*;
 
+/**
+ * This class manages the CRUD to the mysql database for User objects.
+ */
 public class UserDao {
+
+    /**
+     * This method is used to query the table client_schedule.users in the mySql database in order
+     * to retrieve a list of all user IDs.
+     *
+     * @return ObservableList containing all existing user IDs
+     */
         public static ObservableList<String> getAllUserId() {
             String sql = "SELECT User_ID FROM client_schedule.users";
             ObservableList<String> allContactIds = FXCollections.observableArrayList();
