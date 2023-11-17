@@ -13,7 +13,6 @@ import thomasmccue.dbclientapp.helper.JDBC;
 import thomasmccue.dbclientapp.Main;
 
 import java.sql.*;
-import java.time.Instant;
 import java.io.*;
 import java.time.ZoneId;
 import java.io.IOException;
