@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.CustomerReportController">
+    <children>
+        <Button fx:id="exitButton" layoutX="507.0" layoutY="339.0" mnemonicParsing="false" onAction="#exitClicked" prefHeight="26.0" prefWidth="72.0" text="Exit" />
+        <TableView fx:id="divisionTable" layoutX="57.0" layoutY="100.0" prefHeight="200.0" prefWidth="217.0">
+            <columns>
+                <TableColumn fx:id="divIdColumn" prefWidth="100.0" text="Division ID" />
+                <TableColumn fx:id="custColumn1" prefWidth="116.0" text="Customers" />
+            </columns>
+        </TableView>
+        <TableView fx:id="countryTable" layoutX="343.0" layoutY="100.0" prefHeight="200.0" prefWidth="217.0">
+            <columns>
+                <TableColumn fx:id="countryColumn" prefWidth="110.0" text="Country" />
+                <TableColumn fx:id="custColumn2" prefWidth="106.0" text="Customers" />
+            </columns>
+        </TableView>
+        <Label layoutX="57.0" layoutY="71.0" text="Number Of Customers Per Division" />
+        <Label layoutX="343.0" layoutY="71.0" text="Number Of Customers Per Country" />
+        <Label layoutX="57.0" layoutY="22.0" text="Reports On Customer Location">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+    </children>
+</AnchorPane>

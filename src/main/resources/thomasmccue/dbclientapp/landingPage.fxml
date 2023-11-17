@@ -88,8 +88,8 @@
             <RadioButton fx:id="allTimeRadio" layoutX="687.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="All Time" toggleGroup="$apptFilter" />
          </children>
       </Pane>
-      <Button fx:id="apptReportButton" layoutX="697.0" layoutY="667.0" mnemonicParsing="false" text="View Appointment Reports " />
-      <Button fx:id="contactSchedulesButton" layoutX="537.0" layoutY="667.0" mnemonicParsing="false" text="View Contact Schedules" />
-      <Button fx:id="custRecordCreationReportButton" layoutX="343.0" layoutY="667.0" mnemonicParsing="false" text="Veiw Customer Record Report" />
+      <Button fx:id="apptReportButton" layoutX="697.0" layoutY="667.0" mnemonicParsing="false" onAction="#apptReportButtonClicked" text="View Appointment Reports" />
+      <Button fx:id="contactSchedulesButton" layoutX="537.0" layoutY="667.0" mnemonicParsing="false" onAction="#contactSchedulesClicked" text="View Contact Schedules" />
+      <Button fx:id="customerReportButton" layoutX="315.0" layoutY="667.0" mnemonicParsing="false" onAction="#customerReportButtonClicked" text="View Customer Location Distribution" />
     </children>
 </AnchorPane>

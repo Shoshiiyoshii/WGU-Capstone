@@ -35,7 +35,7 @@ public class LandingPageController implements Initializable {
     @FXML
     private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol, lastUpdated, lastUpdatedByCol, countryCol;
     @FXML
-    private Button custAddButton, custUpdateButton, custDeleteButton, apptAddButton1, apptUpdateButton, apptDeleteButton,exitButton, apptReportButton, contactSchedulesButton, custRecordCreationReportButton;
+    private Button custAddButton, custUpdateButton, custDeleteButton, apptAddButton1, apptUpdateButton, apptDeleteButton,exitButton, apptReportButton, contactSchedulesButton, customerReportButton;
     @FXML
     private TableView<Appointment> apptTable;
     @FXML
@@ -212,6 +212,39 @@ public class LandingPageController implements Initializable {
                 ynUpcomingAppointment.setText("You have no appointments starting in the next 15 minutes.");
                 nextAppts.setText("");
             }
+    }
+
+    public void apptReportButtonClicked(ActionEvent event)throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("appointmentReport.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+
+        AppointmentReportController controller = fxmlLoader.getController();
+        stage.setTitle("Appointment Reports");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void contactSchedulesClicked(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("contactSchedule.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+
+       ContactScheduleController controller = fxmlLoader.getController();
+        stage.setTitle("Contact Schedules");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void customerReportButtonClicked(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customerReport.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+
+        CustomerReportController controller = fxmlLoader.getController();
+        stage.setTitle("Customer Location Distribution");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void exitClicked(ActionEvent event)throws IOException {

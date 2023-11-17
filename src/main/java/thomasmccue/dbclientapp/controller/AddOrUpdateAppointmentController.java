@@ -68,9 +68,9 @@ public class AddOrUpdateAppointmentController implements Initializable {
                                 int custId = Integer.parseInt(selectCustBox.getValue());
                                 int userId = Integer.parseInt(selectUserIdBox.getValue());
 
-                                String contactValue = selectContactBox.getValue();
+                                String contact = selectContactBox.getValue();
                                 //split the string at the comma
-                                String[] parts = contactValue.split(",");
+                                String[] parts = contact.split(",");
                                 //parse the first part (after trimming spaces) to an integer
                                 int contactId = Integer.parseInt(parts[0].trim());
 
@@ -141,9 +141,9 @@ public class AddOrUpdateAppointmentController implements Initializable {
                                 int custId = Integer.parseInt(selectCustBox.getValue());
                                 int userId = Integer.parseInt(selectUserIdBox.getValue());
 
-                                String contactValue = selectContactBox.getValue();
+                                String contact = selectContactBox.getValue();
                                 //split the string at the comma
-                                String[] parts = contactValue.split(",");
+                                String[] parts = contact.split(",");
                                 //parse the first part (after trimming spaces) to an integer
                                 int contactId = Integer.parseInt(parts[0].trim());
 
@@ -193,7 +193,7 @@ public class AddOrUpdateAppointmentController implements Initializable {
         }
 
         public static boolean apptTimesInBusinessHours (ZonedDateTime start, ZonedDateTime end){
-                /*ZoneId et = ZoneId.of("America/New_York");
+                ZoneId et = ZoneId.of("America/New_York");
 
                 Instant startInstant = start.toInstant();
                 Instant endInstant = end.toInstant();
@@ -208,8 +208,6 @@ public class AddOrUpdateAppointmentController implements Initializable {
                         && !etEnd.isBefore(businessOpen) && !etEnd.isAfter(businessClosed);
 
                 return isWithinBusinessHours;
-
-                 */ return true;
         }
         public static boolean apptTimesStartBeforeEnd (ZonedDateTime start, ZonedDateTime end){
                 ZoneId et = ZoneId.of("America/New_York");
