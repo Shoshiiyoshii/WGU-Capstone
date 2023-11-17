@@ -10,7 +10,20 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+/**
+ * This class managed the CRUD to the mysql database for Contact objects.
+ */
 public class ContactDao {
+
+    /**
+     * Querys the client_schedule.contacts table to get a column of
+     * strings containing all of the contact IDs and contact names,
+     * the result is a string in the format "Contact_ID, Contact_Name".
+     * Used to display contacts so that both ID and Name can be used to
+     * select a contact easily.
+     *
+     * @return ObservableList of strings in the format "Contact_ID, Contact_Name"
+     */
     public static ObservableList<String> getListOfContacts() {
         String sql = "SELECT CONCAT_WS(', ', Contact_ID, Contact_Name)" +
                 " FROM client_schedule.contacts;";
@@ -30,6 +43,15 @@ public class ContactDao {
         }
         return allContacts;
     }
+
+    /**
+     * This method queries the client_schedule.appointments for appointments
+     * belonging to a specific contact. This is used to populate the contact schedule report.
+     * Times are explictly converted to local/systemDefault from UTC for display.
+     *
+     * @param contactId ID of contact whose appointments are needed
+     * @return ObservableList of ContactAppts objects
+     */
     public static ObservableList<ContactAppts> getContactAppts(int contactId) {
         String sql = "SELECT  Appointment_ID, Title, Description, Type, Start, End, Customer_ID" +
                 " FROM client_schedule.appointments WHERE Contact_ID = ?";

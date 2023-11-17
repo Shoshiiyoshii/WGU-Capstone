@@ -9,10 +9,21 @@ import thomasmccue.dbclientapp.model.Appointment;
 import java.sql.*;
 import java.time.*;
 
+/**
+ * This class manages the CRUD to the mysql database for Appointment objects.
+ */
 public class AppointmentDao {
-
     public static ObservableList<Appointment> displayAppt = FXCollections.observableArrayList();
 
+    /**
+     * This method adds appointments to the client_schedule.appointments table and to
+     * the ObservableList displayAppt which is responsible for the display
+     * of appointments on the landing page. Time values are explicitly set to UTC
+     * for storage.
+     *
+     * @param appointment the appointment to be added
+     * @return boolean true/false whether add was successful
+     */
     public static boolean addAppt(Appointment appointment) {
         String sql = "INSERT INTO client_schedule.appointments " +
                 "(Title, Description, Location, Type, Start, End, Create_Date, Created_By," +
@@ -75,6 +86,14 @@ public class AppointmentDao {
         }
 
 
+    /**
+     * Deletes the appointment from the client_schedule.appointments table in mySql
+     * and from the ObservableList<Appointment> displayAppt.
+     *
+     * @param selectedAppt appointment to delete
+     * @return boolean true/false whether delete was successful
+     * @throws SQLException
+     */
 
       public static boolean deleteAppt (Appointment selectedAppt) throws SQLException {
             String sql = ("DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?");
@@ -96,6 +115,16 @@ public class AppointmentDao {
                 return false;
     }
 
+    /**
+     * Updates the appointment with the same ID as the appointment object it's passed
+     * in the client_schedule.appointments table in mySql and in the
+     * ObservableList<Appointment> displayAppt.Time values are explicitly set to UTC
+     * for storage.
+     *
+     * @param appointment appointment to be updated
+     * @param index location of appointment to be updated in displayAppt list
+     * @return boolean true/false update was successful
+     */
        public static boolean updateAppt (Appointment appointment, int index){
         int apptId = appointment.getApptId();
 
@@ -158,7 +187,14 @@ public class AppointmentDao {
             return false;
         }
 
-        public static ObservableList<Appointment> getAllAppointments () {
+    /**
+     * Gets a list of all appointments in the client_schedule.appointments table. Used to populate
+     * the ObservableList<Appointment> displayAppt. Explictly converts time values to the systems
+     * defalut time zone for display purposes.
+     *
+     * @return ObservableList of all appointments
+     */
+    public static ObservableList<Appointment> getAllAppointments () {
             String sql = "SELECT * FROM client_schedule.appointments";
             ZoneId localZone = ZoneId.systemDefault();
 

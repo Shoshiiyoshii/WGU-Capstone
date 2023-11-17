@@ -26,7 +26,12 @@ import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.regex.*;
 
-
+/**
+ * This class serves as a controller and manages
+ * the addOrUpdateCustomer.fxml. Depending on
+ * whether the Add or Update buttons were used to access
+ * it from the landing page, it behaves differently.
+ */
 public class AddOrUpdateCustomerController implements Initializable {
     @FXML
     private Label custIdLabel, pageTitleLabel, custNameLabel, custPhoneLabel, custAddressLabel, custCountryLabel;
@@ -41,14 +46,37 @@ public class AddOrUpdateCustomerController implements Initializable {
 
     private Customer customer;
 
-
+    /**
+     * This method is called from the landing page if the Add button below the
+     * customers table is clicked. It sets up the form for adding a customer,
+     * and populates the first level division box with all first level divisions.
+     *
+     * Once a country is selected, the first level division will be filtered, that
+     * is handled in a different method.
+     *
+     * @param titleText to set the title of the add form
+     * @param buttonText to set the save button to say "Save"
+     * @throws IOException
+     */
     public void setUpAdd(String titleText, String buttonText) throws IOException{
         pageTitleLabel.setText(titleText);
         saveButton.setText(buttonText);
         custIdField.setText("Customer ID will be auto-assigned on save");
         custFirstLvlDivisionSelectionBox.setItems(FirstLevelDivisionDao.getDivList(-1));
     }
-
+    /**
+     * This method is called from the landing page if the Update button below the
+     * customers table is clicked. It sets up the form for editing a customer that
+     * has been selected from the customers table on the landing page.
+     * This method also pre-fills the form with the correct customers information, and
+     * pre-populates the first level division box with the correctly filtered first
+     * level divisions based on the customers country.
+     *
+     * @param titleText to set the title of the modify form
+     * @param buttonText to set the save button to say "Save Update"
+     * @param customer the customer that has been selected to be edited
+     * @throws IOException
+     */
     public void setUpModify(String titleText, String buttonText, Customer customer) throws IOException{
         this.customer = customer;
         pageTitleLabel.setText(titleText);
@@ -78,7 +106,16 @@ public class AddOrUpdateCustomerController implements Initializable {
         custPostalCodeField.setText(customer.getPostalCode());
     }
 
-  public void selectOrEnterCountry(ActionEvent event) throws IOException, SQLException {
+    /**
+     * This method is triggered when the user selects a country from the combo box.
+     * When a country is selected, the first level division combo box drop down option will
+     * automatically be filtered to only show the first level divisions that are in the
+     * selected country.
+     *
+     * @param event
+     * @throws IOException
+     */
+  public void selectOrEnterCountry(ActionEvent event) throws IOException{
         String selected = custCountrySelectionBox.getValue();
             //depending on what country is selected, show the corresponding first level divisions in the combo box
             if("United States".equals(selected) || "U.S".equals(selected) || "U.S.A".equals(selected) || "U.S.".equals(selected)) {
@@ -96,7 +133,26 @@ public class AddOrUpdateCustomerController implements Initializable {
 
     }
 
-    public void saveClicked(ActionEvent event)throws IOException {
+    /**
+     * This method is called when the save button is clicked. It behaves differently if
+     * the form has been accessed form the add button or update button on the landing page.
+     *
+     * If accessed from the add button, user input is collected from the form, and checked
+     * to ensure that the form has been completed. If needed, an error message is displayed
+     * in the GUI prompting the user to first complete the form. If the form is correctly
+     * filled out, the values are used to create a new customer object, which is then passed
+     * to the CustomerDao class to be added to the database.
+     *
+     * if accessed from the modify button on the landing page, the form is still checks to ensure
+     * that it has been filled out properly, and then the user input is sent to the selected
+     * customers mutators/setters. Once the customer object has been updated, it is sent to
+     * the CustomerDao class to be updated in database.
+     *
+     * @param event
+     * @throws IOException
+     * @throws SQLException
+     */
+    public void saveClicked(ActionEvent event) throws IOException, SQLException {
         //in add mode, save a new customer
         if (pageTitleLabel.getText().equals("Add A Customer To The System")) {
             String name = custNameField.getText();
@@ -176,11 +232,26 @@ public class AddOrUpdateCustomerController implements Initializable {
         }
     }
 
+    /**
+     * This method closes the Update or Add window when the cancel button is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void cancelClicked(ActionEvent event)throws IOException {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * The first level division combo box is populated with both the Division_ID
+     * and the name of the division. When a division is selected from the comboBox,
+     * the string representing the Division_ID and the name is sent here to be parsed
+     * so that the Division_ID can be returned on its own to be used.
+     *
+     * @param divS String representing the select division. Format "Division_ID, Name"
+     * @return int divId, the Division_ID seperated fromn the division name
+     */
     private int parseDivId(String divS){
         int divId = 0;
         Pattern p = Pattern.compile("\\d+");
@@ -196,9 +267,15 @@ public class AddOrUpdateCustomerController implements Initializable {
 
         return divId;
     }
+    /**
+     * initialize method is called first, ensures that the country comboBox is populated
+     * correctly when the form opens.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custCountrySelectionBox.setItems(CountryDao.getAllCountries());
-
     }
 }

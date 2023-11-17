@@ -25,6 +25,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
 import java.util.*;
 
+/**
+ * This class manages the main landing page for the GUI, landingPage.fxml
+ */
 public class LandingPageController implements Initializable {
     @FXML
     private Label ynUpcomingAppointment, nextAppts, title, customersTitle, customerErrorMessage, apptErrorMessage;
@@ -47,6 +50,14 @@ public class LandingPageController implements Initializable {
     final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm")
             .withZone(ZoneId.systemDefault());
 
+    /**
+     * When the add button under the customer table is clicked, this method launches
+     * the addOrUpdateCustomer fxml file and controller in add mode, setting the
+     * title and save button text appropriately.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void clickCustAdd(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -58,6 +69,17 @@ public class LandingPageController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * When the update button under the customer table is clicked, this method
+     * checks that a customer has been selected, and displays an error message if
+     * not. If a customer has been selected this method launches the
+     * addOrUpdateCustomer fxml file and controller in update mode, setting the
+     * title and save button text appropriately and passes the selected customer.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void clickCustUpdate(ActionEvent event) throws IOException {
         SelectionModel<Customer> selectionModel = custTable.getSelectionModel();
         Customer selectedCust = selectionModel.getSelectedItem();
@@ -76,8 +98,17 @@ public class LandingPageController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
-
     }
+
+    /**
+     * When the delete button under the customer table is clicked, this method
+     * checks that a customer has been selected, and displays an error message if
+     * not. If a customer has been selected this method launches the
+     * deleteDialog window, and passes the selected customer to the deleteDialog controller.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void clickCustDelete(ActionEvent event) throws IOException{
         SelectionModel<Customer> selectionModel = custTable.getSelectionModel();
         Customer selectedCust = selectionModel.getSelectedItem();
@@ -98,6 +129,22 @@ public class LandingPageController implements Initializable {
         }
     }
 
+    /**
+     * This method contains two different Lambda expressions.
+     *
+     * The method itself controls the radio buttons used to filter the appointments
+     * table on the landing page by week, month, or all.
+     *
+     * The first Lambda expression is used to concisely return a list of appointments
+     * that has been filtered from the displayAppts list, which contains every appointment.
+     * This lambda returns a list only containing appointments that are happening in the current month.
+     *
+     * The second Lambda expression is used to concisely return a list of appointments
+     * that has been filtered from the displayAppts list, which contains every appointment.
+     * This lambda returns a list only containing appointments that are happening in the current week.
+     *
+     * @param event
+     */
     public void radioFilter(ActionEvent event){
         //get the current date to compare
         LocalDate now = LocalDate.now();
@@ -106,8 +153,7 @@ public class LandingPageController implements Initializable {
             int currentMonth = now.getMonthValue();
             int currentYear = now.getYear();
 
-            //FIXME LAMBDA HERE
-            //create a filtered list of appointments that occur during the current month and year
+            //Lambda to create a filtered list of appointments that occur during the current month and year
             FilteredList<Appointment> thisMonthsAppts = new FilteredList<>(AppointmentDao.displayAppt, appointment -> {
                 LocalDateTime start = appointment.getStart();
                 return start.getMonthValue() == currentMonth && start.getYear() == currentYear;
@@ -117,12 +163,14 @@ public class LandingPageController implements Initializable {
             apptTable.setItems(thisMonthsAppts);
 
         } else if (weekRadio.isSelected()) {
-            //get current week range
+            //get current week range, dependant on location
             TemporalField fieldISO = WeekFields.of(Locale.getDefault()).dayOfWeek();
-            LocalDate startOfWeek = now.with(fieldISO, 1); // Start of week (e.g., Monday)
-            LocalDate endOfWeek = now.with(fieldISO, 7); // End of week (e.g., Sunday)
+            //start of week
+            LocalDate startOfWeek = now.with(fieldISO, 1);
+            //end of week
+            LocalDate endOfWeek = now.with(fieldISO, 7);
 
-            //FIXME LAMBDA HERE
+            //Lambda to create a filtered list of appointments that occur during the current month and year
             FilteredList<Appointment> thisWeeksAppts = new FilteredList<>(AppointmentDao.displayAppt, appointment -> {
                 LocalDateTime start = appointment.getStart();
                 return !start.toLocalDate().isBefore(startOfWeek) && !start.toLocalDate().isAfter(endOfWeek);
@@ -133,6 +181,15 @@ public class LandingPageController implements Initializable {
            apptTable.setItems(AppointmentDao.displayAppt);
         }
     }
+
+    /**
+     * When the add button under the appointments table is clicked, this method launches
+     * the addOrModifyAppointmentPage fxml file and controller in add mode, setting the
+     * title and save button text appropriately.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void clickApptAdd(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrModifyAppointmentPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -144,6 +201,16 @@ public class LandingPageController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    /**
+     * When the update button under the appointment table is clicked, this method
+     * checks that an appointment has been selected, and displays an error message if
+     * not. If an appointment has been selected this method launches the
+     * addOrModifyAppointmentPage fxml file and controller in update mode, setting the
+     * title and save button text appropriately, and passing the selected appointment.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void clickApptUpdate(ActionEvent event) throws IOException{
         SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
         Appointment selectedAppt = selectionModel.getSelectedItem();
@@ -166,7 +233,16 @@ public class LandingPageController implements Initializable {
         }
     }
 
-    public void clickApptDelete(ActionEvent event) throws SQLException, IOException {
+    /**
+     * When the delete button under the appointments table is clicked, this method
+     * checks that an appointment has been selected, and displays an error message if
+     * not. If an appointment has been selected this method launches the
+     * deleteDialog window, and passes the selected appointment to the deleteDialog controller.
+     *
+     * @param event
+     * @throws IOException
+     */
+    public void clickApptDelete(ActionEvent event) throws IOException {
         SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
         Appointment selectedAppt = selectionModel.getSelectedItem();
 
@@ -186,6 +262,11 @@ public class LandingPageController implements Initializable {
         }
     }
 
+    /**
+     * The upcomingAppts method manages the alert at the top of the landing page, which displays
+     * how many appointments are scheduled to start in the next 15 minutes. If there are appointments
+     * scheduled to start within 15 minutes of log in, the appointment ID and start time is displayed.
+     */
     public void upcomingAppts(){
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime in15Mins = now.plusMinutes(15);
@@ -214,6 +295,13 @@ public class LandingPageController implements Initializable {
             }
     }
 
+    /**
+     * This method launches the appointment report window when the View Appointment Reports button
+     * is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void apptReportButtonClicked(ActionEvent event)throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("appointmentReport.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -225,6 +313,13 @@ public class LandingPageController implements Initializable {
         stage.show();
     }
 
+    /**
+     * This method launches the contact schedules report window when the View Contact Schedules
+     * button is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void contactSchedulesClicked(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("contactSchedule.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -236,6 +331,13 @@ public class LandingPageController implements Initializable {
         stage.show();
     }
 
+    /**
+     * This method launches the customer report window when the View Customer Location Distribution
+     * button is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void customerReportButtonClicked(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customerReport.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -247,12 +349,27 @@ public class LandingPageController implements Initializable {
         stage.show();
     }
 
+    /**
+     * This method closes the window when the exit button is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void exitClicked(ActionEvent event)throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * The initialize method is called first when the landing page window is opened.
+     * It ensures that the customer and appointment tables are populated, and calls the
+     * method to set the upcoming appointments notification.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle){
         custTable.setItems(CustomerDao.getAllCust());
 
         custIdBottomCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));

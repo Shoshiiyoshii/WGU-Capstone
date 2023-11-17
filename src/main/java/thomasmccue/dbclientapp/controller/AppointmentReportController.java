@@ -23,7 +23,9 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-
+/**
+ * This class acts as a controller for the appointmentReport.fxml file
+ */
 public class AppointmentReportController implements Initializable {
     @FXML
     private TableView<ApptMonth> monthTable;
@@ -43,6 +45,13 @@ public class AppointmentReportController implements Initializable {
     private ObservableList<ApptMonth> monthAppointments = FXCollections.observableArrayList();
     private ObservableList<TypeAppt> typeAppointments = FXCollections.observableArrayList();
 
+    /**
+     * This method compares each month in a year with each month an appointment is scheduled.
+     * If there is a match, a count of appointments for that month is incremented.
+     * The count of appointments for each month and the name of the month are then made into
+     * an ApptMonth object, and an observable list of ApptMonth objects is used to
+     * populate a table displaying how many appointments fall in each month.
+     */
     public void populateMonthAppointments(){
         String[] months = new String[]{"January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"};
@@ -66,6 +75,11 @@ public class AppointmentReportController implements Initializable {
         apptsColumn1.setCellValueFactory(new PropertyValueFactory<>("appt"));
     }
 
+    /**
+     * This method finds each unique type of appointment that is in the appointments table
+     * and checks how many of each type there are. Then in creates a TypeAppt object for
+     * each type, and populates a table showing how many appointments of each type there are.
+     */
     public void populateTypeAppointments(){
         //using hash set since there is no set list of types of appointments,
         // this will get types in the system without duplicates
@@ -97,10 +111,24 @@ public class AppointmentReportController implements Initializable {
         apptsColumn2.setCellValueFactory(new PropertyValueFactory<>("appts"));
     }
 
+    /**
+     * This method closes the window when the cancel button is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void exitClicked(ActionEvent event)throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * When the window is launched, the initialize method calls populateMonthAppointments()
+     * and populateTypeAppointments() methods to populate the display tables for these reports.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateMonthAppointments();

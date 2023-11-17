@@ -8,7 +8,21 @@ import thomasmccue.dbclientapp.model.FirstLevelDivision;
 import java.sql.*;
 import java.time.LocalDateTime;
 
+/**
+ * This class manages the CRUD to the mysql database for First Level Division objects.
+ */
 public class FirstLevelDivisionDao {
+
+    /**
+     * Querys the client_schedule.first_level_divisions table to get a column of
+     * strings containing all of the division IDs and division names.
+     * The result is a string in the format "Division_ID, Division".
+     * Used to display first level divisions so that both ID and name can be used to
+     * select a first level division easily.
+     *
+     * @param whichDiv integer representing which set of divisions, a country ID
+     * @return ObservableList of strings in the format "Division_ID, Division"
+     */
     public static ObservableList<String> getDivList(int whichDiv) {
         ObservableList<String> results = FXCollections.observableArrayList();
 
@@ -48,6 +62,13 @@ public class FirstLevelDivisionDao {
         return results;
     }
 
+    /**
+     * Queries the client_schedule.first_level_divisions table and returns
+     * the name of a specific division based on its ID.
+     *
+     * @param divId ID of first level division whose name is needed
+     * @return String First Level Division name
+     */
     public static String getDivName(int divId) {
         String divName = "";
 
@@ -66,35 +87,6 @@ public class FirstLevelDivisionDao {
             throw new RuntimeException(e);
         }
         return divName;
-    }
-
-    public static ObservableList<FirstLevelDivision> getAllDivs() {
-        String sql = "SELECT * FROM client_schedule.first_level_divisions";
-        ObservableList<FirstLevelDivision> allDivs = FXCollections.observableArrayList();
-        try {
-            Connection connection = JDBC.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                FirstLevelDivision division = new FirstLevelDivision(
-                        resultSet.getInt("Division_Id"),
-                        resultSet.getString("Division"),
-                        null,
-                        null,
-                        null,
-                        null,
-                        resultSet.getInt("Country_ID")
-                );
-
-                allDivs.add(division);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return allDivs;
-
     }
 }
 

@@ -8,11 +8,24 @@ import thomasmccue.dbclientapp.model.Customer;
 import java.sql.*;
 import java.time.*;
 
+/**
+ * This class manages the CRUD to the mysql database for Customer objects.
+ */
 public class CustomerDao {
-
     public static ObservableList<Customer> displayCust = FXCollections.observableArrayList();
     public static  ObservableList<String> allCustIds = FXCollections.observableArrayList();
-    public static boolean addCust(Customer customer) {
+
+    /**
+     * This method adds customers to the client_schedule.customers table and to
+     * the ObservableList displayCust which is responsible for the display
+     * of customers on the landing page. Time values are explicitly set to UTC
+     * for storage.
+     *
+     * @param customer the customer to be added
+     * @return boolean true/false whether add was successful
+     * @throws SQLException
+     */
+    public static boolean addCust(Customer customer) throws SQLException{
         String sql = "INSERT INTO client_schedule.customers" +
                 " (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Division_ID)" +
                 " VALUES(?,?,?,?,?,?,?)";
@@ -62,7 +75,18 @@ public class CustomerDao {
         return false;
     }
 
-    public static boolean updateCust(Customer customer, int index) {
+    /**
+     * Updates the customer with the same ID as the customer object it's passed
+     * in the client_schedule.customers table in mySql and in the
+     * ObservableList displayCust.Time values are explicitly set to UTC
+     * for storage.
+     *
+     * @param customer customer to be updated
+     * @param index location of customer to be updated in displayCust list
+     * @return boolean true/false update was successful
+     * @throws SQLException
+     */
+    public static boolean updateCust(Customer customer, int index) throws SQLException{
         int custId = customer.getCustomerId();
 
         ZoneId userTimeZone = ZoneId.systemDefault();
@@ -111,7 +135,16 @@ public class CustomerDao {
         return false;
     }
 
-    public static boolean deleteCust(Customer customer) {
+    /**
+     * Deletes a customer from the client_schedule.customers table in mySql
+     * and from the ObservableList displayCust. Calls findCustAppts method to
+     * and only allows delete if the selected customer has no appointments.
+     *
+     * @param customer appointment to delete
+     * @return boolean true/false whether delete was successful
+     * @throws SQLException
+     */
+    public static boolean deleteCust(Customer customer) throws SQLException{
         int custId = customer.getCustomerId();
         int appts = findCustAppts(custId);
 
@@ -136,6 +169,15 @@ public class CustomerDao {
             return false;
     }
 
+    /**
+     * Gets all appointments scheduled for a selected customer, and returns an integer
+     * indicating the number of appointments currently scheduled for the selected customer.
+     * User by the deleteCust method to ensure that customers who have appointments scheduled
+     * can't be deleted until their appointments are.
+     *
+     * @param custId id of customer whose appointments need to be searched
+     * @return int representing the number of appointments scheduled for the customer
+     */
     public static int findCustAppts(int custId){
         String sql = "SELECT * FROM client_schedule.appointments WHERE CUSTOMER_ID = ?";
         int appts = 0;
@@ -154,6 +196,14 @@ public class CustomerDao {
         }
         return appts;
     }
+
+    /**
+     * Gets a list of all customers in the client_schedule.customers table. Used to populate
+     * the ObservableList displayCust. Explictly converts time values to the systems
+     * defalut time zone for display purposes.
+     *
+     * @return ObservableList of all customers
+     */
         public static ObservableList<Customer> getAllCust() {
         String sql = "SELECT * FROM client_schedule.customers";
         ZoneId localZone = ZoneId.systemDefault();
@@ -187,7 +237,7 @@ public class CustomerDao {
                             displayUpdateTime,
                             resultSet.getString("Last_Updated_By"),
                             resultSet.getInt("Division_ID"),
-                            getCountryID(resultSet.getInt("Division_ID"))
+                            CountryDao.getCountryID(resultSet.getInt("Division_ID"))
                     );
 
                     displayCust.add(customer);
@@ -204,7 +254,7 @@ public class CustomerDao {
                             null,
                             resultSet.getString("Last_Updated_By"),
                             resultSet.getInt("Division_ID"),
-                            getCountryID(resultSet.getInt("Division_ID"))
+                            CountryDao.getCountryID(resultSet.getInt("Division_ID"))
                     );
 
                     displayCust.add(customer);
@@ -217,6 +267,12 @@ public class CustomerDao {
         return displayCust;
     }
 
+    /**
+     * Queries the client_schedule.customers table to retrieve an
+     * ObservableList of all existing customer IDs.
+     *
+     * @return ObservableList of customer IDs
+     */
     public static ObservableList<String> getAllCustId() {
         String sql = "SELECT Customer_ID FROM client_schedule.customers";
         try {
@@ -234,79 +290,4 @@ public class CustomerDao {
         }
         return allCustIds;
     }
-
-    private static String getCountryID(int divId) {
-        int countryId = 0;
-        String country = "";
-
-        String sql = "SELECT Country_ID FROM client_schedule.first_level_divisions WHERE Division_ID = ?";
-        try {
-            Connection connection = JDBC.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, divId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                countryId = resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-
-        String sql2 = "SELECT Country FROM client_schedule.countries WHERE Country_ID = ?";
-        try{
-            Connection connection = JDBC.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql2);
-            preparedStatement.setInt(1, countryId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                country = resultSet.getString(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return country;
-    }
-        /*public static Customer findCust(Customer customer) { FIXME not used
-        Customer foundCust = null;
-        int custId = customer.getCustomerId();
-        String sql = "SELECT * FROM client_schedule.customers WHERE CUSTOMER_ID =  ?";
-
-        try {
-            Connection connection = JDBC.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, custId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    //convert UTC datetimes in SQL table to the user's local times for display
-                    //convert Create_Date
-                    Timestamp utcCreateTime = resultSet.getTimestamp("Create_Date");
-                    LocalDateTime localCreateTime = utcCreateTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-
-                    //convert Last_Update
-                    Timestamp utcUpdateTime = resultSet.getTimestamp("Last_Update");
-                    LocalDateTime localUpdateTime = utcUpdateTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-
-                    foundCust = new Customer(
-                            resultSet.getInt("Customer_ID"),
-                            resultSet.getString("Customer_Name"),
-                            resultSet.getString("Address"),
-                            resultSet.getString("Postal_Code"),
-                            resultSet.getString("Phone"),
-                            localCreateTime,
-                            resultSet.getString("Created_By"),
-                            localUpdateTime,
-                            resultSet.getString("Last_Updated_By"),
-                            resultSet.getInt("Division_ID"),
-                            getCountryID(resultSet.getInt("Division_ID"))
-                    );
-                }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return foundCust;
-    }*/
-
 }
