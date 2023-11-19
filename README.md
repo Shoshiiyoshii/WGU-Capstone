@@ -12,7 +12,7 @@ Purpose of Application: This is a
 GUI-based scheduling desktop application. It
 assists with customer and appointment
 tracking for a global business, and allows appointments
-to be seamlessly managed from anywhere in the world.
+to be seamlessly managed from anywhere in the world. 
 
 Date: 11-16-2023
 
