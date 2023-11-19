@@ -53,9 +53,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "AppointmentsCRUD",
+    "git-widget-placeholder": "Reports",
     "last_opened_file_path": "/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientApp",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.6034483",
     "settings.editor.selected.configurable": "terminal"
@@ -239,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700172593913</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="ReadMe done">
+      <created>1700181359767</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1700181359767</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -285,7 +292,8 @@
     <MESSAGE value="Checks for appointments written, apptOverlaps needs to be tested" />
     <MESSAGE value="Appointment CRUD done" />
     <MESSAGE value="Reports Done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reports Done" />
+    <MESSAGE value="ReadMe done" />
+    <option name="LAST_COMMIT_MESSAGE" value="ReadMe done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -304,32 +312,22 @@
         </breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java</url>
-          <line>167</line>
+          <line>192</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
-          <line>34</line>
+          <line>45</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
-          <line>172</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
-          <line>49</line>
+          <line>60</line>
           <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java</url>
-          <line>243</line>
-          <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/ContactScheduleController.java</url>
-          <line>31</line>
+          <line>41</line>
           <properties class="thomasmccue.dbclientapp.controller.ContactScheduleController" method="selectContact">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
