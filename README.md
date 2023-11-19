@@ -6,7 +6,13 @@ Contact Information:
 (509) 560-3196 PST (GMT-8)
 stho517@wgu.edu 
 
-Application version: 1.0
+Application version: 1.1
+
+Purpose of Application: This is a 
+GUI-based scheduling desktop application. It
+assists with customer and appointment
+tracking for a global business, and allows appointments
+to be seamlessly managed from anywhere in the world. 
 
 Date: 11-16-2023
 
