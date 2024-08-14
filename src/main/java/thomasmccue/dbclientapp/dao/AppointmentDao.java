@@ -271,5 +271,178 @@ public class AppointmentDao {
             return displayAppt;
         }
 
+    /**
+     * Gets a list of all appointments in the client_schedule.appointments table with an ID containing the searched
+     * ID. Used to populate the ObservableList<Appointment> displayAppt. Explictly converts time values to the systems
+     * defalut time zone for display purposes.
+     *
+     * @return ObservableList of all appointments
+     */
+    public static ObservableList<Appointment> getAppointmentById (int apptID) {
+        ObservableList<Appointment> idSearchAppts = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Appointment_ID LIKE ?";
+        ZoneId localZone = ZoneId.systemDefault();
+
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + apptID + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                //convert UTC datetimes from SQL table to the user's local times for display
+                ZonedDateTime utcStartTime = resultSet.getObject("Start", ZonedDateTime.class);
+                ZonedDateTime localStartTime = utcStartTime.withZoneSameInstant(localZone);
+                LocalDateTime displayStartTime = localStartTime.toLocalDateTime();
+
+                ZonedDateTime utcEndTime = resultSet.getObject("End", ZonedDateTime.class);
+                ZonedDateTime localEndTime = utcEndTime.withZoneSameInstant(localZone);
+                LocalDateTime displayEndTime = localEndTime.toLocalDateTime();
+
+                ZonedDateTime utcCreateTime = resultSet.getObject("Create_Date", ZonedDateTime.class);
+                ZonedDateTime localCreateTime = utcCreateTime.withZoneSameInstant(localZone);
+                LocalDateTime displayCreateTime = localCreateTime.toLocalDateTime();
+
+                //get last update time and see if it needs to be converted
+                ZonedDateTime utcUpdateTime = resultSet.getObject("Last_Update", ZonedDateTime.class);
+                if (utcUpdateTime != null) {
+                    ZonedDateTime localUpdateTime = utcUpdateTime.withZoneSameInstant(localZone);
+                    LocalDateTime displayUpdateTime = localUpdateTime.toLocalDateTime();
+
+                    Appointment appointment = new Appointment(
+                            resultSet.getInt("Appointment_ID"),
+                            resultSet.getString("Title"),
+                            resultSet.getString("Description"),
+                            resultSet.getString("Location"),
+                            resultSet.getString("Type"),
+                            displayStartTime,
+                            displayEndTime,
+                            displayCreateTime,
+                            resultSet.getString("Created_By"),
+                            displayUpdateTime,
+                            resultSet.getString("Last_Updated_By"),
+                            resultSet.getInt("Customer_ID"),
+                            resultSet.getInt("User_ID"),
+                            resultSet.getInt("Contact_ID")
+                    );
+
+                    idSearchAppts.add(appointment);
+                    //not all Appointments have been updated, so allow for null update time
+                } else {
+                    Appointment appointment = new Appointment(
+                            resultSet.getInt("Appointment_ID"),
+                            resultSet.getString("Title"),
+                            resultSet.getString("Description"),
+                            resultSet.getString("Location"),
+                            resultSet.getString("Type"),
+                            displayStartTime,
+                            displayEndTime,
+                            displayCreateTime,
+                            resultSet.getString("Created_By"),
+                            null,
+                            resultSet.getString("Last_Updated_By"),
+                            resultSet.getInt("Customer_ID"),
+                            resultSet.getInt("User_ID"),
+                            resultSet.getInt("Contact_ID")
+                    );
+
+                    idSearchAppts.add(appointment);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return idSearchAppts;
     }
+
+    /**
+     * Gets a list of all appointments in the client_schedule.appointments table with an ID containing the searched
+     * ID. Used to populate the ObservableList<Appointment> displayAppt. Explictly converts time values to the systems
+     * defalut time zone for display purposes.
+     *
+     * @return ObservableList of all appointments
+     */
+    public static ObservableList<Appointment> getAppointmentByName (String search) {
+        ObservableList<Appointment> nameSearchAppts = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Title LIKE ?";
+        ZoneId localZone = ZoneId.systemDefault();
+
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + search + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                //convert UTC datetimes from SQL table to the user's local times for display
+                ZonedDateTime utcStartTime = resultSet.getObject("Start", ZonedDateTime.class);
+                ZonedDateTime localStartTime = utcStartTime.withZoneSameInstant(localZone);
+                LocalDateTime displayStartTime = localStartTime.toLocalDateTime();
+
+                ZonedDateTime utcEndTime = resultSet.getObject("End", ZonedDateTime.class);
+                ZonedDateTime localEndTime = utcEndTime.withZoneSameInstant(localZone);
+                LocalDateTime displayEndTime = localEndTime.toLocalDateTime();
+
+                ZonedDateTime utcCreateTime = resultSet.getObject("Create_Date", ZonedDateTime.class);
+                ZonedDateTime localCreateTime = utcCreateTime.withZoneSameInstant(localZone);
+                LocalDateTime displayCreateTime = localCreateTime.toLocalDateTime();
+
+                //get last update time and see if it needs to be converted
+                ZonedDateTime utcUpdateTime = resultSet.getObject("Last_Update", ZonedDateTime.class);
+                if (utcUpdateTime != null) {
+                    ZonedDateTime localUpdateTime = utcUpdateTime.withZoneSameInstant(localZone);
+                    LocalDateTime displayUpdateTime = localUpdateTime.toLocalDateTime();
+
+                    Appointment appointment = new Appointment(
+                            resultSet.getInt("Appointment_ID"),
+                            resultSet.getString("Title"),
+                            resultSet.getString("Description"),
+                            resultSet.getString("Location"),
+                            resultSet.getString("Type"),
+                            displayStartTime,
+                            displayEndTime,
+                            displayCreateTime,
+                            resultSet.getString("Created_By"),
+                            displayUpdateTime,
+                            resultSet.getString("Last_Updated_By"),
+                            resultSet.getInt("Customer_ID"),
+                            resultSet.getInt("User_ID"),
+                            resultSet.getInt("Contact_ID")
+                    );
+
+                    nameSearchAppts.add(appointment);
+                    //not all Appointments have been updated, so allow for null update time
+                } else {
+                    Appointment appointment = new Appointment(
+                            resultSet.getInt("Appointment_ID"),
+                            resultSet.getString("Title"),
+                            resultSet.getString("Description"),
+                            resultSet.getString("Location"),
+                            resultSet.getString("Type"),
+                            displayStartTime,
+                            displayEndTime,
+                            displayCreateTime,
+                            resultSet.getString("Created_By"),
+                            null,
+                            resultSet.getString("Last_Updated_By"),
+                            resultSet.getInt("Customer_ID"),
+                            resultSet.getInt("User_ID"),
+                            resultSet.getInt("Contact_ID")
+                    );
+
+                    nameSearchAppts.add(appointment);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return nameSearchAppts;
+    }
+}
 

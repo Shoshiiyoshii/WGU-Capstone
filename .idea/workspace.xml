@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Wip">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/appointmentReport.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +53,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "Reports",
     "last_opened_file_path": "/Users/shoshannathomas-mccue/Desktop/Development/C195/DbClientApp",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.6034483",
     "settings.editor.selected.configurable": "terminal"
@@ -320,10 +318,10 @@
           <line>45</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="71" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/ContactScheduleController.java</url>

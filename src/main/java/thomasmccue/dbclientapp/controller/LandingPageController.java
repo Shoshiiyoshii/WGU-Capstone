@@ -30,7 +30,9 @@ import java.util.*;
  */
 public class LandingPageController implements Initializable {
     @FXML
-    private Label ynUpcomingAppointment, nextAppts, title, customersTitle, customerErrorMessage, apptErrorMessage;
+    private Label ynUpcomingAppointment, nextAppts, title, customersTitle, customerErrorMessage, apptErrorMessage, apptSearchLabel;
+    @FXML
+    private TextField apptSearchBar;
     @FXML
     public TableView<Customer> custTable;
     @FXML
@@ -128,6 +130,52 @@ public class LandingPageController implements Initializable {
             stage.show();
         }
     }
+
+    /**
+     * This method is called when the search bar is selected and the enter key is typed.
+     * It grabs what is typed into the apptSearchBar and holds that in a String called "search".
+     * If the search field is empty, the table is repopulated with all available appointments.
+     * If the search field is not empty, the method checks if search input is an int or
+     * a string so that the proper method in the AppointmentDAO can be called.
+     * It uses regex to see if search input is digits, i.e. a number or not.
+     * If no appointments containing the searched for String or ID int are found, an error message
+     * is shown, and the search bar and table view are reset.
+     * @param event
+     * @throws IOException
+     */
+    public void apptSearchBarClick(ActionEvent event) throws IOException {
+        String search = apptSearchBar.getText();
+        apptErrorMessage.setText("");
+
+        if (search.isEmpty()) {
+            apptTable.setItems(AppointmentDao.getAllAppointments());
+        } else if (search.matches("\\d+")) {
+            int idSearched = Integer.parseInt(search);
+            ObservableList<Appointment> foundAppointments = AppointmentDao.getAppointmentById(idSearched);
+
+            if (!foundAppointments.isEmpty()) {
+                apptErrorMessage.setText("");
+                apptTable.setItems(foundAppointments);
+            } else {
+                apptErrorMessage.setText("No appointment with ID \"" + idSearched + "\" found.");
+                apptSearchBar.clear();
+                apptTable.setItems(AppointmentDao.getAllAppointments());
+            }
+        } else {
+            ObservableList<Appointment> foundAppointments = AppointmentDao.getAppointmentByName(search);
+            if (!foundAppointments.isEmpty()) {
+                apptTable.setItems(foundAppointments);
+                apptErrorMessage.setText("");
+
+            } else {
+                apptErrorMessage.setText("No appointment containing \"" + search + "\" found.");
+                apptSearchBar.clear();
+                apptTable.setItems(AppointmentDao.getAllAppointments());
+            }
+        }
+    }
+    @FXML
+
 
     /**
      * This method contains two different Lambda expressions.
