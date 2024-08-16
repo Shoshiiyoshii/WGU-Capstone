@@ -273,8 +273,7 @@ public class AppointmentDao {
 
     /**
      * Gets a list of all appointments in the client_schedule.appointments table with an ID containing the searched
-     * ID. Used to populate the ObservableList<Appointment> displayAppt. Explictly converts time values to the systems
-     * defalut time zone for display purposes.
+     * ID. Explictly converts time values to the systems defalut time zone for display purposes.
      *
      * @return ObservableList of all appointments
      */
@@ -359,9 +358,8 @@ public class AppointmentDao {
     }
 
     /**
-     * Gets a list of all appointments in the client_schedule.appointments table with an ID containing the searched
-     * ID. Used to populate the ObservableList<Appointment> displayAppt. Explictly converts time values to the systems
-     * defalut time zone for display purposes.
+     * Gets a list of all appointments in the client_schedule.appointments table with a title containing the searched
+     * string. Explictly converts time values to the systems defalut time zone for display purposes.
      *
      * @return ObservableList of all appointments
      */
