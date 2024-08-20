@@ -3,9 +3,9 @@ package thomasmccue.dbclientapp.model;
 import java.time.LocalDateTime;
 
 /**
- * This class represents a customer.
+ * This abstract class represents a customer.
  */
-public class Customer {
+public abstract class Customer {
     private int customerId;
     private String customerName;
     private String address;

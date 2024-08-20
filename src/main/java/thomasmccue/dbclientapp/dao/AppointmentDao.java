@@ -118,7 +118,7 @@ public class AppointmentDao {
     /**
      * Updates the appointment with the same ID as the appointment object it's passed
      * in the client_schedule.appointments table in mySql and in the
-     * ObservableList<Appointment> displayAppt.Time values are explicitly set to UTC
+     * ObservableList<Appointment> displayAppt. Time values are explicitly set to UTC
      * for storage.
      *
      * @param appointment appointment to be updated
@@ -189,8 +189,8 @@ public class AppointmentDao {
 
     /**
      * Gets a list of all appointments in the client_schedule.appointments table. Used to populate
-     * the ObservableList<Appointment> displayAppt. Explictly converts time values to the systems
-     * defalut time zone for display purposes.
+     * the ObservableList<Appointment> displayAppt. Explicitly converts time values to the systems
+     * default time zone for display purposes.
      *
      * @return ObservableList of all appointments
      */
@@ -273,7 +273,7 @@ public class AppointmentDao {
 
     /**
      * Gets a list of all appointments in the client_schedule.appointments table with an ID containing the searched
-     * ID. Explictly converts time values to the systems defalut time zone for display purposes.
+     * ID. Explicitly converts time values to the systems default time zone for display purposes.
      *
      * @return ObservableList of all appointments
      */
@@ -359,7 +359,7 @@ public class AppointmentDao {
 
     /**
      * Gets a list of all appointments in the client_schedule.appointments table with a title containing the searched
-     * string. Explictly converts time values to the systems defalut time zone for display purposes.
+     * string. Explicitly converts time values to the systems default time zone for display purposes.
      *
      * @return ObservableList of all appointments
      */
@@ -441,6 +441,54 @@ public class AppointmentDao {
             throw new RuntimeException(e);
         }
         return nameSearchAppts;
+    }
+
+    /**
+     * Gets a string representing the customers activity status based on  whether the most
+     * recent appointment date for the customer whose ID is passed as a parameter is within the last
+     * 6 months (183 days). Explicitly converts time values to the systems default time zone for
+     * display purposes.
+     *
+     * @return String either "new", "active", or "inactive"
+     */
+    public static String getCustomerStatus(int customerId) {
+        String sql = "SELECT MAX(Start) AS MostRecentStart FROM client_schedule.appointments WHERE Customer_ID = ?";
+        ZoneId localZone = ZoneId.systemDefault();
+
+        try {
+            Connection connection = JDBC.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, customerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                ZonedDateTime utcMostRecentStart = resultSet.getObject("MostRecentStart", ZonedDateTime.class);
+
+                if (utcMostRecentStart != null) {
+                    // Convert the most recent start time from UTC to local time
+                    ZonedDateTime localMostRecentStart = utcMostRecentStart.withZoneSameInstant(localZone);
+
+                    // Calculate the date 183 days ago from now
+                    LocalDate now = LocalDate.now();
+                    LocalDate sixMonthsAgo = now.minusDays(183);
+
+                    // Compare the most recent appointment date with the date 183 days ago
+                    if (localMostRecentStart.toLocalDate().isAfter(sixMonthsAgo)) {
+                        // customer has had an appointment within the last 183 days, they're active
+                        return "active";
+                    } else {
+                        // customer hasn't had an appointment within the last 183 days, they're inactive
+                        return "inactive";
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        // No appointment found, customer must be new
+        return "new";
     }
 }
 

@@ -3,7 +3,10 @@ package thomasmccue.dbclientapp.dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import thomasmccue.dbclientapp.helper.JDBC;
+import thomasmccue.dbclientapp.model.ActiveCustomer;
 import thomasmccue.dbclientapp.model.Customer;
+import thomasmccue.dbclientapp.model.InactiveCustomer;
+import thomasmccue.dbclientapp.model.NewCustomer;
 
 import java.sql.*;
 import java.time.*;
@@ -199,12 +202,12 @@ public class CustomerDao {
 
     /**
      * Gets a list of all customers in the client_schedule.customers table. Used to populate
-     * the ObservableList displayCust. Explictly converts time values to the systems
-     * defalut time zone for display purposes.
+     * the ObservableList displayCust. Explicitly converts time values to the systems
+     * default time zone for display purposes.
      *
      * @return ObservableList of all customers
      */
-        public static ObservableList<Customer> getAllCust() {
+    public static ObservableList<Customer> getAllCust() {
         String sql = "SELECT * FROM client_schedule.customers";
         ZoneId localZone = ZoneId.systemDefault();
 
@@ -214,58 +217,83 @@ public class CustomerDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                //convert UTC datetimes in SQL table to the user's local times for display
-                //convert Create_Date
+                // Convert UTC datetimes in SQL table to the user's local times for display
                 ZonedDateTime utcCreateTime = resultSet.getObject("Create_Date", ZonedDateTime.class);
                 ZonedDateTime localCreateTime = utcCreateTime.withZoneSameInstant(localZone);
                 LocalDateTime displayCreateTime = localCreateTime.toLocalDateTime();
 
-                //convert Last_Update
+                // Convert Last_Update
                 ZonedDateTime utcUpdateTime = resultSet.getObject("Last_Update", ZonedDateTime.class);
-                if(utcUpdateTime != null) {
+                LocalDateTime displayUpdateTime = null;
+                if (utcUpdateTime != null) {
                     ZonedDateTime localUpdateTime = utcUpdateTime.withZoneSameInstant(localZone);
-                    LocalDateTime displayUpdateTime = localUpdateTime.toLocalDateTime();
-
-                    Customer customer = new Customer(
-                            resultSet.getInt("Customer_ID"),
-                            resultSet.getString("Customer_Name"),
-                            resultSet.getString("Address"),
-                            resultSet.getString("Postal_Code"),
-                            resultSet.getString("Phone"),
-                            displayCreateTime,
-                            resultSet.getString("Created_By"),
-                            displayUpdateTime,
-                            resultSet.getString("Last_Updated_By"),
-                            resultSet.getInt("Division_ID"),
-                            CountryDao.getCountryID(resultSet.getInt("Division_ID"))
-                    );
-
-                    displayCust.add(customer);
-                    //not all Customers have been updated, so allow for null update time
-                } else {
-                    Customer customer = new Customer(
-                    resultSet.getInt("Customer_ID"),
-                            resultSet.getString("Customer_Name"),
-                            resultSet.getString("Address"),
-                            resultSet.getString("Postal_Code"),
-                            resultSet.getString("Phone"),
-                            displayCreateTime,
-                            resultSet.getString("Created_By"),
-                            null,
-                            resultSet.getString("Last_Updated_By"),
-                            resultSet.getInt("Division_ID"),
-                            CountryDao.getCountryID(resultSet.getInt("Division_ID"))
-                    );
-
-                    displayCust.add(customer);
+                    displayUpdateTime = localUpdateTime.toLocalDateTime();
                 }
+
+                // Get the customer status
+                String status = AppointmentDao.getCustomerStatus(resultSet.getInt("Customer_ID"));
+
+                // Instantiate the correct customer type based on the status
+                Customer customer;
+                switch (status) {
+                    case "active":
+                        customer = new ActiveCustomer(
+                                resultSet.getInt("Customer_ID"),
+                                resultSet.getString("Customer_Name"),
+                                resultSet.getString("Address"),
+                                resultSet.getString("Postal_Code"),
+                                resultSet.getString("Phone"),
+                                displayCreateTime,
+                                resultSet.getString("Created_By"),
+                                displayUpdateTime,
+                                resultSet.getString("Last_Updated_By"),
+                                resultSet.getInt("Division_ID"),
+                                CountryDao.getCountryID(resultSet.getInt("Division_ID"))
+                        );
+                        break;
+                    case "inactive":
+                        customer = new InactiveCustomer(
+                                resultSet.getInt("Customer_ID"),
+                                resultSet.getString("Customer_Name"),
+                                resultSet.getString("Address"),
+                                resultSet.getString("Postal_Code"),
+                                resultSet.getString("Phone"),
+                                displayCreateTime,
+                                resultSet.getString("Created_By"),
+                                displayUpdateTime,
+                                resultSet.getString("Last_Updated_By"),
+                                resultSet.getInt("Division_ID"),
+                                CountryDao.getCountryID(resultSet.getInt("Division_ID"))
+                        );
+                        break;
+                    case "new":
+                    default:
+                        customer = new NewCustomer(
+                                resultSet.getInt("Customer_ID"),
+                                resultSet.getString("Customer_Name"),
+                                resultSet.getString("Address"),
+                                resultSet.getString("Postal_Code"),
+                                resultSet.getString("Phone"),
+                                displayCreateTime,
+                                resultSet.getString("Created_By"),
+                                displayUpdateTime,
+                                resultSet.getString("Last_Updated_By"),
+                                resultSet.getInt("Division_ID"),
+                                CountryDao.getCountryID(resultSet.getInt("Division_ID"))
+                        );
+                        break;
+                }
+
+                displayCust.add(customer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+
         return displayCust;
     }
+
 
     /**
      * Queries the client_schedule.customers table to retrieve an
