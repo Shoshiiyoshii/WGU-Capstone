@@ -1,23 +1,18 @@
 package thomasmccue.dbclientapp.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import thomasmccue.dbclientapp.Main;
 import thomasmccue.dbclientapp.dao.CountryDao;
 import thomasmccue.dbclientapp.dao.CustomerDao;
 import thomasmccue.dbclientapp.dao.FirstLevelDivisionDao;
-import thomasmccue.dbclientapp.helper.JDBC;
 import thomasmccue.dbclientapp.model.Customer;
+import thomasmccue.dbclientapp.model.NewCustomer;
 
 
 import java.io.IOException;
@@ -172,7 +167,7 @@ public class AddOrUpdateCustomerController implements Initializable {
 
                 String createdBy = LogInController.loggedInUser;
 
-                customer = new Customer(
+                customer = new NewCustomer(
                         name,
                         address,
                         postalCode,
@@ -250,7 +245,7 @@ public class AddOrUpdateCustomerController implements Initializable {
      * so that the Division_ID can be returned on its own to be used.
      *
      * @param divS String representing the select division. Format "Division_ID, Name"
-     * @return int divId, the Division_ID seperated fromn the division name
+     * @return int divId, the Division_ID separated from the division name
      */
     private int parseDivId(String divS){
         int divId = 0;

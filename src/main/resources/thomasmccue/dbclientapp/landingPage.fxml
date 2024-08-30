@@ -5,94 +5,100 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="mainScreenPane" prefHeight="710.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.LandingPageController">
+<AnchorPane fx:id="mainScreenPane" prefHeight="710.0" prefWidth="1092.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thomasmccue.dbclientapp.controller.LandingPageController">
     <children>
-      <Pane layoutX="59.0" layoutY="52.0" prefHeight="76.0" prefWidth="485.0">
+      <Pane layoutX="49.0" layoutY="52.0" prefHeight="76.0" prefWidth="485.0">
          <children>
             <Label fx:id="ynUpcomingAppointment" layoutY="6.0" prefHeight="17.0" prefWidth="321.0" text="The following appointments start in the next 15 minutes: " />
             <Label fx:id="nextAppts" layoutX="-3.0" layoutY="23.0" prefHeight="54.0" prefWidth="492.0" />
          </children></Pane>
-        <Label fx:id="title" layoutX="46.0" layoutY="23.0" text="Customer and Appointment Managment System">
+        <Label fx:id="title" layoutX="46.0" layoutY="23.0" text="Customer and Appointment Management System">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-        <Pane layoutX="12.0" layoutY="398.0" prefHeight="250.0" prefWidth="962.0">
+        <Pane layoutX="12.0" layoutY="398.0" prefHeight="250.0" prefWidth="1060.0">
             <children>
-                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f5f5f500" height="250.0" stroke="BLACK" strokeType="INSIDE" width="962.0" />
-                <TableView fx:id="custTable" layoutX="13.0" layoutY="44.0" prefHeight="162.0" prefWidth="944.0">
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f5f5f500" height="250.0" stroke="BLACK" strokeType="INSIDE" width="1060.0" />
+                <TableView fx:id="custTable" layoutX="17.0" layoutY="44.0" prefHeight="162.0" prefWidth="1025.0">
                     <columns>
                         <TableColumn fx:id="custIdBottomCol" prefWidth="61.0" text="Cust. ID" />
                         <TableColumn fx:id="nameCol" prefWidth="83.0" text="Name" />
+                        <TableColumn fx:id="statusCol" prefWidth="83.0" text="Status" />
                         <TableColumn fx:id="addressCol" prefWidth="97.0" text="Address" />
                         <TableColumn fx:id="postalCodeCol" prefWidth="79.0" text="Postal Code" />
-                  <TableColumn fx:id="phoneCol" prefWidth="109.0" text="Phone Number" />
-                  <TableColumn fx:id="createDateCol" prefWidth="83.0" text="Date Created" />
-                  <TableColumn fx:id="createdByCol" prefWidth="86.0" text="Created By" />
-                  <TableColumn fx:id="lastUpdated" prefWidth="102.0" text="Last Updated" />
-                  <TableColumn fx:id="lastUpdatedByCol" prefWidth="101.0" text="Last Updated By" />
-                  <TableColumn fx:id="divisionIdCol" prefWidth="73.0" text="Division ID" />
-                  <TableColumn fx:id="countryCol" prefWidth="68.0" text="Country" />
+                        <TableColumn fx:id="phoneCol" prefWidth="109.0" text="Phone Number" />
+                        <TableColumn fx:id="createDateCol" prefWidth="83.0" text="Date Created" />
+                        <TableColumn fx:id="createdByCol" prefWidth="86.0" text="Created By" />
+                        <TableColumn fx:id="lastUpdated" prefWidth="102.0" text="Last Updated" />
+                        <TableColumn fx:id="lastUpdatedByCol" prefWidth="101.0" text="Last Updated By" />
+                        <TableColumn fx:id="divisionIdCol" prefWidth="73.0" text="Division ID" />
+                        <TableColumn fx:id="countryCol" prefWidth="68.0" text="Country" />
                     </columns>
                 </TableView>
-                <ButtonBar layoutX="703.0" layoutY="206.0" prefHeight="40.0" prefWidth="200.0">
+                <ButtonBar layoutX="794.0" layoutY="206.0" prefHeight="40.0" prefWidth="200.0">
                     <buttons>
                         <Button fx:id="custAddButton" mnemonicParsing="false" onAction="#clickCustAdd" text="Add" />
                         <Button fx:id="custUpdateButton" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickCustUpdate" text="Update" />
                         <Button fx:id="custDeleteButton" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickCustDelete" text="Delete" />
                     </buttons>
                 </ButtonBar>
-                <Label fx:id="customersTitle" layoutX="14.0" layoutY="18.0" prefHeight="20.0" prefWidth="134.0" text="Customer Records" wrapText="true">
+                <Label fx:id="customersTitle" layoutX="19.0" layoutY="18.0" prefHeight="20.0" prefWidth="134.0" text="Customer Records" wrapText="true">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font></Label>
-                <Label fx:id="customerErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="206.0" prefHeight="40.0" prefWidth="703.0" textAlignment="CENTER" textFill="#f20303" />
+                <Label fx:id="customerErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="207.0" prefHeight="40.0" prefWidth="790.0" textAlignment="CENTER" textFill="#f20303" />
+            <Label fx:id="customerStatusReportLabel" alignment="CENTER_RIGHT" layoutX="241.0" layoutY="12.0" prefHeight="30.0" prefWidth="800.0" textAlignment="RIGHT" />
             </children>
         </Pane>
-        <Button fx:id="exitButton" layoutX="873.0" layoutY="667.0" mnemonicParsing="false" onAction="#exitClicked" prefHeight="26.0" prefWidth="83.0" text="Exit" />
-      <Pane layoutX="10.0" layoutY="135.0" prefHeight="250.0" prefWidth="962.0">
+      <Pane layoutX="10.0" layoutY="135.0" prefHeight="250.0" prefWidth="1060.0">
          <children>
-            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f5f5f500" height="250.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="962.0" />
-            <TableView fx:id="apptTable" layoutX="10.0" layoutY="42.0" prefHeight="162.0" prefWidth="944.0">
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f5f5f500" height="250.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="1060.0" />
+            <TableView fx:id="apptTable" layoutX="17.0" layoutY="42.0" prefHeight="162.0" prefWidth="1025.0">
                <columns>
-                  <TableColumn fx:id="apptIdCol" prefWidth="52.0" text="Appt. ID" />
-                  <TableColumn fx:id="titleCol" prefWidth="68.0" text="Title" />
-                  <TableColumn fx:id="descCol" prefWidth="90.0" text="Description" />
-                  <TableColumn fx:id="locationCol" prefWidth="171.0" text="Location" />
-                  <TableColumn fx:id="contactIdCol" prefWidth="66.0" text="Contact ID" />
-                  <TableColumn fx:id="typeCol" prefWidth="90.0" text="Type" />
-                  <TableColumn fx:id="startDTCol" prefWidth="128.0" text="Start Date and Time" />
-                  <TableColumn fx:id="endDTCol" prefWidth="128.0" text="End Date and Time" />
-                  <TableColumn fx:id="custIdTopCol" prefWidth="77.0" text="Customer ID" />
-                  <TableColumn fx:id="userIdCol" prefWidth="73.0" text="User ID" />
+                  <TableColumn fx:id="apptIdCol" prefWidth="60.0" text="Appt. ID" />
+                  <TableColumn fx:id="titleCol" prefWidth="76.0" text="Title" />
+                  <TableColumn fx:id="descCol" prefWidth="98.0" text="Description" />
+                  <TableColumn fx:id="locationCol" prefWidth="180.0" text="Location" />
+                  <TableColumn fx:id="contactIdCol" prefWidth="74.0" text="Contact ID" />
+                  <TableColumn fx:id="typeCol" prefWidth="98.0" text="Type" />
+                  <TableColumn fx:id="startDTCol" prefWidth="136.0" text="Start Date and Time" />
+                  <TableColumn fx:id="endDTCol" prefWidth="136.0" text="End Date and Time" />
+                  <TableColumn fx:id="custIdTopCol" prefWidth="85.0" text="Customer ID" />
+                  <TableColumn fx:id="userIdCol" prefWidth="81.0" text="User ID" />
                </columns>
             </TableView>
-            <ButtonBar layoutX="698.0" layoutY="206.0" prefHeight="40.0" prefWidth="200.0">
+            <ButtonBar layoutX="794.0" layoutY="206.0" prefHeight="40.0" prefWidth="200.0">
                <buttons>
                   <Button fx:id="apptAddButton1" mnemonicParsing="false" onAction="#clickApptAdd" text="Add" />
                   <Button fx:id="apptUpdateButton" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickApptUpdate" text="Update" />
                   <Button fx:id="apptDeleteButton" layoutX="140.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickApptDelete" text="Delete" />
                </buttons>
             </ButtonBar>
-            <Label fx:id="appointmentTitle" layoutX="14.0" layoutY="18.0" prefHeight="20.0" prefWidth="134.0" text="Appointments" wrapText="true">
+            <Label fx:id="appointmentTitle" layoutX="19.0" layoutY="18.0" prefHeight="20.0" prefWidth="134.0" text="Appointments" wrapText="true">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <Label fx:id="apptErrorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="211.0" prefHeight="29.0" prefWidth="703.0" textAlignment="CENTER" textFill="#f20303" />
-            <RadioButton fx:id="weekRadio" layoutX="770.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Week">
+            <RadioButton fx:id="weekRadio" layoutX="860.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Week">
                <toggleGroup>
                   <ToggleGroup fx:id="apptFilter" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="monthRadio" layoutX="863.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Month" toggleGroup="$apptFilter" />
-            <RadioButton fx:id="allTimeRadio" layoutX="687.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="All Time" toggleGroup="$apptFilter" />
+            <RadioButton fx:id="monthRadio" layoutX="953.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="This Month" toggleGroup="$apptFilter" />
+            <RadioButton fx:id="allTimeRadio" layoutX="777.0" layoutY="19.0" mnemonicParsing="false" onAction="#radioFilter" text="All Time" toggleGroup="$apptFilter" />
          </children>
       </Pane>
-      <Button fx:id="apptReportButton" layoutX="697.0" layoutY="667.0" mnemonicParsing="false" onAction="#apptReportButtonClicked" text="View Appointment Reports" />
-      <Button fx:id="contactSchedulesButton" layoutX="537.0" layoutY="667.0" mnemonicParsing="false" onAction="#contactSchedulesClicked" text="View Contact Schedules" />
-      <Button fx:id="customerReportButton" layoutX="315.0" layoutY="667.0" mnemonicParsing="false" onAction="#customerReportButtonClicked" text="View Customer Location Distribution" />
-      <TextField fx:id="apptSearchBar" layoutX="801.0" layoutY="101.0" onAction="#apptSearchBarClick" promptText="Search by Name or ID" />
-      <Label fx:id="apptSearchLabel" layoutX="670.0" layoutY="105.0" text="Appointment Search:">
+        <ButtonBar layoutX="100.0" layoutY="660.0" prefHeight="40.0" prefWidth="962.0">
+            <buttons>
+                <Button fx:id="apptReportButton" mnemonicParsing="false" onAction="#apptReportButtonClicked" text="View Appointment Reports" />
+                <Button fx:id="contactSchedulesButton" mnemonicParsing="false" onAction="#contactSchedulesClicked" text="View Contact Schedules" />
+                <Button fx:id="customerLocationReportButton" mnemonicParsing="false" onAction="#customerLocationReportButtonClicked" text="View Customer Location Distribution" />
+                <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitClicked" text="Exit" />
+            </buttons>
+        </ButtonBar>
+        <TextField fx:id="apptSearchBar" layoutX="903.0" layoutY="101.0" onAction="#apptSearchBarClick" promptText="Search by Name or ID" />
+      <Label fx:id="apptSearchLabel" layoutX="772.0" layoutY="105.0" text="Appointment Search:">
          <font>
             <Font size="14.0" />
          </font>

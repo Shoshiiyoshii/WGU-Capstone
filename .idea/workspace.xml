@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="11b0d059-5e82-4ff6-a76c-49b53b2dd396" name="Changes" comment="Wip">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateCustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/CustomerReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/CustomerReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LandingPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/customerReport.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/customerLocationReport.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/thomasmccue/dbclientapp/landingPage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1723838088014</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Customer and Appointment DAO updated to accommodate the types of customer, and Customer changed to abstract.">
+      <created>1724189858088</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1724189858089</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -306,7 +318,8 @@
     <MESSAGE value="Reports Done" />
     <MESSAGE value="ReadMe done" />
     <MESSAGE value="Appointment Search Bar working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Appointment Search Bar working" />
+    <MESSAGE value="Customer and Appointment DAO updated to accommodate the types of customer, and Customer changed to abstract." />
+    <option name="LAST_COMMIT_MESSAGE" value="Customer and Appointment DAO updated to accommodate the types of customer, and Customer changed to abstract." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -10,24 +10,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import thomasmccue.dbclientapp.dao.AppointmentDao;
-import thomasmccue.dbclientapp.dao.CountryDao;
 import thomasmccue.dbclientapp.dao.CustomerDao;
 import thomasmccue.dbclientapp.dao.FirstLevelDivisionDao;
 import thomasmccue.dbclientapp.model.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.TextStyle;
-import java.util.HashSet;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * This class controls the customerReport.fxml display
+ * This class controls the customerLocationReport.fxml display
  */
-public class CustomerReportController implements Initializable {
+public class CustomerLocationReportController implements Initializable {
     @FXML
     private Button exitButton;
     @FXML

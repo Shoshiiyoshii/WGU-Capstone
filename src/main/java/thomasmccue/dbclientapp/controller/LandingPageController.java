@@ -1,6 +1,5 @@
 package thomasmccue.dbclientapp.controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -18,7 +17,6 @@ import thomasmccue.dbclientapp.model.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +28,8 @@ import java.util.*;
  */
 public class LandingPageController implements Initializable {
     @FXML
-    private Label ynUpcomingAppointment, nextAppts, title, customersTitle, customerErrorMessage, apptErrorMessage, apptSearchLabel;
+    private Label ynUpcomingAppointment, nextAppts, title, customersTitle, customerErrorMessage, apptErrorMessage,
+            apptSearchLabel, customerStatusReportLabel;
     @FXML
     private TextField apptSearchBar;
     @FXML
@@ -40,7 +39,8 @@ public class LandingPageController implements Initializable {
     @FXML
     private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol, lastUpdated, lastUpdatedByCol, countryCol;
     @FXML
-    private Button custAddButton, custUpdateButton, custDeleteButton, apptAddButton1, apptUpdateButton, apptDeleteButton,exitButton, apptReportButton, contactSchedulesButton, customerReportButton;
+    private Button custAddButton, custUpdateButton, custDeleteButton, apptAddButton1, apptUpdateButton, apptDeleteButton,
+            exitButton, apptReportButton, contactSchedulesButton, customerStatusReportButton, customerLocationReportButton ;
     @FXML
     private TableView<Appointment> apptTable;
     @FXML
@@ -380,21 +380,32 @@ public class LandingPageController implements Initializable {
     }
 
     /**
-     * This method launches the customer report window when the View Customer Location Distribution
+     * This method launches the customer location report window when the View Customer Location Distribution
      * button is clicked.
      *
      * @param event
      * @throws IOException
      */
-    public void customerReportButtonClicked(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customerReport.fxml"));
+    public void customerLocationReportButtonClicked(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customerLocationReport.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
 
-        CustomerReportController controller = fxmlLoader.getController();
+        CustomerLocationReportController controller = fxmlLoader.getController();
         stage.setTitle("Customer Location Distribution");
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * This method launches the customer status report window when the View Customer Status Report
+     * button is clicked.
+     *
+     * @param event
+     * @throws IOException
+     */
+    public void customerStatusReportButtonClicked(ActionEvent event) throws IOException{
+
     }
 
     /**
