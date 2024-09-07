@@ -37,10 +37,11 @@ public class LandingPageController implements Initializable {
     @FXML
     private TableColumn<Customer, Integer> custIdBottomCol, divisionIdCol;
     @FXML
-    private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol, lastUpdated, lastUpdatedByCol, countryCol;
+    private TableColumn<Customer, String> nameCol, addressCol, postalCodeCol, phoneCol, createDateCol, createdByCol,
+            lastUpdated, lastUpdatedByCol, countryCol, statusCol;
     @FXML
     private Button custAddButton, custUpdateButton, custDeleteButton, apptAddButton1, apptUpdateButton, apptDeleteButton,
-            exitButton, apptReportButton, contactSchedulesButton, customerStatusReportButton, customerLocationReportButton ;
+            exitButton, apptReportButton, contactSchedulesButton, customerStatusReportButton, customerLocationReportButton;
     @FXML
     private TableView<Appointment> apptTable;
     @FXML
@@ -86,9 +87,9 @@ public class LandingPageController implements Initializable {
         SelectionModel<Customer> selectionModel = custTable.getSelectionModel();
         Customer selectedCust = selectionModel.getSelectedItem();
 
-        if(selectedCust == null){
+        if (selectedCust == null) {
             customerErrorMessage.setText("Please first select a Customer to Modify.");
-        } else{
+        } else {
             customerErrorMessage.setText("");
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -111,11 +112,11 @@ public class LandingPageController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void clickCustDelete(ActionEvent event) throws IOException{
+    public void clickCustDelete(ActionEvent event) throws IOException {
         SelectionModel<Customer> selectionModel = custTable.getSelectionModel();
         Customer selectedCust = selectionModel.getSelectedItem();
 
-        if(selectedCust == null) {
+        if (selectedCust == null) {
             customerErrorMessage.setText("Please first select a Customer to Delete.");
         } else {
             customerErrorMessage.setText("");
@@ -140,6 +141,7 @@ public class LandingPageController implements Initializable {
      * It uses regex to see if search input is digits, i.e. a number or not.
      * If no appointments containing the searched for String or ID int are found, an error message
      * is shown, and the search bar and table view are reset.
+     *
      * @param event
      * @throws IOException
      */
@@ -174,6 +176,7 @@ public class LandingPageController implements Initializable {
             }
         }
     }
+
     @FXML
 
 
@@ -193,10 +196,10 @@ public class LandingPageController implements Initializable {
      *
      * @param event
      */
-    public void radioFilter(ActionEvent event){
+    public void radioFilter(ActionEvent event) {
         //get the current date to compare
         LocalDate now = LocalDate.now();
-        if(monthRadio.isSelected()){
+        if (monthRadio.isSelected()) {
             //get the current month and year
             int currentMonth = now.getMonthValue();
             int currentYear = now.getYear();
@@ -225,8 +228,8 @@ public class LandingPageController implements Initializable {
             });
 
             apptTable.setItems(thisWeeksAppts);
-        }else if(allTimeRadio.isSelected()){
-           apptTable.setItems(AppointmentDao.displayAppt);
+        } else if (allTimeRadio.isSelected()) {
+            apptTable.setItems(AppointmentDao.displayAppt);
         }
     }
 
@@ -246,9 +249,11 @@ public class LandingPageController implements Initializable {
         AddOrUpdateAppointmentController controller = fxmlLoader.getController();
         controller.setUpAdd("Create a new Appointment", "Save");
         stage.setTitle("Create A New Appointment");
+        controller.setLandingPageController(this);
         stage.setScene(scene);
         stage.show();
     }
+
     /**
      * When the update button under the appointment table is clicked, this method
      * checks that an appointment has been selected, and displays an error message if
@@ -259,11 +264,11 @@ public class LandingPageController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void clickApptUpdate(ActionEvent event) throws IOException{
+    public void clickApptUpdate(ActionEvent event) throws IOException {
         SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
         Appointment selectedAppt = selectionModel.getSelectedItem();
 
-        if(selectedAppt == null) {
+        if (selectedAppt == null) {
             apptErrorMessage.setText("Please select an existing appointment to modify.");
 
         } else {
@@ -273,6 +278,7 @@ public class LandingPageController implements Initializable {
             Stage stage = new Stage();
 
             AddOrUpdateAppointmentController controller = fxmlLoader.getController();
+            controller.setLandingPageController(this);
             controller.setUpModify("Update An Existing Appointment", "Save Changes", selectedAppt);
 
             stage.setTitle("Update Existing Appointment");
@@ -294,7 +300,7 @@ public class LandingPageController implements Initializable {
         SelectionModel<Appointment> selectionModel = apptTable.getSelectionModel();
         Appointment selectedAppt = selectionModel.getSelectedItem();
 
-        if(selectedAppt == null) {
+        if (selectedAppt == null) {
             customerErrorMessage.setText("Please first select an Appointment to Delete.");
         } else {
             customerErrorMessage.setText("");
@@ -315,7 +321,7 @@ public class LandingPageController implements Initializable {
      * how many appointments are scheduled to start in the next 15 minutes. If there are appointments
      * scheduled to start within 15 minutes of log in, the appointment ID and start time is displayed.
      */
-    public void upcomingAppts(){
+    public void upcomingAppts() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime in15Mins = now.plusMinutes(15);
 
@@ -324,23 +330,23 @@ public class LandingPageController implements Initializable {
             return ((start.isEqual(now) || start.isAfter(now))
                     && (start.isBefore(in15Mins) || start.isEqual(in15Mins)));
         });
-            if(!soonAppts.isEmpty()){
-                ynUpcomingAppointment.setText("You have " + soonAppts.size() +" appointments" +
-                        " starting in the next 15 minutes.");
-                StringBuilder stringBuilder = new StringBuilder();
+        if (!soonAppts.isEmpty()) {
+            ynUpcomingAppointment.setText("You have " + soonAppts.size() + " appointments" +
+                    " starting in the next 15 minutes.");
+            StringBuilder stringBuilder = new StringBuilder();
 
-                for (Appointment appointment: soonAppts) {
-                    String id = String.valueOf(appointment.getApptId());
-                    stringBuilder.append("Appointment ID: " + id);
-                    String time = appointment.getStart().format(formatter);
-                    stringBuilder.append(" Starts at: "+ time + ", ");
-                }
-                String upcoming = stringBuilder.toString();
-                nextAppts.setText(upcoming.substring(0, upcoming.length() - 2));
-            } else {
-                ynUpcomingAppointment.setText("You have no appointments starting in the next 15 minutes.");
-                nextAppts.setText("");
+            for (Appointment appointment : soonAppts) {
+                String id = String.valueOf(appointment.getApptId());
+                stringBuilder.append("Appointment ID: " + id);
+                String time = appointment.getStart().format(formatter);
+                stringBuilder.append(" Starts at: " + time + ", ");
             }
+            String upcoming = stringBuilder.toString();
+            nextAppts.setText(upcoming.substring(0, upcoming.length() - 2));
+        } else {
+            ynUpcomingAppointment.setText("You have no appointments starting in the next 15 minutes.");
+            nextAppts.setText("");
+        }
     }
 
     /**
@@ -350,7 +356,7 @@ public class LandingPageController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void apptReportButtonClicked(ActionEvent event)throws IOException{
+    public void apptReportButtonClicked(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("appointmentReport.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
@@ -368,12 +374,12 @@ public class LandingPageController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void contactSchedulesClicked(ActionEvent event) throws IOException{
+    public void contactSchedulesClicked(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("contactSchedule.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
 
-       ContactScheduleController controller = fxmlLoader.getController();
+        ContactScheduleController controller = fxmlLoader.getController();
         stage.setTitle("Contact Schedules");
         stage.setScene(scene);
         stage.show();
@@ -386,7 +392,7 @@ public class LandingPageController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void customerLocationReportButtonClicked(ActionEvent event) throws IOException{
+    public void customerLocationReportButtonClicked(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("customerLocationReport.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
@@ -404,7 +410,7 @@ public class LandingPageController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void customerStatusReportButtonClicked(ActionEvent event) throws IOException{
+    public void customerStatusReportButtonClicked(ActionEvent event) throws IOException {
 
     }
 
@@ -414,7 +420,7 @@ public class LandingPageController implements Initializable {
      * @param event
      * @throws IOException
      */
-    public void exitClicked(ActionEvent event)throws IOException {
+    public void exitClicked(ActionEvent event) throws IOException {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
@@ -422,17 +428,18 @@ public class LandingPageController implements Initializable {
     /**
      * The initialize method is called first when the landing page window is opened.
      * It ensures that the customer and appointment tables are populated, and calls the
-     * method to set the upcoming appointments notification.
+     * method to set the upcoming appointments notification, set the table columns, and refresh the table data.
      *
      * @param url
      * @param resourceBundle
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         custTable.setItems(CustomerDao.getAllCust());
 
         custIdBottomCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));

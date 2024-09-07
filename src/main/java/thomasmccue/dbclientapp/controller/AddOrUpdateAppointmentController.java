@@ -42,6 +42,12 @@ public class AddOrUpdateAppointmentController implements Initializable {
                 .withZone(ZoneId.systemDefault());
         private Appointment appointment;
 
+        private LandingPageController landingPageController;
+
+        public void setLandingPageController(LandingPageController controller) {
+                this.landingPageController = controller;
+        }
+
         public void selectOrEnterContact(ActionEvent event)throws IOException {
 
         }
@@ -137,6 +143,8 @@ public class AddOrUpdateAppointmentController implements Initializable {
                                                 );
 
                                                 AppointmentDao.addAppt(newAppointment);
+                                                CustomerDao.displayCust.clear();
+                                                landingPageController.custTable.setItems(CustomerDao.getAllCust());
                                                 Stage stage = (Stage) saveButton.getScene().getWindow();
                                                 stage.close();
                                         }
@@ -205,6 +213,8 @@ public class AddOrUpdateAppointmentController implements Initializable {
 
                                                 boolean updated = AppointmentDao.updateAppt(appointment, index);
                                                 if (updated) {
+                                                        CustomerDao.displayCust.clear();
+                                                        landingPageController.custTable.setItems(CustomerDao.getAllCust());
                                                         Stage stage = (Stage) saveButton.getScene().getWindow();
                                                         stage.close();
                                                 } else {
@@ -381,5 +391,6 @@ public class AddOrUpdateAppointmentController implements Initializable {
         selectCustBox.setItems(CustomerDao.getAllCustId());
         selectContactBox.setItems(ContactDao.getListOfContacts());
         selectUserIdBox.setItems(UserDao.getAllUserId());
+
         }
 }

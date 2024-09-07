@@ -270,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724189858089</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Updated landing page layout">
+      <created>1725046272423</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1725046272424</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -319,7 +326,8 @@
     <MESSAGE value="ReadMe done" />
     <MESSAGE value="Appointment Search Bar working" />
     <MESSAGE value="Customer and Appointment DAO updated to accommodate the types of customer, and Customer changed to abstract." />
-    <option name="LAST_COMMIT_MESSAGE" value="Customer and Appointment DAO updated to accommodate the types of customer, and Customer changed to abstract." />
+    <MESSAGE value="Updated landing page layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated landing page layout" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -338,18 +346,18 @@
         </breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java</url>
-          <line>192</line>
+          <line>200</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/dao/AppointmentDao.java</url>
-          <line>45</line>
+          <line>50</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/LogInController.java</url>
-          <line>50</line>
-          <option name="timeStamp" value="75" />
+          <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/AddOrUpdateAppointmentController.java</url>
+          <line>81</line>
+          <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/thomasmccue/dbclientapp/controller/ContactScheduleController.java</url>

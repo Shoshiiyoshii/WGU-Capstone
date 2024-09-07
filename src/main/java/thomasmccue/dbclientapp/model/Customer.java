@@ -18,6 +18,10 @@ public abstract class Customer {
     private int divisionId;
     private String country;
 
+
+    public abstract String getStatus();
+
+
     /**
      * Constructor for creating a Customer object that does not yet exist in the database,
      * i.e. does not yet have an assigned ID

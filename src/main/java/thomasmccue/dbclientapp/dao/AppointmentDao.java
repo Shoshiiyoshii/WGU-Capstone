@@ -446,8 +446,9 @@ public class AppointmentDao {
     /**
      * Gets a string representing the customers activity status based on  whether the most
      * recent appointment date for the customer whose ID is passed as a parameter is within the last
-     * 6 months (183 days). Explicitly converts time values to the systems default time zone for
-     * display purposes.
+     * 6 months (183 days), or if the customer has an appointment scheduled for the future.
+     * If so, the customer is considered Active. Explicitly converts time values to the systems default time
+     *  zone for display purposes.
      *
      * @return String either "new", "active", or "inactive"
      */
@@ -467,17 +468,20 @@ public class AppointmentDao {
                 if (utcMostRecentStart != null) {
                     // Convert the most recent start time from UTC to local time
                     ZonedDateTime localMostRecentStart = utcMostRecentStart.withZoneSameInstant(localZone);
+                    LocalDate localMostRecentStartDate = localMostRecentStart.toLocalDate();
 
                     // Calculate the date 183 days ago from now
                     LocalDate now = LocalDate.now();
                     LocalDate sixMonthsAgo = now.minusDays(183);
 
-                    // Compare the most recent appointment date with the date 183 days ago
-                    if (localMostRecentStart.toLocalDate().isAfter(sixMonthsAgo)) {
-                        // customer has had an appointment within the last 183 days, they're active
+                    if (localMostRecentStartDate.isAfter(now)) {
+                        // This explicitly checks for future appointments
+                        return "active";
+                    } else if (localMostRecentStartDate.isAfter(sixMonthsAgo)) {
+                        // This checks for recent past activity within the last 183 days
                         return "active";
                     } else {
-                        // customer hasn't had an appointment within the last 183 days, they're inactive
+                        // No recent or future appointments
                         return "inactive";
                     }
                 }
@@ -491,4 +495,3 @@ public class AppointmentDao {
         return "new";
     }
 }
-
