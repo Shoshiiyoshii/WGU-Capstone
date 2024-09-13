@@ -2,12 +2,15 @@ package thomasmccue.dbclientapp.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import thomasmccue.dbclientapp.Main;
 import thomasmccue.dbclientapp.dao.AppointmentDao;
 import thomasmccue.dbclientapp.dao.ContactDao;
 import thomasmccue.dbclientapp.dao.CustomerDao;
@@ -141,12 +144,14 @@ public class AddOrUpdateAppointmentController implements Initializable {
                                                         userId,
                                                         contactId
                                                 );
-
                                                 AppointmentDao.addAppt(newAppointment);
-                                                CustomerDao.displayCust.clear();
-                                                landingPageController.custTable.setItems(CustomerDao.getAllCust());
-                                                Stage stage = (Stage) saveButton.getScene().getWindow();
-                                                stage.close();
+                                                Stage currentStage = (Stage) (saveButton.getScene().getWindow());
+                                                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("landingPage.fxml"));
+                                                Scene scene = new Scene(fxmlLoader.load());
+                                                currentStage.setScene(scene);
+                                                currentStage.setTitle("Customer and Appointment Management Portal");
+                                                currentStage.centerOnScreen();
+                                                currentStage.show();
                                         }
                                 }
                         }
@@ -213,10 +218,13 @@ public class AddOrUpdateAppointmentController implements Initializable {
 
                                                 boolean updated = AppointmentDao.updateAppt(appointment, index);
                                                 if (updated) {
-                                                        CustomerDao.displayCust.clear();
-                                                        landingPageController.custTable.setItems(CustomerDao.getAllCust());
-                                                        Stage stage = (Stage) saveButton.getScene().getWindow();
-                                                        stage.close();
+                                                        Stage currentStage = (Stage) (saveButton.getScene().getWindow());
+                                                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("landingPage.fxml"));
+                                                        Scene scene = new Scene(fxmlLoader.load());
+                                                        currentStage.setScene(scene);
+                                                        currentStage.setTitle("Customer and Appointment Management Portal");
+                                                        currentStage.centerOnScreen();
+                                                        currentStage.show();
                                                 } else {
                                                         errorMessage.setText("There was a problem updating the appointment" +
                                                                 " in the database.");
@@ -330,8 +338,13 @@ public class AddOrUpdateAppointmentController implements Initializable {
          * @throws IOException
          */
         public void cancelClicked(ActionEvent event)throws IOException {
-            Stage stage = (Stage) cancelButton.getScene().getWindow();
-            stage.close();
+                Stage currentStage = (Stage) (cancelButton.getScene().getWindow());
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("landingPage.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                currentStage.setScene(scene);
+                currentStage.setTitle("Customer and Appointment Management Portal");
+                currentStage.centerOnScreen();
+                currentStage.show();
         }
 
         /**

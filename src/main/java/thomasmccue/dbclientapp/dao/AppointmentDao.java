@@ -195,6 +195,7 @@ public class AppointmentDao {
      * @return ObservableList of all appointments
      */
     public static ObservableList<Appointment> getAllAppointments () {
+            displayAppt.clear();
             String sql = "SELECT * FROM client_schedule.appointments";
             ZoneId localZone = ZoneId.systemDefault();
 

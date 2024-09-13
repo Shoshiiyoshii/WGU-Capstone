@@ -208,6 +208,7 @@ public class CustomerDao {
      * @return ObservableList of all customers
      */
     public static ObservableList<Customer> getAllCust() {
+        displayCust.clear();
         String sql = "SELECT * FROM client_schedule.customers";
         ZoneId localZone = ZoneId.systemDefault();
 
@@ -302,6 +303,7 @@ public class CustomerDao {
      * @return ObservableList of customer IDs
      */
     public static ObservableList<String> getAllCustId() {
+        allCustIds.clear();
         String sql = "SELECT Customer_ID FROM client_schedule.customers";
         try {
             Connection connection = JDBC.getConnection();

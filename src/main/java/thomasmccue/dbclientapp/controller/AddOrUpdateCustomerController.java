@@ -2,12 +2,15 @@ package thomasmccue.dbclientapp.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import thomasmccue.dbclientapp.Main;
 import thomasmccue.dbclientapp.dao.CountryDao;
 import thomasmccue.dbclientapp.dao.CustomerDao;
 import thomasmccue.dbclientapp.dao.FirstLevelDivisionDao;
@@ -181,8 +184,13 @@ public class AddOrUpdateCustomerController implements Initializable {
                 );
                 boolean added = CustomerDao.addCust(customer);
                 if (added) {
-                    Stage stage = (Stage) saveButton.getScene().getWindow();
-                    stage.close();
+                    Stage currentStage = (Stage) (saveButton.getScene().getWindow());
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("landingPage.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load());
+                    currentStage.setScene(scene);
+                    currentStage.setTitle("Customer and Appointment Management Portal");
+                    currentStage.centerOnScreen();
+                    currentStage.show();
                 } else {
                     errorMessage.setText("There was a problem adding the customer to the database.");
                 }
@@ -218,8 +226,13 @@ public class AddOrUpdateCustomerController implements Initializable {
 
                 boolean updated = CustomerDao.updateCust(customer,index);
                 if (updated) {
-                    Stage stage = (Stage) saveButton.getScene().getWindow();
-                    stage.close();
+                    Stage currentStage = (Stage) (saveButton.getScene().getWindow());
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("landingPage.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load());
+                    currentStage.setScene(scene);
+                    currentStage.setTitle("Customer and Appointment Management Portal");
+                    currentStage.centerOnScreen();
+                    currentStage.show();
                 } else {
                     errorMessage.setText("There was a problem updating the customer in the database.");
                 }
@@ -234,8 +247,14 @@ public class AddOrUpdateCustomerController implements Initializable {
      * @throws IOException
      */
     public void cancelClicked(ActionEvent event)throws IOException {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        Stage currentStage = (Stage) (cancelButton.getScene().getWindow());
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("landingPage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        currentStage.setScene(scene);
+        currentStage.setTitle("Customer and Appointment Management Portal");
+        currentStage.centerOnScreen();
+        currentStage.show();
+
     }
 
     /**

@@ -38,3 +38,14 @@ Login Attempt Time: 06-09-2024 23:57:24 UTC - 06-09-2024 16:57:24 PDT, Username 
 Login Attempt Time: 06-09-2024 23:58:49 UTC - 06-09-2024 16:58:49 PDT, Username Input: test, Login Successful: true
 Login Attempt Time: 07-09-2024 00:00:14 UTC - 06-09-2024 17:00:14 PDT, Username Input: test, Login Successful: true
 Login Attempt Time: 07-09-2024 00:10:30 UTC - 06-09-2024 17:10:30 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 12-09-2024 17:38:02 UTC - 12-09-2024 10:38:02 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 12-09-2024 17:41:41 UTC - 12-09-2024 10:41:41 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 12-09-2024 17:47:52 UTC - 12-09-2024 10:47:52 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 12-09-2024 17:50:02 UTC - 12-09-2024 10:50:02 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 13-09-2024 20:19:44 UTC - 13-09-2024 13:19:44 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 13-09-2024 20:26:39 UTC - 13-09-2024 13:26:39 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 13-09-2024 20:30:33 UTC - 13-09-2024 13:30:33 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 13-09-2024 20:55:28 UTC - 13-09-2024 13:55:28 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 13-09-2024 20:58:49 UTC - 13-09-2024 13:58:49 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 13-09-2024 21:01:15 UTC - 13-09-2024 14:01:15 PDT, Username Input: test, Login Successful: true
+Login Attempt Time: 13-09-2024 21:06:40 UTC - 13-09-2024 14:06:40 PDT, Username Input: test, Login Successful: true

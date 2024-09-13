@@ -1,5 +1,6 @@
 package thomasmccue.dbclientapp.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -29,7 +30,7 @@ import java.util.*;
 public class LandingPageController implements Initializable {
     @FXML
     private Label ynUpcomingAppointment, nextAppts, title, customersTitle, customerErrorMessage, apptErrorMessage,
-            apptSearchLabel, customerStatusReportLabel;
+            apptSearchLabel, customerOutreachLabel;
     @FXML
     private TextField apptSearchBar;
     @FXML
@@ -62,6 +63,11 @@ public class LandingPageController implements Initializable {
      * @throws IOException
      */
     public void clickCustAdd(ActionEvent event) throws IOException {
+        // Close the current window
+        Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        currentStage.close();
+
+        // Open the new window
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
@@ -91,6 +97,12 @@ public class LandingPageController implements Initializable {
             customerErrorMessage.setText("Please first select a Customer to Modify.");
         } else {
             customerErrorMessage.setText("");
+
+            // Close the current window
+            Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+            // Open the new window
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrUpdateCustomer.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
@@ -102,6 +114,7 @@ public class LandingPageController implements Initializable {
             stage.show();
         }
     }
+
 
     /**
      * When the delete button under the customer table is clicked, this method
@@ -242,6 +255,11 @@ public class LandingPageController implements Initializable {
      * @throws IOException
      */
     public void clickApptAdd(ActionEvent event) throws IOException {
+        // Close the current window
+        Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        currentStage.close();
+
+        // Open the new window
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrModifyAppointmentPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
@@ -253,6 +271,7 @@ public class LandingPageController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
 
     /**
      * When the update button under the appointment table is clicked, this method
@@ -270,9 +289,14 @@ public class LandingPageController implements Initializable {
 
         if (selectedAppt == null) {
             apptErrorMessage.setText("Please select an existing appointment to modify.");
-
         } else {
             apptErrorMessage.setText("");
+
+            // Close the current window
+            Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+            // Open the new window
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addOrModifyAppointmentPage.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
@@ -286,6 +310,7 @@ public class LandingPageController implements Initializable {
             stage.show();
         }
     }
+
 
     /**
      * When the delete button under the appointments table is clicked, this method
@@ -435,7 +460,8 @@ public class LandingPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        custTable.setItems(CustomerDao.getAllCust());
+        ObservableList<Customer> AllCustomers = CustomerDao.getAllCust();
+        custTable.setItems(AllCustomers);
 
         custIdBottomCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -467,6 +493,21 @@ public class LandingPageController implements Initializable {
 
         allTimeRadio.setSelected(true);
 
+        SetOutreachNotification(AllCustomers);
         upcomingAppts();
+    }
+
+    public void SetOutreachNotification(ObservableList<Customer> AllCustomers) {
+        int inactiveCust = 0;
+        int newCust = 0;
+        for (Customer customer : AllCustomers) {
+            if (customer instanceof NewCustomer) {
+                newCust++;  // Increment for NewCustomer
+            } else if (customer instanceof InactiveCustomer) {
+                inactiveCust++;  // Increment for InactiveCustomer
+            }
+        }
+        customerOutreachLabel.setText("There are " + inactiveCust + " Inactive Customers, and " + newCust +
+                " New Customers. Make appointments with these customers ASAP to maintain healthy business relationships.");
     }
 }
