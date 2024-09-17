@@ -3,7 +3,9 @@ package thomasmccue.dbclientapp.model;
 import java.time.LocalDateTime;
 
 /**
- * This abstract class represents a customer.
+ * This abstract class represents a customer. It defines the basic attributes and methods
+ * for all types of customers in the system. This class cannot be instantiated directly,
+ * and it must be extended by specific customer types (e.g., ActiveCustomer, InactiveCustomer, NewCustomer).
  */
 public abstract class Customer {
     private int customerId;
@@ -18,7 +20,12 @@ public abstract class Customer {
     private int divisionId;
     private String country;
 
-
+    /**
+     * Abstract method that must be implemented by subclasses to return the specific status
+     * of the customer (Active, Inactive, New).
+     *
+     * @return String representing the status of the customer.
+     */
     public abstract String getStatus();
 
 
@@ -145,7 +152,7 @@ public abstract class Customer {
     /**
      * Mutator for setting the creator of this customer
      *
-     * @param createdBy String representing who created the customer object
+     * @param createdBy String representing who created the customer.
      */
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
@@ -154,7 +161,7 @@ public abstract class Customer {
     /**
      * Mutator for setting the last update time of this customer
      *
-     * @param lastUpdate LocalDateTime representing the last update time of this customer
+     * @param lastUpdate LocalDateTime representing the last update time of this customer.
      */
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
@@ -163,7 +170,7 @@ public abstract class Customer {
     /**
      * Mutator for setting who last updated this customer
      *
-     * @param lastUpdatedBy String representing who last updated the customer
+     * @param lastUpdatedBy String representing who last updated the customer.
      */
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
@@ -172,7 +179,7 @@ public abstract class Customer {
     /**
      * Mutator for setting the division ID associated with this customer
      *
-     * @param divisionId Integer representing the division ID to be associated with the customer
+     * @param divisionId Integer representing the division ID to be associated with the customer.
      */
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
@@ -190,98 +197,98 @@ public abstract class Customer {
     // Getters
 
     /**
-     * Accessor for retrieving this customer's ID
+     * Accessor for retrieving this customer's ID.
      *
-     * @return Integer representing this customer's ID
+     * @return Integer representing this customer's ID.
      */
     public int getCustomerId() {
         return customerId;
     }
 
     /**
-     * Accessor for retrieving this customer's name
+     * Accessor for retrieving this customer's name.
      *
-     * @return String representing this customer's name
+     * @return String representing this customer's name.
      */
     public String getCustomerName() {
         return customerName;
     }
 
     /**
-     * Accessor for retrieving this customer's address
+     * Accessor for retrieving this customer's address.
      *
-     * @return String representing this customer's address
+     * @return String representing this customer's address.
      */
     public String getAddress() {
         return address;
     }
 
     /**
-     * Accessor for retrieving this customer's postal code
+     * Accessor for retrieving this customer's postal code.
      *
-     * @return String representing this customer's postal code
+     * @return String representing this customer's postal code.
      */
     public String getPostalCode() {
         return postalCode;
     }
 
     /**
-     * Accessor for retrieving this customer's phone number
+     * Accessor for retrieving this customer's phone number.
      *
-     * @return String representing this customer's phone number
+     * @return String representing this customer's phone number.
      */
     public String getPhone() {
         return phone;
     }
 
     /**
-     * Accessor for retrieving this customer's creation date and time
+     * Accessor for retrieving this customer's creation date and time.
      *
-     * @return LocalDateTime representing the date and time this customer was created
+     * @return LocalDateTime representing the date and time this customer was created.
      */
     public LocalDateTime getCreateDate() {
         return createDate;
     }
 
     /**
-     * Accessor for retrieving the name of who created this customer
+     * Accessor for retrieving the name of who created this customer.
      *
-     * @return String representing who created this customer
+     * @return String representing who created this customer.
      */
     public String getCreatedBy() {
         return createdBy;
     }
 
     /**
-     * Accessor for retrieving the time this customer was last updated
+     * Accessor for retrieving the time this customer was last updated.
      *
-     * @return LocalDateTime representing the time this customer was most recently updated
+     * @return LocalDateTime representing the time this customer was most recently updated.
      */
     public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
     /**
-     * Accessor for retrieving who last updated this customer
+     * Accessor for retrieving who last updated this customer.
      *
-     * @return String representing who last updated this customer
+     * @return String representing who last updated this customer.
      */
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
     /**
-     * Accessor for retrieving the division ID associated with this customer
+     * Accessor for retrieving the division ID associated with this customer.
      *
-     * @return integer representing the division ID associated with this customer
+     * @return integer representing the division ID associated with this customer.
      */
     public int getDivisionId() {
         return divisionId;
     }
 
     /**
-     * Accessor for retrieving the country associated with this customer
+     * Accessor for retrieving the country associated with this customer.
      *
-     * @return String representing the country associated with this customer
+     * @return String representing the country associated with this customer.
      */
     public String getCountry() {
         return country;

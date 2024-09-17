@@ -497,6 +497,14 @@ public class LandingPageController implements Initializable {
         upcomingAppts();
     }
 
+    /**
+     * This method is called when the customer table is populated in order to set the outreach notification prompt.
+     * The method sorts the ObservableList AllCustomers which is passed to it, and counts how many instances of each
+     * subclass of Customer exist in the list. Then it dynamically sets the outreach notification to reflect the
+     * current number of Inactive and New customers.
+     *
+     * @param AllCustomers
+     */
     public void SetOutreachNotification(ObservableList<Customer> AllCustomers) {
         int inactiveCust = 0;
         int newCust = 0;

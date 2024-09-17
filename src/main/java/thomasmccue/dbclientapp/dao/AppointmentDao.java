@@ -445,11 +445,11 @@ public class AppointmentDao {
     }
 
     /**
-     * Gets a string representing the customers activity status based on  whether the most
+     * Returns a string representing the customers activity status based on  whether the most
      * recent appointment date for the customer whose ID is passed as a parameter is within the last
      * 6 months (183 days), or if the customer has an appointment scheduled for the future.
      * If so, the customer is considered Active. Explicitly converts time values to the systems default time
-     *  zone for display purposes.
+     * zone for display purposes.
      *
      * @return String either "new", "active", or "inactive"
      */
