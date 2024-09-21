@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import thomasmccue.dbclientapp.helper.JDBC;
@@ -31,7 +32,9 @@ public class LogInController implements Initializable {
     @FXML
     private Button logInButton, closeButton;
     @FXML
-    private TextField passwordField, usernameField;
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
     public static String loggedInUser;
     private ResourceBundle resourceBundle;
     Stage stage;
